@@ -36,7 +36,6 @@ import cardConponent from "../components/CardConponent.vue";
           variant="tonal"
           density="compact"
           height="20"
-          width="200"
           color="primary"
           class="text-caption"
           text="会社名"
@@ -64,14 +63,11 @@ import cardConponent from "../components/CardConponent.vue";
           variant="tonal"
           density="compact"
           height="20"
-          width="200"
           color="primary mb-2"
           class="text-caption"
           text="URL"
         ></cardConponent>
-        <a href="http://sample.co.jp" target="_blank" class="ml-2"
-          >http://sample.co.jp</a
-        >
+        <a href="http://sample.co.jp" target="_blank">http://sample.co.jp</a>
       </v-col>
     </v-row>
     <v-row>
@@ -80,7 +76,6 @@ import cardConponent from "../components/CardConponent.vue";
           variant="tonal"
           density="compact"
           height="20"
-          width="200"
           color="primary mb-2"
           class="text-caption"
           text="住所"
@@ -114,6 +109,96 @@ import cardConponent from "../components/CardConponent.vue";
           </v-col>
         </v-row>
       </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <cardConponent
+          variant="tonal"
+          density="compact"
+          height="20"
+          color="primary mb-2"
+          class="text-caption"
+          text="電話番号"
+        ></cardConponent>
+        <p>090-0000-0000</p>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <cardConponent
+          variant="tonal"
+          density="compact"
+          height="20"
+          color="primary mb-2"
+          class="text-caption"
+          text="メールアドレス"
+        ></cardConponent>
+        <p>sample@sample.jp</p>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <cardConponent
+          variant="tonal"
+          density="compact"
+          height="20"
+          color="primary mb-2"
+          class="text-caption"
+          text="スキル"
+        ></cardConponent>
+        <p>ファイナンシャルプランナー技能士</p>
+        <p>中小企業診断士</p>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <cardConponent
+          variant="tonal"
+          density="compact"
+          height="20"
+          color="primary mb-2"
+          class="text-caption"
+          text="経歴"
+        ></cardConponent>
+        <v-timeline side="end">
+          <v-timeline-item size="small">
+            <v-alert value="true">
+              <b>OpenAI</b>
+              <p class="text-caption">
+                ソフトウェアエンジニア<br />
+                2020年10月 - 現在<br />
+                自然言語処理システムの開発と改善に従事。<br />
+                GPTシリーズのアーキテクチャの維持と拡張を担当。<br />
+                ディープラーニングモデルの最適化とスケーラビリティの向上に取り組む
+              </p>
+            </v-alert>
+          </v-timeline-item>
+        </v-timeline>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <cardConponent
+          variant="tonal"
+          density="compact"
+          height="20"
+          color="primary mb-2"
+          class="text-caption"
+          text="自己PR"
+        ></cardConponent>
+      </v-col>
+      <v-card class="ml-4 mr-4 pa-2" variant="tonal">
+        私は自然言語処理と人工知能の分野で豊富な経験を持つソフトウェアエンジニアです。これまでのキャリアで、次のような経験を積んできました：
+        技術的な深さと広さ:
+        深層学習モデルの開発や最適化、自然言語理解システムの設計・実装に携わり、高度な技術的課題に対処してきました。
+        チームでの協力:
+        大規模なプロジェクトでのチームワークを重視し、他のメンバーとの密接な連携を通じて、成果を最大化することに努めています。
+        問題解決能力:
+        複雑な問題に対して論理的かつ創造的なアプローチで取り組むことが得意であり、常に効率的な解決策を追求しています。
+        継続的な学びと成長:
+        技術の進化に常に対応するために、新しいアルゴリズムやツールについて学び続け、自己成長を維持しています。
+        私はチャレンジを楽しみ、新しい技術やアイデアを探求することに情熱を持っています。革新的なプロジェクトに貢献し、技術の進化に寄与することを目指しています。
+      </v-card>
     </v-row>
   </v-container>
 </template>

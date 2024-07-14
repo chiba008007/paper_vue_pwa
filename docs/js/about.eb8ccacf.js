@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkvue_pwa_sample"]=self["webpackChunkvue_pwa_sample"]||[]).push([[594],{3726:function(u,a,e){e.r(a),e.d(a,{default:function(){return o}});var n=e(6768);const s={class:"about"},t=(0,n.Lk)("h1",null,"This is an about page",-1),r=[t];function c(u,a){return(0,n.uX)(),(0,n.CE)("div",s,r)}var l=e(1241);const p={},i=(0,l.A)(p,[["render",c]]);var o=i}}]);
-//# sourceMappingURL=about.eb8ccacf.js.map
