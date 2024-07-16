@@ -1,3 +1,12 @@
+<script setup lang="ts">
+import { ref } from "vue";
+
+const open = ref(false);
+
+const menuOpen = () => {
+  open.value = open.value ? false : true;
+};
+</script>
 <template>
   <v-app>
     <v-card color="grey-lighten-4" height="auto" rounded="0" flat>
@@ -10,27 +19,72 @@
         <v-btn icon>
           <v-icon>mdi-heart</v-icon>
         </v-btn>
-        <v-btn icon>
+        <v-btn icon @click="menuOpen()">
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
       </v-toolbar>
     </v-card>
     <v-main>
+      <div class="menu" :class="{ 'is-active': open }">
+        <div class="menu__item close" @click="menuOpen()">閉じる</div>
+        <div class="menu__item">問合せ</div>
+        <div class="menu__item">新規申し込み</div>
+        <div class="menu__item">名刺データ編集</div>
+        <div class="menu__item">公開可否</div>
+        <div class="menu__item">利用状況</div>
+        <div class="menu__item">読込履歴取込み</div>
+        <div class="menu__item">読込履歴ファイルインポート</div>
+        <div class="menu__item">読込履歴ダウンロード</div>
+        <div class="menu__item">利用状況</div>
+        <div class="menu__item">ログイン</div>
+        <div class="menu__item">ログアウト</div>
+      </div>
       <router-view />
     </v-main>
   </v-app>
 </template>
+<style>
+/*----------------------------
+* メニュー本体
+*----------------------------*/
+.menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: top;
+  background: #555;
+}
+.menu__item {
+  width: 100%;
+  height: auto;
+  padding: 0.5em 1em;
+  text-align: left;
+  color: #fff;
+  border-bottom: 1px solid #fff;
+  box-sizing: border-box;
+  &.close {
+    text-align: left;
+    color: #ff0000;
+  }
+}
 
-<script lang="ts">
-import { defineComponent } from "vue";
+/*----------------------------
+* アニメーション部分
+*----------------------------*/
 
-export default defineComponent({
-  name: "App",
-
-  data() {
-    return {
-      //
-    };
-  },
-});
-</script>
+/* アニメーション前のメニューの状態 */
+.menu {
+  transform: translateX(100vw);
+  transition: all 0.3s linear;
+}
+/* アニメーション後のメニューの状態 */
+.menu.is-active {
+  transform: translateX(0);
+}
+</style>
