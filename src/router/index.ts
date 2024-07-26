@@ -1,7 +1,13 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import {
+  createRouter,
+  createWebHistory,
+  RouteRecordRaw,
+  createMemoryHistory,
+} from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import AboutView from "../views/AboutView.vue";
 import TopView from "../views/TopView.vue";
+import ListView from "../views/ListView.vue";
 import ErrorView from "../views/ErrorView.vue";
 import { START_LOCATION } from "vue-router";
 
@@ -10,6 +16,18 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "top",
     component: TopView,
+    //props: (route) => ({ text: route.params.text }),
+  },
+  {
+    path: "/lists/",
+    name: "lists",
+    component: ListView,
+    beforeEnter: (to, from) => {
+      if (from === START_LOCATION) {
+        // 直アクセスだった場合
+        return "/lists/"; // '/hoge' へリダイレクトする
+      }
+    },
   },
   {
     path: "/error",
@@ -39,7 +57,7 @@ const routes: Array<RouteRecordRaw> = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createMemoryHistory(process.env.BASE_URL),
   routes,
 });
 

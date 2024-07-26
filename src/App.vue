@@ -11,13 +11,14 @@ const menuOpen = () => {
   <v-app>
     <v-card color="grey-lighten-4" height="auto" rounded="0" flat>
       <v-toolbar density="compact" color="primary" class="caption">
-        <v-toolbar-title>私の名刺</v-toolbar-title>
+        <router-link
+          class="text-h6 ml-2 mylink"
+          :to="`/?code=` + $route.query.code"
+          >私の名刺</router-link
+        >
         <v-spacer></v-spacer>
-        <v-btn icon>
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-        <v-btn icon>
-          <v-icon>mdi-heart</v-icon>
+        <v-btn icon :to="`/lists/?code=` + $route.query.code">
+          <v-icon>mdi-format-list-bulleted</v-icon>
         </v-btn>
         <v-btn icon @click="menuOpen()">
           <v-icon>mdi-dots-vertical</v-icon>
@@ -86,5 +87,9 @@ const menuOpen = () => {
 /* アニメーション後のメニューの状態 */
 .menu.is-active {
   transform: translateX(0);
+}
+.mylink {
+  text-decoration: none;
+  color: #fff;
 }
 </style>
