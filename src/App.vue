@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-
+import UserHelpers from "./functions/userHelper";
 const open = ref(false);
-
+const { movePage } = UserHelpers();
 const menuOpen = () => {
   open.value = open.value ? false : true;
 };
@@ -37,7 +37,7 @@ const menuOpen = () => {
         <div class="menu__item">読込履歴ファイルインポート</div>
         <div class="menu__item">読込履歴ダウンロード</div>
         <div class="menu__item">利用状況</div>
-        <div class="menu__item">ログイン</div>
+        <div class="menu__item" @click="[movePage(), menuOpen()]">ログイン</div>
         <div class="menu__item">ログアウト</div>
       </div>
       <router-view />

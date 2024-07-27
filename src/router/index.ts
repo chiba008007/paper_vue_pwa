@@ -8,6 +8,7 @@ import HomeView from "../views/HomeView.vue";
 import AboutView from "../views/AboutView.vue";
 import TopView from "../views/TopView.vue";
 import ListView from "../views/ListView.vue";
+import LoginView from "../views/LoginView.vue";
 import ErrorView from "../views/ErrorView.vue";
 import { START_LOCATION } from "vue-router";
 
@@ -28,6 +29,11 @@ const routes: Array<RouteRecordRaw> = [
         return "/lists/"; // '/hoge' へリダイレクトする
       }
     },
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: LoginView,
   },
   {
     path: "/error",
