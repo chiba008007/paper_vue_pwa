@@ -1,26 +1,30 @@
-<script lang="ts"></script>
+<script setup lang="ts">
+import { ref } from "vue";
+import { useRoute } from "vue-router";
+import TextComponent from "../components/TextComponent.vue";
+</script>
 <template>
   <v-container>
     <v-row>
       <v-col cols="12">
-        <v-textarea
+        <TextComponent
           label="メールアドレス"
-          rows="1"
           variant="outlined"
-          auto-grow
-          hide-details="false"
-        ></v-textarea>
+          autoGrow="true"
+          hideDetails="true"
+          type="text"
+        ></TextComponent>
       </v-col>
     </v-row>
     <v-row>
       <v-col cols="12">
-        <v-textarea
+        <TextComponent
           label="パスワード"
-          rows="1"
           variant="outlined"
-          auto-grow
-          hide-details="false"
-        ></v-textarea>
+          autoGrow="true"
+          hideDetails="true"
+          type="password"
+        ></TextComponent>
       </v-col>
     </v-row>
     <v-row>
