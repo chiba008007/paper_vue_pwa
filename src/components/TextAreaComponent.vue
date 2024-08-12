@@ -9,9 +9,11 @@ interface Props {
   variant?: TVariant;
   density?: TDensity;
   label?: string;
-  autoGrow?: boolean | string;
+  autoGrow?: boolean;
   hideDetails?: boolean | string;
   type?: string;
+  rowHeight?: number;
+  rows?: number;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -24,12 +26,11 @@ const props = withDefaults(defineProps<Props>(), {
 });
 </script>
 <template>
-  <v-text-field
+  <v-textarea
     :label="props.label"
-    rows="1"
     :variant="props.variant"
-    :auto-grow="props.autoGrow"
+    :row-height="props.rowHeight"
+    :rows="props.rows"
     :hide-details="props.hideDetails"
-    :type="props.type"
-  ></v-text-field>
+  ></v-textarea>
 </template>

@@ -9,6 +9,9 @@ import AboutView from "../views/AboutView.vue";
 import TopView from "../views/TopView.vue";
 import ListView from "../views/ListView.vue";
 import LoginFormView from "../views/LoginFormView.vue";
+import ForgetFormView from "../views/ForgetFormView.vue";
+import QuestionFormView from "../views/QuestionFormView.vue";
+import QuestionFinFormView from "../views/QuestionFinFormView.vue";
 import ErrorView from "../views/ErrorView.vue";
 import { START_LOCATION } from "vue-router";
 
@@ -34,6 +37,21 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login",
     name: "login",
     component: LoginFormView,
+  },
+  {
+    path: "/forget",
+    name: "forget",
+    component: ForgetFormView,
+  },
+  {
+    path: "/question",
+    name: "question",
+    component: QuestionFormView,
+  },
+  {
+    path: "/questionFin",
+    name: "questionFin",
+    component: QuestionFinFormView,
   },
   {
     path: "/error",

@@ -9,8 +9,6 @@ interface Props {
   variant?: TVariant;
   density?: TDensity;
   label?: string;
-  autoGrow?: boolean | string;
-  hideDetails?: boolean | string;
   type?: string;
 }
 
@@ -18,18 +16,14 @@ const props = withDefaults(defineProps<Props>(), {
   variant: "outlined",
   density: undefined,
   label: "",
-  autoGrow: true,
-  hideDetails: true,
   type: "",
 });
 </script>
 <template>
-  <v-text-field
-    :label="props.label"
-    rows="1"
+  <v-btn
     :variant="props.variant"
-    :auto-grow="props.autoGrow"
-    :hide-details="props.hideDetails"
     :type="props.type"
-  ></v-text-field>
+    @click="$emit('onClick')"
+    >{{ props.label }}</v-btn
+  >
 </template>

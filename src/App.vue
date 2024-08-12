@@ -28,7 +28,9 @@ const menuOpen = () => {
     <v-main>
       <div class="menu" :class="{ 'is-active': open }">
         <div class="menu__item close" @click="menuOpen()">閉じる</div>
-        <div class="menu__item">問合せ</div>
+        <div class="menu__item" @click="[movePage('question'), menuOpen()]">
+          問合せ
+        </div>
         <div class="menu__item">新規申し込み</div>
         <div class="menu__item">名刺データ編集</div>
         <div class="menu__item">公開可否</div>
@@ -37,7 +39,9 @@ const menuOpen = () => {
         <div class="menu__item">読込履歴ファイルインポート</div>
         <div class="menu__item">読込履歴ダウンロード</div>
         <div class="menu__item">利用状況</div>
-        <div class="menu__item" @click="[movePage(), menuOpen()]">ログイン</div>
+        <div class="menu__item" @click="[movePage('login'), menuOpen()]">
+          ログイン
+        </div>
         <div class="menu__item">ログアウト</div>
       </div>
       <router-view />

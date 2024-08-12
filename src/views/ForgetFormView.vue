@@ -5,15 +5,23 @@ import TextComponent from "../components/TextComponent.vue";
 import ButtonComponent from "../components/ButtonComponent.vue";
 import { useTheme } from "vuetify/lib/framework.mjs";
 
+const sendflag = ref(false);
 const router = useRouter();
-const pwdForgetClick = () => {
-  router.push({ name: "forget" });
+const pwdSendClick = () => {
+  alert(1111);
+  sendflag.value = true;
 };
 </script>
 <template>
   <v-container>
+    <v-alert
+      text="パスワード再設定メールを送信しました"
+      type="success"
+      v-if="sendflag"
+    ></v-alert>
     <v-row>
       <v-col cols="12">
+        登録しているメールアドレスを入力してください。
         <TextComponent
           label="メールアドレス"
           variant="outlined"
@@ -23,25 +31,11 @@ const pwdForgetClick = () => {
     </v-row>
     <v-row>
       <v-col cols="12">
-        <TextComponent
-          label="パスワード"
-          variant="outlined"
-          type="password"
-        ></TextComponent>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12">
-        <v-btn class="w-100" color="primary">ログイン</v-btn>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12">
         <ButtonComponent
           class="w-100"
-          :variant="`plain`"
-          :label="`パスワード忘れた人`"
-          @onClick="pwdForgetClick()"
+          color="primary"
+          :label="`送信`"
+          @onClick="pwdSendClick()"
         ></ButtonComponent>
       </v-col>
     </v-row>
