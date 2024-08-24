@@ -5,13 +5,11 @@ import SelectComponent from "../components/SelectComponent.vue";
 import ButtonComponent from "../components/ButtonComponent.vue";
 import { prefecturesNameList } from "../plugins/const";
 import { useRouter } from "vue-router";
+import UserHelpers from "../functions/userHelper";
 
 const router = useRouter();
 const reqiredRules = [(v: string) => !!v || "Name is required"];
-
-const registSend = () => {
-  router.push({ name: "registFin" });
-};
+const { movePage } = UserHelpers();
 </script>
 <template>
   <v-container>
@@ -85,7 +83,7 @@ const registSend = () => {
           color="primary"
           class="w-100 mt-2"
           label="送信"
-          @onClick="registSend()"
+          @onClick="movePage('registFin')"
         ></ButtonComponent>
       </v-col>
     </v-row>

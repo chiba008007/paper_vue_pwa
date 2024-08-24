@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import TextComponent from "../components/TextComponent.vue";
 import ButtonComponent from "../components/ButtonComponent.vue";
+import AlertComponent from "../components/AlertComponent.vue";
 import { useTheme } from "vuetify/lib/framework.mjs";
 
 const sendflag = ref(false);
@@ -14,11 +15,11 @@ const pwdSendClick = () => {
 </script>
 <template>
   <v-container>
-    <v-alert
+    <AlertComponent
+      v-if="sendflag"
       text="パスワード再設定メールを送信しました"
       type="success"
-      v-if="sendflag"
-    ></v-alert>
+    ></AlertComponent>
     <v-row>
       <v-col cols="12">
         登録しているメールアドレスを入力してください。

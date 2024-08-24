@@ -33,8 +33,8 @@ const pwdSendClick = () => {
         <TextAreaComponent
           hideDetails="auto"
           label="問合わせ内容"
-          rows="10"
-          row-height="10"
+          :rows="10"
+          :row-height="10"
           variant="outlined"
         ></TextAreaComponent>
       </v-col>
