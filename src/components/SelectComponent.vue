@@ -3,17 +3,12 @@ import { defineProps, withDefaults } from "vue";
 import { prop } from "vue-class-component";
 import type { VCard } from "vuetify/components";
 type TVariant = VCard["$props"]["variant"];
-type TDensity = VCard["$props"]["density"];
 
 interface Props {
   variant?: TVariant;
-  density?: TDensity;
   label?: string;
-  autoGrow?: boolean | string;
   hideDetails?: boolean | string;
-  type?: string;
-  rules?: string | undefined | object;
-  postflag?: boolean;
+  items?: object;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -22,20 +17,14 @@ const props = withDefaults(defineProps<Props>(), {
   label: "",
   autoGrow: true,
   hideDetails: true,
-  type: "",
-  postflag: false,
+  items: undefined,
 });
 </script>
 <template>
-  <v-text-field
+  <v-select
     :label="props.label"
-    rows="1"
+    :items="props.items"
     :variant="props.variant"
-    :auto-grow="props.autoGrow"
-    :hide-details="props.hideDetails"
-    :type="props.type"
-    :rules="props.rules"
-  >
-    <template v-slot:prepend v-if="props.postflag"> 〒 </template>
-  </v-text-field>
+    :hideDetails="props.hideDetails"
+  ></v-select>
 </template>

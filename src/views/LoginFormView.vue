@@ -18,6 +18,8 @@ const pwdForgetClick = () => {
           label="メールアドレス"
           variant="outlined"
           type="text"
+          autoGrow="auto"
+          hideDetails="true"
         ></TextComponent>
       </v-col>
     </v-row>
@@ -26,6 +28,8 @@ const pwdForgetClick = () => {
         <TextComponent
           label="パスワード"
           variant="outlined"
+          autoGrow="auto"
+          hideDetails="true"
           type="password"
         ></TextComponent>
       </v-col>

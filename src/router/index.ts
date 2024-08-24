@@ -12,6 +12,8 @@ import LoginFormView from "../views/LoginFormView.vue";
 import ForgetFormView from "../views/ForgetFormView.vue";
 import QuestionFormView from "../views/QuestionFormView.vue";
 import QuestionFinFormView from "../views/QuestionFinFormView.vue";
+import RegistView from "../views/RegistView.vue";
+import RegistFinView from "../views/RegistFinView.vue";
 import ErrorView from "../views/ErrorView.vue";
 import { START_LOCATION } from "vue-router";
 
@@ -54,6 +56,16 @@ const routes: Array<RouteRecordRaw> = [
     component: QuestionFinFormView,
   },
   {
+    path: "/regist",
+    name: "regist",
+    component: RegistView,
+  },
+  {
+    path: "/registFin",
+    name: "registFin",
+    component: RegistFinView,
+  },
+  {
     path: "/error",
     name: "error",
     component: ErrorView,
@@ -81,7 +93,7 @@ const routes: Array<RouteRecordRaw> = [
 ];
 
 const router = createRouter({
-  history: createMemoryHistory(process.env.BASE_URL),
+  history: createWebHistory(process.env.BASE_URL),
   routes,
 });
 

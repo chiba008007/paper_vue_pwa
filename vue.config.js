@@ -7,6 +7,7 @@ module.exports = defineConfig({
 
   devServer: {
     host: "localhost",
+    historyApiFallback: true, // 画面リロードしてエラーにならないように
   },
 
   pluginOptions: {
