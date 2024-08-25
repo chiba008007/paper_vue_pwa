@@ -37,8 +37,9 @@ const menuOpen = () => {
         <div class="menu__item" @click="[movePage('edit'), menuOpen()]">
           名刺データ編集
         </div>
-        <div class="menu__item">公開可否</div>
-        <div class="menu__item">利用状況</div>
+        <div class="menu__item" @click="[movePage('open'), menuOpen()]">
+          公開可否
+        </div>
         <div class="menu__item">読込履歴取込み</div>
         <div class="menu__item">読込履歴ファイルインポート</div>
         <div class="menu__item">読込履歴ダウンロード</div>

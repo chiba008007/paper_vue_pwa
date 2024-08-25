@@ -15,6 +15,7 @@ import QuestionFinFormView from "../views/QuestionFinFormView.vue";
 import RegistView from "../views/RegistView.vue";
 import RegistFinView from "../views/RegistFinView.vue";
 import EditView from "../views/EditView.vue";
+import OpenView from "../views/OpenView.vue";
 
 import ErrorView from "../views/ErrorView.vue";
 import { START_LOCATION } from "vue-router";
@@ -71,6 +72,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/edit",
     name: "edit",
     component: EditView,
+  },
+  {
+    path: "/open",
+    name: "open",
+    component: OpenView,
   },
   {
     path: "/error",
