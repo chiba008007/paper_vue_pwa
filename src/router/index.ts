@@ -22,21 +22,15 @@ import { START_LOCATION } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/",
+    path: "/:code",
     name: "top",
     component: TopView,
     //props: (route) => ({ text: route.params.text }),
   },
   {
-    path: "/lists/",
+    path: "/lists:code",
     name: "lists",
     component: ListView,
-    beforeEnter: (to, from) => {
-      if (from === START_LOCATION) {
-        // 直アクセスだった場合
-        return "/lists/"; // '/hoge' へリダイレクトする
-      }
-    },
   },
   {
     path: "/login",
@@ -44,37 +38,37 @@ const routes: Array<RouteRecordRaw> = [
     component: LoginFormView,
   },
   {
-    path: "/forget",
+    path: "/forget:code",
     name: "forget",
     component: ForgetFormView,
   },
   {
-    path: "/question",
+    path: "/question:code",
     name: "question",
     component: QuestionFormView,
   },
   {
-    path: "/questionFin",
+    path: "/questionFin:code",
     name: "questionFin",
     component: QuestionFinFormView,
   },
   {
-    path: "/regist",
+    path: "/regist:code",
     name: "regist",
     component: RegistView,
   },
   {
-    path: "/registFin",
+    path: "/registFin:code",
     name: "registFin",
     component: RegistFinView,
   },
   {
-    path: "/edit",
+    path: "/edit:code",
     name: "edit",
     component: EditView,
   },
   {
-    path: "/open",
+    path: "/open:code",
     name: "open",
     component: OpenView,
   },
