@@ -22,13 +22,13 @@ import { START_LOCATION } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/:code",
+    path: "/",
     name: "top",
     component: TopView,
     //props: (route) => ({ text: route.params.text }),
   },
   {
-    path: "/lists:code",
+    path: "/lists",
     name: "lists",
     component: ListView,
   },
@@ -38,37 +38,37 @@ const routes: Array<RouteRecordRaw> = [
     component: LoginFormView,
   },
   {
-    path: "/forget:code",
+    path: "/forget",
     name: "forget",
     component: ForgetFormView,
   },
   {
-    path: "/question:code",
+    path: "/question",
     name: "question",
     component: QuestionFormView,
   },
   {
-    path: "/questionFin:code",
+    path: "/questionFin",
     name: "questionFin",
     component: QuestionFinFormView,
   },
   {
-    path: "/regist:code",
+    path: "/regist",
     name: "regist",
     component: RegistView,
   },
   {
-    path: "/registFin:code",
+    path: "/registFin",
     name: "registFin",
     component: RegistFinView,
   },
   {
-    path: "/edit:code",
+    path: "/edit",
     name: "edit",
     component: EditView,
   },
   {
-    path: "/open:code",
+    path: "/open",
     name: "open",
     component: OpenView,
   },

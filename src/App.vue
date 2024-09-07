@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import UserHelpers from "./functions/userHelper";
-import { useRoute } from "vue-router";
-const route = useRoute();
 const code = ref();
-code.value = route.params.code;
-
+const query = location.href;
+code.value = query.split("?")[1];
+console.log(code.value);
 const open = ref(false);
 const { movePage } = UserHelpers();
 const menuOpen = () => {
@@ -18,10 +17,10 @@ const menuOpen = () => {
       <v-toolbar density="compact" color="primary" class="caption">
         <p class="text-h6 ml-2">私の名刺</p>
         <v-spacer></v-spacer>
-        <v-btn icon @click="[movePage('top', code)]">
+        <v-btn icon @click="[movePage('top')]">
           <v-icon>mdi-home</v-icon>
         </v-btn>
-        <v-btn icon @click="[movePage('lists', code)]">
+        <v-btn icon @click="[movePage('lists')]">
           <v-icon>mdi-format-list-bulleted</v-icon>
         </v-btn>
         <v-btn icon @click="menuOpen()">
@@ -32,19 +31,16 @@ const menuOpen = () => {
     <v-main>
       <div class="menu" :class="{ 'is-active': open }">
         <div class="menu__item close" @click="menuOpen()">閉じる</div>
-        <div
-          class="menu__item"
-          @click="[movePage('question', code), menuOpen()]"
-        >
+        <div class="menu__item" @click="[movePage('question'), menuOpen()]">
           問合せ
         </div>
         <div class="menu__item" @click="[movePage('regist'), menuOpen()]">
           新規申し込み
         </div>
-        <div class="menu__item" @click="[movePage('edit', code), menuOpen()]">
+        <div class="menu__item" @click="[movePage('edit'), menuOpen()]">
           名刺データ編集
         </div>
-        <div class="menu__item" @click="[movePage('open', code), menuOpen()]">
+        <div class="menu__item" @click="[movePage('open'), menuOpen()]">
           公開可否
         </div>
         <div class="menu__item">読込履歴取込み</div>
