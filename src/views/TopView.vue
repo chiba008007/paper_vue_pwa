@@ -2,6 +2,13 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import cardConponent from "../components/CardConponent.vue";
+import UserHelpers from "../functions/userHelper";
+
+const user = UserHelpers();
+// ローカルストレージ取得
+const ls = user.getStrage();
+// ローカルストレージに保存
+localStorage.setItem("paper_url", JSON.stringify(ls));
 </script>
 <template>
   <v-container>

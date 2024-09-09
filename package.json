@@ -9,16 +9,22 @@
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
+    "@types/query-string": "^6.3.0",
+    "axios": "^1.6.8",
     "core-js": "^3.8.3",
     "next-navigation": "^1.0.6",
     "register-service-worker": "^1.7.2",
+    "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^3.2.1",
+    "react-use-cookie": "^1.5.0",
     "roboto-fontface": "*",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.3",
     "vuetify": "^3.0.0-beta.0",
     "vuex": "^4.0.0",
-    "webfontloader": "^1.0.0"
+    "webfontloader": "^1.0.0",
+    "yubinbango-core2": "^0.6.3"
   },
   "devDependencies": {
     "@mdi/font": "^7.4.47",

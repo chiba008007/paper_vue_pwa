@@ -1,7 +1,12 @@
 <script setup lang="ts">
+import UserHelpers from "../functions/userHelper";
+
 const clickItem = () => {
   alert(111);
 };
+const user = UserHelpers();
+const ls = user.getStrage();
+console.log(ls);
 </script>
 <template>
   <v-container>

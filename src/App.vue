@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import UserHelpers from "./functions/userHelper";
-const code = ref();
-const query = location.href;
-code.value = query.split("?")[1];
-console.log(code.value);
+
 const open = ref(false);
 const { movePage } = UserHelpers();
 const menuOpen = () => {
@@ -43,7 +40,9 @@ const menuOpen = () => {
         <div class="menu__item" @click="[movePage('open'), menuOpen()]">
           公開可否
         </div>
-        <div class="menu__item">読込履歴取込み</div>
+        <div class="menu__item" @click="[movePage('lists'), menuOpen()]">
+          読込履歴取込み
+        </div>
         <div class="menu__item">読込履歴ファイルインポート</div>
         <div class="menu__item">読込履歴ダウンロード</div>
         <div class="menu__item">利用状況</div>
