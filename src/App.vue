@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import UserHelpers from "./functions/userHelper";
+import { useStoreUser } from "@/store/user";
+const store = useStoreUser();
 
 const open = ref(false);
 const { movePage } = UserHelpers();
@@ -46,10 +48,20 @@ const menuOpen = () => {
         <div class="menu__item">読込履歴ファイルインポート</div>
         <div class="menu__item">読込履歴ダウンロード</div>
         <div class="menu__item">利用状況</div>
-        <div class="menu__item" @click="[movePage('login'), menuOpen()]">
+        <div
+          class="menu__item"
+          v-if="store.isLogin == false"
+          @click="[movePage('login'), menuOpen()]"
+        >
           ログイン
         </div>
-        <div class="menu__item">ログアウト</div>
+        <div
+          class="menu__item"
+          v-if="store.isLogin == true"
+          @click="[movePage('logout'), menuOpen()]"
+        >
+          ログアウト
+        </div>
       </div>
       <router-view />
     </v-main>

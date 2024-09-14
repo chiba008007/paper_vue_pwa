@@ -15,4 +15,11 @@ export const useStoreUser = defineStore("user", {
       this.userdata = data;
     },
   },
+  getters: {
+    doubleCount: () => 200000000,
+  },
+
+  persist: {
+    storage: sessionStorage,
+  },
 });

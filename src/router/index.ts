@@ -9,6 +9,7 @@ import AboutView from "../views/AboutView.vue";
 import TopView from "../views/TopView.vue";
 import ListView from "../views/ListView.vue";
 import LoginFormView from "../views/LoginFormView.vue";
+import LogoutFormView from "../views/LogoutFormView.vue";
 import ForgetFormView from "../views/ForgetFormView.vue";
 import QuestionFormView from "../views/QuestionFormView.vue";
 import QuestionFinFormView from "../views/QuestionFinFormView.vue";
@@ -36,6 +37,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login",
     name: "login",
     component: LoginFormView,
+  },
+  {
+    path: "/logout",
+    name: "logout",
+    component: LogoutFormView,
   },
   {
     path: "/forget",

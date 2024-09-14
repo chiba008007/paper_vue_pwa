@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { useRoute } from "vue-router";
 import cardConponent from "../components/CardConponent.vue";
 import UserHelpers from "../functions/userHelper";
+import UserApiService from "../services/UserApiService";
 
 const user = UserHelpers();
 // ローカルストレージ取得

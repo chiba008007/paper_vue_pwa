@@ -11,17 +11,25 @@ const router = useRouter();
 const pwdForgetClick = () => {
   router.push({ name: "forget" });
 };
+const email = ref();
+const password = ref();
+const onKeyup = (e: any, name: string) => {
+  if (name == "email") email.value = e.target.value;
+  if (name == "password") password.value = e.target.value;
+};
 const user = useStoreUser();
 const onLogin = () => {
   let data = {
-    email: "micheal.marquardt@example.com",
-    password: "password",
+    email: email.value,
+    password: password.value,
   };
   UserApiService.getPost(data)
     .then((response: any) => {
       user.setUserDataToken(response.data.token);
       user.setUserData(response.data.user);
-      alert(user.isLogin);
+      if (user.isLogin == true) {
+        router.push({ name: "top", query: { code: response.data.user.code } });
+      }
     })
     .catch(() => {
       alert("LOGIN ERROR");
@@ -38,6 +46,7 @@ const onLogin = () => {
           type="text"
           autoGrow="auto"
           hideDetails="true"
+          @keyup="(e:any) => onKeyup(e,'email')"
         ></TextComponent>
       </v-col>
     </v-row>
@@ -49,6 +58,7 @@ const onLogin = () => {
           autoGrow="auto"
           hideDetails="true"
           type="password"
+          @keyup="(e:any) => onKeyup(e,'password')"
         ></TextComponent>
       </v-col>
     </v-row>
