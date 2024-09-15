@@ -2,10 +2,12 @@
 import { ref } from "vue";
 import UserHelpers from "./functions/userHelper";
 import { useStoreUser } from "@/store/user";
+
 const store = useStoreUser();
+const code = store.userdata as any;
 
 const open = ref(false);
-const { movePage } = UserHelpers();
+const { movePage, movePageCode } = UserHelpers();
 const menuOpen = () => {
   open.value = open.value ? false : true;
 };
@@ -36,7 +38,11 @@ const menuOpen = () => {
         <div class="menu__item" @click="[movePage('regist'), menuOpen()]">
           新規申し込み
         </div>
-        <div class="menu__item" @click="[movePage('edit'), menuOpen()]">
+        <div
+          class="menu__item"
+          v-if="store.isLogin == true"
+          @click="[movePageCode('edit', code.code), menuOpen()]"
+        >
           名刺データ編集
         </div>
         <div class="menu__item" @click="[movePage('open'), menuOpen()]">

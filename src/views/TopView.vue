@@ -2,14 +2,57 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import cardConponent from "../components/CardConponent.vue";
+import imgConponent from "../components/ImgConponent.vue";
 import UserHelpers from "../functions/userHelper";
 import UserApiService from "../services/UserApiService";
-
+import queryString from "query-string";
+const filter = queryString.parse(location.search);
 const user = UserHelpers();
-// ローカルストレージ取得
-const ls = user.getStrage();
-// ローカルストレージに保存
-localStorage.setItem("paper_url", JSON.stringify(ls));
+
+// データを取得
+const name = ref();
+const kana = ref();
+const syozoku = ref();
+const myimage_path = ref();
+const company_image_path = ref();
+const company_name = ref();
+const company_url = ref();
+const companies = ref();
+const tel = ref();
+const email = ref();
+const skills = ref();
+const histories = ref();
+const profile = ref();
+
+UserApiService.getUserData(filter.code as string)
+  .then((res: any) => {
+    name.value = res.data.user.name;
+    kana.value = res.data.user.kana;
+    syozoku.value = res.data.user.syozoku;
+    myimage_path.value = res.data.user.myimage_path;
+    company_image_path.value = res.data.user.company_image_path;
+    company_name.value = res.data.user.company_name;
+    company_url.value = res.data.user.company_url;
+    tel.value = res.data.user.tel;
+    email.value = res.data.user.email;
+    profile.value = res.data.user.profile;
+
+    companies.value = res.data.company;
+    skills.value = res.data.skill;
+    histories.value = res.data.history;
+
+    // ローカルストレージ取得
+    const ls = user.getStrage(
+      name.value,
+      myimage_path.value,
+      company_name.value
+    );
+    // ローカルストレージに保存
+    localStorage.setItem("paper_url", JSON.stringify(ls));
+  })
+  .catch(() => {
+    alert("getData ERROR");
+  });
 </script>
 <template>
   <v-container>
@@ -24,18 +67,18 @@ localStorage.setItem("paper_url", JSON.stringify(ls));
           text="名前"
         ></cardConponent>
         <div class="ml-2 mt-3">
-          <p class="text-h6">開発部</p>
-          <p class="text-caption">おのでら こじろう</p>
-          <p class="text-h5 font-weight-black">小野寺 小次郎</p>
+          <p class="text-h6">{{ syozoku }}</p>
+          <p class="text-caption">{{ kana }}</p>
+          <p class="text-h5 font-weight-black">{{ name }}</p>
         </div>
       </v-col>
       <v-col cols="5">
-        <v-img
+        <imgConponent
           :width="200"
-          aspect-ratio="16/9"
+          :aspect="`16/9`"
           cover
-          src="../../public/img/account/icon.jpg"
-        ></v-img>
+          :src="myimage_path"
+        ></imgConponent>
       </v-col>
     </v-row>
     <v-row>
@@ -50,17 +93,15 @@ localStorage.setItem("paper_url", JSON.stringify(ls));
         ></cardConponent>
         <v-row class="ml-2 mt-1">
           <v-col cols="3">
-            <v-img
+            <imgConponent
               :width="200"
-              aspect-ratio="16/9"
+              :aspect="`16/9`"
               cover
-              src="../../public/img/company/logo.png"
-            ></v-img>
+              :src="company_image_path"
+            ></imgConponent>
           </v-col>
-          <v-col cols="9">
-            <p class="text-h6 font-weight-black text">株式会社</p>
-            <p class="text-h6 font-weight-black text">イノベーションゲート</p>
-            <p class="text-h6 font-weight-black text">3行目</p>
+          <v-col cols="9" class="vcenter">
+            <p class="text-h6 font-weight-black text">{{ company_name }}</p>
           </v-col>
         </v-row>
       </v-col>
@@ -75,7 +116,7 @@ localStorage.setItem("paper_url", JSON.stringify(ls));
           class="text-caption"
           text="URL"
         ></cardConponent>
-        <a href="http://sample.co.jp" target="_blank">http://sample.co.jp</a>
+        <a :href="company_url" target="_blank">{{ company_url }}</a>
       </v-col>
     </v-row>
     <v-row>
@@ -86,29 +127,13 @@ localStorage.setItem("paper_url", JSON.stringify(ls));
           height="20"
           color="primary mb-2"
           class="text-caption"
-          text="住所"
+          text="所在地"
         ></cardConponent>
-        <v-row>
-          <v-col>
-            〒 000-0000<br />
-            東京都品川区1丁目0-0 サンプルビル品川13F
-            <br />
+        <v-row v-for="company in companies" :key="company" class="mt-0 pt-0">
+          <v-col class="wraptext">
+            {{ company.address }}
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3243.1797907341056!2d139.7381620757852!3d35.62329397260596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1z5p2x5Lqs6YO95ZOB5bed5Yy6MeS4geebrjAtMCDjgrXjg7Pjg5fjg6vjg5Pjg6vlk4Hlt50xM0Y!5e0!3m2!1sja!2sjp!4v1720959078762!5m2!1sja!2sjp"
-              width="100"
-              style="border: 0; width: 100%"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-            ></iframe>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            〒 000-0000<br />
-            宮城県仙台市1丁目0-0 サンプルビル仙台13F
-            <br />
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3243.1797907341056!2d139.7381620757852!3d35.62329397260596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1z5p2x5Lqs6YO95ZOB5bed5Yy6MeS4geebrjAtMCDjgrXjg7Pjg5fjg6vjg5Pjg6vlk4Hlt50xM0Y!5e0!3m2!1sja!2sjp!4v1720959078762!5m2!1sja!2sjp"
+              :src="company.map_url"
               width="100"
               style="border: 0; width: 100%"
               loading="lazy"
@@ -128,7 +153,7 @@ localStorage.setItem("paper_url", JSON.stringify(ls));
           class="text-caption"
           text="電話番号"
         ></cardConponent>
-        <p>090-0000-0000</p>
+        <p>{{ tel }}</p>
       </v-col>
     </v-row>
     <v-row>
@@ -141,7 +166,7 @@ localStorage.setItem("paper_url", JSON.stringify(ls));
           class="text-caption"
           text="メールアドレス"
         ></cardConponent>
-        <p>sample@sample.jp</p>
+        <p>{{ email }}</p>
       </v-col>
     </v-row>
     <v-row>
@@ -154,8 +179,9 @@ localStorage.setItem("paper_url", JSON.stringify(ls));
           class="text-caption"
           text="スキル"
         ></cardConponent>
-        <p>ファイナンシャルプランナー技能士</p>
-        <p>中小企業診断士</p>
+        <p v-for="skill in skills" :key="skill">
+          {{ skill.note }}
+        </p>
       </v-col>
     </v-row>
     <v-row>
@@ -170,14 +196,10 @@ localStorage.setItem("paper_url", JSON.stringify(ls));
         ></cardConponent>
         <v-timeline side="end">
           <v-timeline-item size="small">
-            <v-alert value="true">
-              <b>OpenAI</b>
-              <p class="text-caption">
-                ソフトウェアエンジニア<br />
-                2020年10月 - 現在<br />
-                自然言語処理システムの開発と改善に従事。<br />
-                GPTシリーズのアーキテクチャの維持と拡張を担当。<br />
-                ディープラーニングモデルの最適化とスケーラビリティの向上に取り組む
+            <v-alert value="true" v-for="history in histories" :key="history">
+              <b>{{ history.title }}</b>
+              <p class="text-caption wraptext">
+                {{ history.note }}
               </p>
             </v-alert>
           </v-timeline-item>
@@ -195,17 +217,8 @@ localStorage.setItem("paper_url", JSON.stringify(ls));
           text="自己PR"
         ></cardConponent>
       </v-col>
-      <v-card class="ml-4 mr-4 pa-2" variant="tonal">
-        私は自然言語処理と人工知能の分野で豊富な経験を持つソフトウェアエンジニアです。これまでのキャリアで、次のような経験を積んできました：<br />
-        技術的な深さと広さ:<br />
-        深層学習モデルの開発や最適化、自然言語理解システムの設計・実装に携わり、高度な技術的課題に対処してきました。<br />
-        チームでの協力:<br />
-        大規模なプロジェクトでのチームワークを重視し、他のメンバーとの密接な連携を通じて、成果を最大化することに努めています。<br />
-        問題解決能力:<br />
-        複雑な問題に対して論理的かつ創造的なアプローチで取り組むことが得意であり、常に効率的な解決策を追求しています。<br />
-        継続的な学びと成長:<br />
-        技術の進化に常に対応するために、新しいアルゴリズムやツールについて学び続け、自己成長を維持しています。<br />
-        私はチャレンジを楽しみ、新しい技術やアイデアを探求することに情熱を持っています。革新的なプロジェクトに貢献し、技術の進化に寄与することを目指しています。
+      <v-card class="ml-4 mr-4 pa-2 wraptext" variant="tonal">
+        {{ profile }}
       </v-card>
     </v-row>
   </v-container>
@@ -213,5 +226,12 @@ localStorage.setItem("paper_url", JSON.stringify(ls));
 <style>
 .text {
   white-space: pre-line;
+}
+.vcenter {
+  display: flex;
+  align-items: center;
+}
+.wraptext {
+  white-space: pre-wrap;
 }
 </style>

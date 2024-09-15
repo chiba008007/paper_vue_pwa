@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import UserHelpers from "../functions/userHelper";
 
-const clickItem = () => {
-  alert(111);
+const clickItem = (url: string) => {
+  location.href = url;
 };
 const user = UserHelpers();
 const ls = user.getStrage();
@@ -22,43 +22,15 @@ console.log(ls);
     </v-card-text>
     <v-list lines="three">
       <v-list-item
-        :prepend-avatar="`https://randomuser.me/api/portraits/women/8.jpg`"
-        @click="clickItem()"
+        v-for="list in ls"
+        :key="list"
+        :prepend-avatar="list.imagepath"
+        @click="clickItem(list.url)"
       >
-        <v-list-item-title>株式会社サンプル </v-list-item-title>
-        <v-list-item-subtitle>佐藤太郎 様</v-list-item-subtitle>
+        <v-list-item-title>{{ list.company_name }} </v-list-item-title>
+        <v-list-item-subtitle>{{ list.name }} 様</v-list-item-subtitle>
         <v-list-item-subtitle class="text-right"
-          >0000/00/00 [取込済]</v-list-item-subtitle
-        >
-      </v-list-item>
-      <v-list-item
-        :prepend-avatar="`https://randomuser.me/api/portraits/women/8.jpg`"
-        @click="clickItem()"
-      >
-        <v-list-item-title>株式会社サンプル </v-list-item-title>
-        <v-list-item-subtitle>佐藤太郎 様</v-list-item-subtitle>
-        <v-list-item-subtitle class="text-right"
-          >0000/00/00 [取込済]</v-list-item-subtitle
-        >
-      </v-list-item>
-      <v-list-item
-        :prepend-avatar="`https://randomuser.me/api/portraits/women/8.jpg`"
-        @click="clickItem()"
-      >
-        <v-list-item-title>株式会社サンプル </v-list-item-title>
-        <v-list-item-subtitle>佐藤太郎 様</v-list-item-subtitle>
-        <v-list-item-subtitle class="text-right"
-          >0000/00/00 [取込済]</v-list-item-subtitle
-        >
-      </v-list-item>
-      <v-list-item
-        :prepend-avatar="`https://randomuser.me/api/portraits/women/8.jpg`"
-        @click="clickItem()"
-      >
-        <v-list-item-title>株式会社サンプル </v-list-item-title>
-        <v-list-item-subtitle>佐藤太郎 様</v-list-item-subtitle>
-        <v-list-item-subtitle class="text-right"
-          >0000/00/00 [取込済]</v-list-item-subtitle
+          >{{ list.time }} [取込済]</v-list-item-subtitle
         >
       </v-list-item>
     </v-list>

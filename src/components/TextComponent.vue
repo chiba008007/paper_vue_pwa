@@ -15,6 +15,7 @@ interface Props {
   rules?: string | undefined | object;
   postflag?: boolean;
   name?: string;
+  value?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -26,6 +27,7 @@ const props = withDefaults(defineProps<Props>(), {
   type: "text",
   postflag: false,
   name: undefined,
+  value: undefined,
 });
 
 const emit = defineEmits<{
@@ -42,6 +44,7 @@ const emit = defineEmits<{
     :hide-details="props.hideDetails"
     :type="props.type"
     :rules="props.rules"
+    :model-value="props.value"
     @keyup="emit('onKeyup', $event.target.value, props.name)"
     @blur="emit('onBlur', $event.target.value, props.name)"
   >

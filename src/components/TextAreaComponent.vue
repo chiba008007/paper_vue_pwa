@@ -14,6 +14,7 @@ interface Props {
   type?: string;
   rowHeight?: number;
   rows?: number;
+  value?: string | undefined;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -23,6 +24,7 @@ const props = withDefaults(defineProps<Props>(), {
   autoGrow: true,
   hideDetails: true,
   type: "",
+  value: "",
 });
 </script>
 <template>
@@ -32,5 +34,6 @@ const props = withDefaults(defineProps<Props>(), {
     :row-height="props.rowHeight"
     :rows="props.rows"
     :hide-details="props.hideDetails"
+    :model-value="props.value"
   ></v-textarea>
 </template>
