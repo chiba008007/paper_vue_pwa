@@ -27,12 +27,13 @@ const onLogin = () => {
     .then((response: any) => {
       user.setUserDataToken(response.data.token);
       user.setUserData(response.data.user);
+      localStorage.setItem("userToken", JSON.stringify(response.data.token));
       if (user.isLogin == true) {
         router.push({ name: "top", query: { code: response.data.user.code } });
       }
     })
-    .catch(() => {
-      alert("LOGIN ERROR");
+    .catch((e) => {
+      alert("LOGIN ERROR" + e);
     });
 };
 </script>

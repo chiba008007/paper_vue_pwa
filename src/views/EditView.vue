@@ -10,16 +10,10 @@ import imgConponent from "../components/ImgConponent.vue";
 import UserHelpers from "../functions/userHelper";
 import UserApiService from "../services/UserApiService";
 import queryString from "query-string";
+
 const filter = queryString.parse(location.search);
-
 const userHelp = UserHelpers();
-userHelp.sameCheck();
-
-const editflag = ref(false);
-
-const editButton = () => {
-  editflag.value = true;
-};
+//userHelp.sameCheck();
 
 const companyLoops = ref([{ key: 1 }]) as any;
 const onAddCompany = (type: string) => {
@@ -54,6 +48,7 @@ const onAddHistory = (type: string) => {
 
 // データを取得
 const name = ref();
+const display_name = ref();
 const kana = ref();
 const syozoku = ref();
 const myimage_path = ref();
@@ -67,9 +62,11 @@ const skills = ref();
 const histories = ref();
 const profile = ref();
 
-UserApiService.getUserData(filter.code as string)
+UserApiService.getUserEditData()
   .then((res: any) => {
-    name.value = res.data.user.name;
+    console.log(res);
+    // // name.value = res.data.user.name;
+    display_name.value = res.data.user.display_name;
     kana.value = res.data.user.kana;
     syozoku.value = res.data.user.syozoku;
     myimage_path.value = res.data.user.myimage_path;
@@ -79,7 +76,6 @@ UserApiService.getUserData(filter.code as string)
     tel.value = res.data.user.tel;
     email.value = res.data.user.email;
     profile.value = res.data.user.profile;
-
     companies.value = res.data.company;
     companyLoops.value = [];
     for (let i = 0; i < companies.value.length; i++) {
@@ -89,7 +85,6 @@ UserApiService.getUserData(filter.code as string)
         map_url: companies.value[i].map_url,
       });
     }
-
     skills.value = res.data.skill;
     skillLoops.value = [];
     for (let i = 0; i < skills.value.length; i++) {
@@ -98,9 +93,7 @@ UserApiService.getUserData(filter.code as string)
         note: skills.value[i].note,
       });
     }
-
     histories.value = res.data.history;
-
     historyLoops.value = [];
     for (let i = 0; i < histories.value.length; i++) {
       historyLoops.value.push({
@@ -110,17 +103,123 @@ UserApiService.getUserData(filter.code as string)
       });
     }
   })
-  .catch(() => {
+  .catch(($e) => {
+    console.log("ERROR");
+    console.log($e);
     alert("getData ERROR");
   });
+const myImage_model = ref();
+const myImage_model_path = ref();
+const company_model = ref();
+const company_model_path = ref();
+const onUpdate = (e: any, type: string) => {
+  let blob: Blob;
+  let formData = new FormData();
+  let imageUrl: any;
+  if (type == "myimage_path") {
+    blob = new Blob([myImage_model.value], { type: "image/jpeg" });
+    imageUrl = window.URL.createObjectURL(blob);
+    formData.append("photo", blob, "image.jpg");
+    myimage_path.value = imageUrl;
+  }
+  if (type == "company_image_path") {
+    blob = new Blob([company_model.value], { type: "image/jpeg" });
+    imageUrl = window.URL.createObjectURL(blob);
+    formData.append("photo", blob, "image.jpg");
+    company_image_path.value = imageUrl;
+  }
 
-const onKeyup = (e: any, type: string) => {
-  if (type == "name") name.value = e.target.value;
+  UserApiService.onUpload(formData)
+    .then((res: any) => {
+      if (type == "myimage_path") {
+        myImage_model_path.value = res.data;
+      }
+      if (type == "company_image_path") {
+        company_model_path.value = res.data;
+      }
+    })
+    .catch((e) => {
+      alert("editUserData ERROR" + e);
+    });
+};
+
+const onKeyup = (e: any, type: string, num?: number) => {
+  if (type == "display_name") display_name.value = e.target.value;
+  if (type == "syozoku") syozoku.value = e.target.value;
+  if (type == "kana") kana.value = e.target.value;
+  if (type == "company_name") company_name.value = e.target.value;
+  if (type == "company_url") company_url.value = e.target.value;
+  if (type == "tel") tel.value = e.target.value;
+  if (type == "profile") profile.value = e.target.value;
+
+  let n = 0;
+  if (type == "company_address") {
+    n = ((num as number) - 1) as number;
+    if (typeof companies.value[n] === "undefined")
+      companies.value[n] = { address: "" };
+    companies.value[n]["address"] = e.target.value;
+  }
+  if (type == "company_map_url") {
+    n = ((num as number) - 1) as number;
+    if (typeof companies.value[n] === "undefined")
+      companies.value[n] = { map_url: "" };
+    companies.value[n]["map_url"] = e.target.value;
+  }
+  if (type == "skill_note") {
+    n = ((num as number) - 1) as number;
+    if (typeof skillLoops.value[n] === "undefined")
+      skillLoops.value[n] = { note: "" };
+    skillLoops.value[n]["note"] = e.target.value;
+  }
+  if (type == "history_title") {
+    n = ((num as number) - 1) as number;
+    if (typeof historyLoops.value[n] === "undefined")
+      historyLoops.value[n] = { title: "" };
+    historyLoops.value[n]["title"] = e.target.value;
+  }
+  if (type == "history_note") {
+    n = ((num as number) - 1) as number;
+    if (typeof historyLoops.value[n] === "undefined")
+      historyLoops.value[n] = { note: "" };
+    historyLoops.value[n]["note"] = e.target.value;
+  }
+};
+
+const editflag = ref(false);
+const editButton = () => {
+  let param = {
+    display_name: display_name.value,
+    kana: kana.value,
+    syozoku: syozoku.value,
+    myimage_path: myimage_path.value,
+    company_image_path: company_image_path.value,
+    company_name: company_name.value,
+    company_url: company_url.value,
+    tel: tel.value,
+    email: email.value,
+    profile: profile.value,
+    companies: companies.value,
+    skills: skillLoops.value,
+    histories: historyLoops.value,
+  };
+  UserApiService.editUserData(param)
+    .then((res: any) => {
+      console.log(res);
+      editflag.value = true;
+    })
+    .catch(() => {
+      alert("editData ERROR");
+    });
 };
 </script>
 <template>
   <v-container>
-    <p class="font-weight-black text-h6">名刺データ編集</p>
+    <v-row class="mt-1">
+      <v-col cols="12">
+        <p class="font-weight-black text-h6">名刺データ編集</p>
+      </v-col>
+    </v-row>
+
     <v-row class="mt-1">
       <v-col cols="12">
         <TextComponent
@@ -129,8 +228,8 @@ const onKeyup = (e: any, type: string) => {
           type="text"
           autoGrow="auto"
           hideDetails="auto"
-          :value="name"
-          @keyup="(e:any) => onKeyup(e,'name')"
+          :value="display_name"
+          @keyup="(e:any) => onKeyup(e,'display_name')"
         ></TextComponent>
       </v-col>
     </v-row>
@@ -172,9 +271,12 @@ const onKeyup = (e: any, type: string) => {
       </v-col>
       <v-col cols="9">
         <FileComponent
+          ref="preview"
           label="自己画像アップロード"
           variant="outlined"
           hideDetails="auto"
+          v-model="myImage_model"
+          @update:modelValue="(e:any) => onUpdate(e,'myimage_path')"
         ></FileComponent>
       </v-col>
     </v-row>
@@ -206,6 +308,8 @@ const onKeyup = (e: any, type: string) => {
           label="会社ロゴアップロード"
           variant="outlined"
           hideDetails="auto"
+          v-model="company_model"
+          @update:modelValue="(e:any) => onUpdate(e,'company_image_path')"
         ></FileComponent>
       </v-col>
     </v-row>
@@ -232,7 +336,7 @@ const onKeyup = (e: any, type: string) => {
           :autoGrow="true"
           :hideDetails="true"
           :value="companyLoop.address"
-          @keyup="(e:any) => onKeyup(e,'company_address')"
+          @keyup="(e:any) => onKeyup(e,'company_address',companyLoop.key)"
         ></TextAreaComponent>
         <TextComponent
           label="地図URL"
@@ -241,7 +345,7 @@ const onKeyup = (e: any, type: string) => {
           :autoGrow="true"
           :hideDetails="true"
           :value="companyLoop.map_url"
-          @keyup="(e:any) => onKeyup(e,'company_map_url')"
+          @keyup="(e:any) => onKeyup(e,'company_map_url',companyLoop.key)"
         ></TextComponent>
       </v-col>
     </v-row>
@@ -282,15 +386,8 @@ const onKeyup = (e: any, type: string) => {
     </v-row>
     <v-row class="mt-1">
       <v-col cols="12">
-        <TextComponent
-          label="メールアドレス"
-          variant="outlined"
-          type="text"
-          autoGrow="auto"
-          hideDetails="auto"
-          :value="email"
-          @keyup="(e:any) => onKeyup(e,'email')"
-        ></TextComponent>
+        メールアドレス<br />
+        {{ email }}
       </v-col>
     </v-row>
     <v-row class="mt-5">
@@ -304,7 +401,7 @@ const onKeyup = (e: any, type: string) => {
           autoGrow="auto"
           hideDetails="auto"
           :value="skillLoop.note"
-          @keyup="(e:any) => onKeyup(e,'skill_note'+skillLoop.key)"
+          @keyup="(e:any) => onKeyup(e,'skill_note',skillLoop.key)"
         ></TextComponent>
         <div class="text-right">
           <ButtonComponent
@@ -334,7 +431,7 @@ const onKeyup = (e: any, type: string) => {
           autoGrow="auto"
           hideDetails="auto"
           :value="historyLoop.title"
-          @keyup="(e:any) => onKeyup(e,'history_title'+historyLoop.key)"
+          @keyup="(e:any) => onKeyup(e,'history_title',historyLoop.key)"
         ></TextComponent>
         <TextAreaComponent
           :label="`経歴内容` + historyLoop.key"
@@ -343,7 +440,7 @@ const onKeyup = (e: any, type: string) => {
           :autoGrow="true"
           :hideDetails="true"
           :value="historyLoop.note"
-          @keyup="(e:any) => onKeyup(e,'history_note'+historyLoop.key)"
+          @keyup="(e:any) => onKeyup(e,'history_note',historyLoop.key)"
         ></TextAreaComponent>
       </v-col>
     </v-row>
@@ -382,23 +479,30 @@ const onKeyup = (e: any, type: string) => {
         ></TextAreaComponent>
       </v-col>
     </v-row>
-    <v-row class="mt-1">
-      <v-col cols="12">
-        <AlertComponent
-          v-if="editflag"
-          text="データ登録を行いました。"
-          type="success"
-          class="mb-2"
-        ></AlertComponent>
-
-        <ButtonComponent
-          variant="flat"
-          color="blue darken-1"
-          class="w-100"
-          label="登録"
-          @onClick="editButton()"
-        ></ButtonComponent>
-      </v-col>
-    </v-row>
+    <div id="buttonFix">
+      <AlertComponent
+        v-if="editflag"
+        text="データ登録を行いました。"
+        type="success"
+        class="mb-2"
+        @onClick="editflag = false"
+      ></AlertComponent>
+      <ButtonComponent
+        variant="flat"
+        color="blue darken-1"
+        class="w-100"
+        label="登録"
+        @onClick="editButton()"
+      ></ButtonComponent>
+    </div>
   </v-container>
 </template>
+<style type="text/css">
+#buttonFix {
+  position: fixed;
+  bottom: 10px;
+  left: 1%;
+  z-index: 10;
+  width: 98%;
+}
+</style>

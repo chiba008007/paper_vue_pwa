@@ -6,11 +6,14 @@ import imgConponent from "../components/ImgConponent.vue";
 import UserHelpers from "../functions/userHelper";
 import UserApiService from "../services/UserApiService";
 import queryString from "query-string";
+import { useStoreUser } from "../store/user";
 const filter = queryString.parse(location.search);
 const user = UserHelpers();
-
+const store = useStoreUser();
+// alert(store.userToken);
 // データを取得
 const name = ref();
+const display_name = ref();
 const kana = ref();
 const syozoku = ref();
 const myimage_path = ref();
@@ -27,6 +30,7 @@ const profile = ref();
 UserApiService.getUserData(filter.code as string)
   .then((res: any) => {
     name.value = res.data.user.name;
+    display_name.value = res.data.user.display_name;
     kana.value = res.data.user.kana;
     syozoku.value = res.data.user.syozoku;
     myimage_path.value = res.data.user.myimage_path;
@@ -40,7 +44,6 @@ UserApiService.getUserData(filter.code as string)
     companies.value = res.data.company;
     skills.value = res.data.skill;
     histories.value = res.data.history;
-
     // ローカルストレージ取得
     const ls = user.getStrage(
       name.value,
@@ -69,7 +72,7 @@ UserApiService.getUserData(filter.code as string)
         <div class="ml-2 mt-3">
           <p class="text-h6">{{ syozoku }}</p>
           <p class="text-caption">{{ kana }}</p>
-          <p class="text-h5 font-weight-black">{{ name }}</p>
+          <p class="text-h5 font-weight-black">{{ display_name }}</p>
         </div>
       </v-col>
       <v-col cols="5">
@@ -195,8 +198,12 @@ UserApiService.getUserData(filter.code as string)
           text="経歴"
         ></cardConponent>
         <v-timeline side="end">
-          <v-timeline-item size="small">
-            <v-alert value="true" v-for="history in histories" :key="history">
+          <v-timeline-item
+            size="small"
+            v-for="history in histories"
+            :key="history"
+          >
+            <v-alert value="true">
               <b>{{ history.title }}</b>
               <p class="text-caption wraptext">
                 {{ history.note }}
@@ -207,17 +214,17 @@ UserApiService.getUserData(filter.code as string)
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col cols="12">
         <cardConponent
           variant="tonal"
           density="compact"
           height="20"
           color="primary mb-2"
-          class="text-caption"
+          class="text-caption w-100"
           text="自己PR"
         ></cardConponent>
       </v-col>
-      <v-card class="ml-4 mr-4 pa-2 wraptext" variant="tonal">
+      <v-card class="ml-4 mr-4 pa-2 wraptext w-100" variant="tonal">
         {{ profile }}
       </v-card>
     </v-row>

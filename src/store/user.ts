@@ -14,6 +14,9 @@ export const useStoreUser = defineStore("user", {
     setUserData(data: object) {
       this.userdata = data;
     },
+    getUserData() {
+      return JSON.parse(JSON.stringify(this.userdata));
+    },
   },
   getters: {
     doubleCount: () => 200000000,

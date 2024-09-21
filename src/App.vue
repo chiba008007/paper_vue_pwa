@@ -71,6 +71,9 @@ const menuOpen = () => {
       </div>
       <router-view />
     </v-main>
+    <div style="height: 40px">
+      <v-footer color="primary" height="40"> (c) 私の名刺 </v-footer>
+    </div>
   </v-app>
 </template>
 <style>
@@ -81,7 +84,7 @@ const menuOpen = () => {
   position: fixed;
   top: 0;
   right: 0;
-  z-index: 1;
+  z-index: 100;
   width: 100vw;
   height: 100vh;
   display: flex;
