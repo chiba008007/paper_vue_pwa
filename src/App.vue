@@ -7,7 +7,7 @@ const store = useStoreUser();
 const code = store.userdata as any;
 
 const open = ref(false);
-const { movePage, movePageCode } = UserHelpers();
+const { movePage, movePageCode, moveLinkPageCode } = UserHelpers();
 const menuOpen = () => {
   open.value = open.value ? false : true;
 };
@@ -41,7 +41,7 @@ const menuOpen = () => {
         <div
           class="menu__item"
           v-if="store.isLogin == true"
-          @click="[movePageCode('edit', code.code), menuOpen()]"
+          @click="[moveLinkPageCode('edit', code.code)]"
         >
           名刺データ編集
         </div>

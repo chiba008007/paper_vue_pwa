@@ -2,6 +2,10 @@ interface NumberCodeOrNullListType {
   [key: number]: string;
   null: string;
 }
+/** 画像 */
+export const d_Path = "http://localhost:8000";
+/** 画像 */
+export const imagePath = d_Path + "/storage/app/myImage/";
 
 /** 性別 */
 export const gender: NumberCodeOrNullListType = {

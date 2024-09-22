@@ -10,10 +10,15 @@ import imgConponent from "../components/ImgConponent.vue";
 import UserHelpers from "../functions/userHelper";
 import UserApiService from "../services/UserApiService";
 import queryString from "query-string";
+import { imagePath } from "@/plugins/const";
 
+import { useStoreUser } from "../store/user";
 const filter = queryString.parse(location.search);
 const userHelp = UserHelpers();
 //userHelp.sameCheck();
+const user = useStoreUser();
+// ローカルストレージに保存
+localStorage.setItem("user", JSON.stringify(user));
 
 const companyLoops = ref([{ key: 1 }]) as any;
 const onAddCompany = (type: string) => {
@@ -132,10 +137,10 @@ const onUpdate = (e: any, type: string) => {
   UserApiService.onUpload(formData)
     .then((res: any) => {
       if (type == "myimage_path") {
-        myImage_model_path.value = res.data;
+        myImage_model_path.value = imagePath + res.data;
       }
       if (type == "company_image_path") {
-        company_model_path.value = res.data;
+        company_model_path.value = imagePath + res.data;
       }
     })
     .catch((e) => {
@@ -191,8 +196,8 @@ const editButton = () => {
     display_name: display_name.value,
     kana: kana.value,
     syozoku: syozoku.value,
-    myimage_path: myimage_path.value,
-    company_image_path: company_image_path.value,
+    myimage_path: myImage_model_path.value,
+    company_image_path: company_model_path.value,
     company_name: company_name.value,
     company_url: company_url.value,
     tel: tel.value,

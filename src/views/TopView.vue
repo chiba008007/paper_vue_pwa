@@ -27,6 +27,10 @@ const skills = ref();
 const histories = ref();
 const profile = ref();
 
+// ローカルストレージに保存
+if (store.isLogin) {
+  localStorage.setItem("user", JSON.stringify(store));
+}
 UserApiService.getUserData(filter.code as string)
   .then((res: any) => {
     name.value = res.data.user.name;

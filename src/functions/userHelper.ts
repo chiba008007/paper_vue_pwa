@@ -11,6 +11,9 @@ export default function () {
   const movePageCode = (pgName: string, code: string) => {
     router.push({ name: pgName, query: { code: code } });
   };
+  const moveLinkPageCode = (pgName: string, code: string) => {
+    location.href = "/" + pgName + "?code=" + code;
+  };
   const sameCheck = () => {
     const filter = queryString.parse(location.search);
     const store = useStoreUser();
@@ -54,6 +57,7 @@ export default function () {
   return {
     movePage,
     movePageCode,
+    moveLinkPageCode,
     getStrage,
     sameCheck,
   };
