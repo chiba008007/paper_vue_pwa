@@ -13,6 +13,7 @@ const store = useStoreUser();
 // alert(store.userToken);
 // データを取得
 const name = ref();
+const code = ref();
 const display_name = ref();
 const kana = ref();
 const syozoku = ref();
@@ -26,6 +27,10 @@ const email = ref();
 const skills = ref();
 const histories = ref();
 const profile = ref();
+const display_flag = ref();
+
+const myself = JSON.parse(localStorage.getItem("user") as string);
+const myselfCode = myself?.userdata?.code;
 
 // ローカルストレージに保存
 if (store.isLogin) {
@@ -33,6 +38,7 @@ if (store.isLogin) {
 }
 UserApiService.getUserData(filter.code as string)
   .then((res: any) => {
+    code.value = res.data.user.code;
     name.value = res.data.user.name;
     display_name.value = res.data.user.display_name;
     kana.value = res.data.user.kana;
@@ -44,6 +50,7 @@ UserApiService.getUserData(filter.code as string)
     tel.value = res.data.user.tel;
     email.value = res.data.user.email;
     profile.value = res.data.user.profile;
+    display_flag.value = res.data.user.display_flag;
 
     companies.value = res.data.company;
     skills.value = res.data.skill;
@@ -62,7 +69,24 @@ UserApiService.getUserData(filter.code as string)
   });
 </script>
 <template>
-  <v-container>
+  <v-container v-if="display_flag == 0 && myselfCode != code">
+    <v-row>
+      <v-col>準備中です</v-col>
+    </v-row>
+  </v-container>
+  <v-container v-else>
+    <v-row>
+      <v-col cols="12">
+        <cardConponent
+          v-if="myselfCode == code"
+          height="20"
+          color="success"
+          :text="display_flag ? '公開中' : '非公開'"
+          ariant="tonal"
+          width="70"
+        ></cardConponent>
+      </v-col>
+    </v-row>
     <v-row>
       <v-col cols="7">
         <cardConponent

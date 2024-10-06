@@ -13,6 +13,12 @@ class UserApiService {
   getUserEditData(): Promise<object> {
     return httpAuth.get("/api/getEditUser/");
   }
+  getReadData(): Promise<object> {
+    return httpAuth.get("/api/getRead/");
+  }
+  setReadEditData(data: object): Promise<object> {
+    return httpAuth.post("/api/setRead/", data);
+  }
   editUserData(data: object): Promise<object> {
     return httpAuth.post("/api/editUser", data);
   }
@@ -24,6 +30,9 @@ class UserApiService {
   }
   onUpload(form: FormData): Promise<object> {
     return httpUpload.post("/api/upload", form);
+  }
+  editUserDisplayStatus(form: object): Promise<object> {
+    return httpAuth.post("/api/editUserStatus", form);
   }
 }
 

@@ -69,7 +69,6 @@ const profile = ref();
 
 UserApiService.getUserEditData()
   .then((res: any) => {
-    console.log(res);
     // // name.value = res.data.user.name;
     display_name.value = res.data.user.display_name;
     kana.value = res.data.user.kana;

@@ -10,6 +10,7 @@ interface Props {
   density?: TDensity;
   label?: string;
   type?: string;
+  mdi?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -17,13 +18,12 @@ const props = withDefaults(defineProps<Props>(), {
   density: undefined,
   label: "",
   type: "",
+  mdi: "",
 });
 </script>
 <template>
-  <v-btn
-    :variant="props.variant"
-    :type="props.type"
-    @click="$emit('onClick')"
-    >{{ props.label }}</v-btn
-  >
+  <v-btn :variant="props.variant" :type="props.type" @click="$emit('onClick')">
+    {{ props.label }}
+    <v-icon v-if="props.mdi">{{ props.mdi }}</v-icon>
+  </v-btn>
 </template>

@@ -45,14 +45,16 @@ const menuOpen = () => {
         >
           名刺データ編集
         </div>
-        <div class="menu__item" @click="[movePage('open'), menuOpen()]">
+        <div
+          class="menu__item"
+          v-if="store.isLogin == true"
+          @click="[movePage('open'), menuOpen()]"
+        >
           公開可否
         </div>
         <div class="menu__item" @click="[movePage('lists'), menuOpen()]">
           読込履歴取込み
         </div>
-        <div class="menu__item">読込履歴ファイルインポート</div>
-        <div class="menu__item">読込履歴ダウンロード</div>
         <div class="menu__item">利用状況</div>
         <div
           class="menu__item"
