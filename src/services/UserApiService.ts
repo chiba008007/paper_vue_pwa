@@ -8,16 +8,16 @@ class UserApiService {
     return http.post("/api/login", data);
   }
   getUserData(code: string | null): Promise<object> {
-    return http.get("/api/top/?code=" + code);
+    return http.get("/api/top?code=" + code);
   }
   getUserEditData(): Promise<object> {
-    return httpAuth.get("/api/getEditUser/");
+    return httpAuth.get("/api/getEditUser");
   }
   getReadData(): Promise<object> {
-    return httpAuth.get("/api/getRead/");
+    return httpAuth.get("/api/getRead");
   }
   setReadEditData(data: object): Promise<object> {
-    return httpAuth.post("/api/setRead/", data);
+    return httpAuth.post("/api/setRead", data);
   }
   editUserData(data: object): Promise<object> {
     return httpAuth.post("/api/editUser", data);
