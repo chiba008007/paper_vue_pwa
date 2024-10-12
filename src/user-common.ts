@@ -6,7 +6,7 @@ const apiClient: AxiosInstance = axios.create({
   // リクエストヘッダ
   headers: {
     "Content-type": "application/json",
-    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Origin": "https://admin.myselfpaper.online",
   },
   withCredentials: true,
 });
