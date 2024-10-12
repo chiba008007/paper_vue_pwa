@@ -9,6 +9,7 @@ const apiClient: AxiosInstance = axios.create({
   headers: {
     "Content-type": "application/json",
     "Access-Control-Allow-Origin": "https://admin.myselfpaper.online",
+    "Access-Control-Allow-Credentials": true,
     Authorization: "Bearer " + JSON.parse(token)?.userToken,
   },
 });

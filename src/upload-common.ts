@@ -7,6 +7,7 @@ const apiClient: AxiosInstance = axios.create({
   headers: {
     "content-type": "multipart/form-data",
     "Access-Control-Allow-Origin": "https://admin.myselfpaper.online",
+    "Access-Control-Allow-Credentials": true,
   },
 });
 
