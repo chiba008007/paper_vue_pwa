@@ -38,6 +38,7 @@ if (store.isLogin) {
 }
 UserApiService.getUserData(filter.code as string)
   .then((res: any) => {
+    console.log(res.data);
     code.value = res.data.user.code;
     name.value = res.data.user.name;
     display_name.value = res.data.user.display_name;

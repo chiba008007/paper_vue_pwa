@@ -6,7 +6,7 @@ module.exports = defineConfig({
   outputDir: "docs",
 
   devServer: {
-    host: "localhost",
+    host: "myselfpaper.online",
     historyApiFallback: true, // 画面リロードしてエラーにならないように
   },
 
