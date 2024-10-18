@@ -25,12 +25,13 @@ const onLogin = () => {
   };
   UserApiService.getPost(data)
     .then((response: any) => {
+      console.log(response.data);
       localStorage.setItem("userToken", JSON.stringify(response.data.token));
       user.setUserDataToken(response.data.token);
       user.setUserData(response.data.user);
       if (user.isLogin == true) {
         // router.push({ name: "top", query: { code: response.data.user.code } });
-        location.href = "/?code=" + response.data.user.code;
+        location.href = "?code=" + response.data.user.code;
       }
     })
     .catch((e) => {

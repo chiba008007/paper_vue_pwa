@@ -33,9 +33,9 @@ const myself = JSON.parse(localStorage.getItem("user") as string);
 const myselfCode = myself?.userdata?.code;
 
 // ローカルストレージに保存
-if (store.isLogin) {
-  localStorage.setItem("user", JSON.stringify(store));
-}
+// if (store.isLogin) {
+//   localStorage.setItem("user", JSON.stringify(store));
+// }
 UserApiService.getUserData(filter.code as string)
   .then((res: any) => {
     code.value = res.data.user.code;

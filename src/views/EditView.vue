@@ -18,7 +18,7 @@ const userHelp = UserHelpers();
 //userHelp.sameCheck();
 const user = useStoreUser();
 // ローカルストレージに保存
-localStorage.setItem("user", JSON.stringify(user));
+//localStorage.setItem("user", JSON.stringify(user));
 
 const companyLoops = ref([{ key: 1 }]) as any;
 const onAddCompany = (type: string) => {
