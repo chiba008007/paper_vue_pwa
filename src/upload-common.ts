@@ -1,9 +1,9 @@
 import axios, { AxiosInstance } from "axios";
+import { d_Path } from "@/plugins/const";
 
 const apiClient: AxiosInstance = axios.create({
   // APIのURI
-  //baseURL: "http://localhost:8000/",
-  baseURL: "https://admin.myselfpaper.online",
+  baseURL: d_Path,
   // リクエストヘッダ
   headers: {
     "content-type": "multipart/form-data",

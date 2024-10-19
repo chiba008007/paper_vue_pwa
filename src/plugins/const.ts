@@ -4,7 +4,7 @@ interface NumberCodeOrNullListType {
 }
 /** 画像 */
 //export const d_Path = "http://localhost:8000/";
-export const d_Path = "https://admin.myselfpaper.online";
+export const d_Path = "https://paperadmin.uh-oh.jp";
 /** 画像 */
 export const imagePath = d_Path + "/storage/app/myImage/";
 
