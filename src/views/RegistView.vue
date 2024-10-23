@@ -1,15 +1,38 @@
 <script setup lang="ts">
 import { ref } from "vue";
+
 import TextComponent from "../components/TextComponent.vue";
 import SelectComponent from "../components/SelectComponent.vue";
 import ButtonComponent from "../components/ButtonComponent.vue";
 import { prefecturesNameList } from "../plugins/const";
 import { useRouter } from "vue-router";
 import UserHelpers from "../functions/userHelper";
+import { Core as YubinBangoCore } from "yubinbango-core2";
 
 const router = useRouter();
 const reqiredRules = [(v: string) => !!v || "Name is required"];
 const { movePage } = UserHelpers();
+const disableFlag = ref(false);
+const form = ref({
+  postcode: "",
+  pref: "",
+  address: "",
+});
+const onRegist = () => {
+  //movePage('registFin');
+  alert(form.value.postcode);
+  alert(form.value.pref);
+  alert(form.value.address);
+  alert(124);
+};
+const fetchAddress = (postcode: string) => {
+  new YubinBangoCore(postcode, (value: any) => {
+    console.log(value);
+    form.value.postcode = postcode;
+    form.value.pref = value.region;
+    form.value.address = value.locality + value.street;
+  });
+};
 </script>
 <template>
   <v-container>
@@ -62,11 +85,15 @@ const { movePage } = UserHelpers();
           :rules="reqiredRules"
           class="w-75"
           :postflag="true"
+          :value="form.postcode"
+          @onKeyup="(e) => fetchAddress(e)"
         ></TextComponent>
         <SelectComponent
           label="都道府県"
           class="w-50 mt-2"
           :items="prefecturesNameList"
+          :value="form.pref"
+          @onBlur="(e) => (form.pref = e)"
         ></SelectComponent>
 
         <TextComponent
@@ -77,13 +104,16 @@ const { movePage } = UserHelpers();
           hideDetails="true"
           :rules="reqiredRules"
           class="mt-2"
+          :value="form.address"
+          @onKeyup="(e) => (form.address = e)"
         ></TextComponent>
         <ButtonComponent
           variant="flat"
           color="primary"
           class="w-100 mt-2"
           label="送信"
-          @onClick="movePage('registFin')"
+          @onClick="onRegist()"
+          :disabled="disableFlag"
         ></ButtonComponent>
       </v-col>
     </v-row>

@@ -4,7 +4,6 @@ module.exports = defineConfig({
   publicPath: "./",
   assetsDir: "",
   outputDir: "docs",
-
   devServer: {
     historyApiFallback: true, // 画面リロードしてエラーにならないように
   },

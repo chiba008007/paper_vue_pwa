@@ -3,8 +3,17 @@ interface NumberCodeOrNullListType {
   null: string;
 }
 /** 画像 */
-//export const d_Path = "http://localhost:8000/";
-export const d_Path = "https://paperadmin.uh-oh.jp";
+const uri = new URL(window.location.href);
+const reg = /localhost/;
+let tmp = "";
+if (reg.test(uri.toString())) {
+  tmp = "http://localhost:8000/";
+} else {
+  tmp = "https://paperadmin.uh-oh.jp";
+}
+
+export const d_Path = tmp;
+
 /** 画像 */
 export const imagePath = d_Path + "/storage/app/myImage/";
 
