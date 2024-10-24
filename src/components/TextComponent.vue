@@ -16,6 +16,7 @@ interface Props {
   postflag?: boolean;
   name?: string;
   value?: string;
+  messages?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -28,6 +29,7 @@ const props = withDefaults(defineProps<Props>(), {
   postflag: false,
   name: undefined,
   value: undefined,
+  messages: "",
 });
 
 const emit = defineEmits<{
@@ -38,13 +40,14 @@ const emit = defineEmits<{
 <template>
   <v-text-field
     :label="props.label"
-    rows="1"
     :variant="props.variant"
     :auto-grow="props.autoGrow"
     :hide-details="props.hideDetails"
     :type="props.type"
     :rules="props.rules"
     :model-value="props.value"
+    :messages="props.messages"
+    :density="props.density"
     @keyup="emit('onKeyup', $event.target.value, props.name)"
     @blur="emit('onBlur', $event.target.value, props.name)"
   >
