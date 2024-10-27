@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, withDefaults } from "vue";
+import { defineProps, withDefaults, defineEmits } from "vue";
 import { prop } from "vue-class-component";
 import type { VCard } from "vuetify/components";
 type TVariant = VCard["$props"]["variant"];
@@ -15,7 +15,13 @@ interface Props {
   rowHeight?: number;
   rows?: number;
   value?: string | undefined;
+  name?: string;
 }
+
+const emit = defineEmits<{
+  (e: "onKeyup", value: string, name: string | undefined): void;
+  (e: "onBlur", value: string, name: string | undefined): void;
+}>();
 
 const props = withDefaults(defineProps<Props>(), {
   variant: "outlined",
@@ -25,6 +31,7 @@ const props = withDefaults(defineProps<Props>(), {
   hideDetails: true,
   type: "",
   value: "",
+  name: "",
 });
 </script>
 <template>
@@ -35,5 +42,7 @@ const props = withDefaults(defineProps<Props>(), {
     :rows="props.rows"
     :hide-details="props.hideDetails"
     :model-value="props.value"
+    @keyup="emit('onKeyup', $event.target.value, props.name)"
+    @blur="emit('onBlur', $event.target.value, props.name)"
   ></v-textarea>
 </template>

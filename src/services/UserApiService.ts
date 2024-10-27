@@ -34,6 +34,15 @@ class UserApiService {
   editUserDisplayStatus(form: object): Promise<object> {
     return httpAuth.post("/api/editUserStatus", form);
   }
+  setRegist(data: object): Promise<object> {
+    return http.post("api/setRegist", data);
+  }
+  setRegistData(form: object) {
+    return http.post("/api/setRegistData", form);
+  }
+  getRegistData(data: object): Promise<object> {
+    return http.post("/api/getRegistData", data);
+  }
 }
 
 export default new UserApiService();

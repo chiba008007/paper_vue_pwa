@@ -7,7 +7,7 @@ const uri = new URL(window.location.href);
 const reg = /localhost/;
 let tmp = "";
 if (reg.test(uri.toString())) {
-  tmp = "http://localhost:8000/";
+  tmp = "http://localhost:8000";
 } else {
   tmp = "https://paperadmin.uh-oh.jp";
 }
@@ -15,7 +15,7 @@ if (reg.test(uri.toString())) {
 export const d_Path = tmp;
 
 /** 画像 */
-export const imagePath = d_Path + "/storage/app/myImage/";
+export const imagePath = d_Path + "storage/app/myImage/";
 
 /** 性別 */
 export const gender: NumberCodeOrNullListType = {

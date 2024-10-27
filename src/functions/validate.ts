@@ -18,10 +18,12 @@ export const checkTel = (phoneNumber: string) => {
   if (!phonePattern.test(phoneNumber)) {
     return ["電話番号は半角数値及びハイフンを付けて入力してください。"];
   }
+  return [];
 };
 export const checkPost = (postNumber: string) => {
   const pattern = /^[0-9]{3}-[0-9]{4}$/;
   if (!pattern.test(postNumber)) {
     return ["郵便番号に不備があります。"];
   }
+  return [];
 };

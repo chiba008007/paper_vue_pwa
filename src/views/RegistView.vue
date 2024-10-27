@@ -14,6 +14,7 @@ import {
   checkTel,
   checkPost,
 } from "../functions/validate";
+import UserApiService from "../services/UserApiService";
 
 const router = useRouter();
 const { movePage } = UserHelpers();
@@ -26,25 +27,39 @@ const form = ref({
   pref: "",
   address: "",
 });
-const sendButton = () => {
+const sendButtonFlag = () => {
   disableFlag.value = true;
   if (
-    requiredValue(form.value.name, "お名前") &&
-    checkEmail(form.value.email) &&
-    checkTel(form.value.tel) &&
-    checkPost(form.value.postcode) &&
-    requiredValue(form.value.pref, "都道府県") &&
-    requiredValue(form.value.address, "住所")
+    requiredValue(form.value.name, "").length === 0 &&
+    checkEmail(form.value.email).length === 0 &&
+    checkTel(form.value.tel).length === 0 &&
+    checkPost(form.value.postcode).length === 0 &&
+    requiredValue(form.value.pref, "").length === 0 &&
+    requiredValue(form.value.address, "").length === 0
   ) {
     disableFlag.value = false;
+  } else {
+    disableFlag.value = true;
   }
 };
 const onRegist = () => {
-  //movePage('registFin');
-  alert(form.value.name);
-  // alert(form.value.postcode);
-  // alert(form.value.pref);
-  // alert(form.value.address);
+  let params = {
+    name: form.value.name,
+    mail: form.value.email,
+    tel: form.value.tel,
+    post: form.value.postcode,
+    pref: form.value.pref,
+    address: form.value.address,
+  };
+
+  UserApiService.setRegist(params)
+    .then(() => {
+      movePage("registFin");
+    })
+    .catch(($e) => {
+      console.log("ERROR");
+      console.log($e);
+    });
 };
 const fetchAddress = (postcode: string) => {
   new YubinBangoCore(postcode, (value: any) => {
@@ -66,7 +81,7 @@ const fetchAddress = (postcode: string) => {
           :value="form.name"
           :hideDetails="`auto`"
           :rules="requiredValue(form.name, 'お名前')"
-          @onBlur="(e) => ((form.name = e), sendButton())"
+          @onBlur="(e) => ((form.name = e), sendButtonFlag())"
         ></TextComponent>
       </v-col>
       <v-col cols="12">
@@ -77,7 +92,7 @@ const fetchAddress = (postcode: string) => {
           :value="form.email"
           :hideDetails="`auto`"
           :rules="checkEmail(form.email)"
-          @onBlur="(e) => ((form.email = e), sendButton())"
+          @onBlur="(e) => ((form.email = e), sendButtonFlag())"
         ></TextComponent>
       </v-col>
       <v-col cols="12">
@@ -89,7 +104,7 @@ const fetchAddress = (postcode: string) => {
           :hideDetails="`auto`"
           messages="例)090-0000-0000"
           :rules="checkTel(form.tel)"
-          @onBlur="(e) => (form.tel = e)"
+          @onBlur="(e) => ((form.tel = e), sendButtonFlag())"
         ></TextComponent>
       </v-col>
       <v-col cols="12">
@@ -104,7 +119,7 @@ const fetchAddress = (postcode: string) => {
           :value="form.postcode"
           :rules="checkPost(form.postcode)"
           messages="例)000-0000"
-          @onKeyup="(e) => fetchAddress(e)"
+          @onKeyup="(e) => (fetchAddress(e), sendButtonFlag())"
         ></TextComponent>
         <SelectComponent
           label="都道府県"
@@ -112,7 +127,7 @@ const fetchAddress = (postcode: string) => {
           :items="prefecturesNameList"
           :value="form.pref"
           :rules="requiredValue(form.pref, '都道府県')"
-          @onBlur="(e) => ((form.pref = e), sendButton())"
+          @onBlur="(e) => ((form.pref = e), sendButtonFlag())"
         ></SelectComponent>
 
         <TextComponent
@@ -123,7 +138,7 @@ const fetchAddress = (postcode: string) => {
           class="mt-2"
           :value="form.address"
           :rules="requiredValue(form.address, '住所')"
-          @onKeyup="(e) => (form.address = e)"
+          @onKeyup="(e) => ((form.address = e), sendButtonFlag())"
         ></TextComponent>
         <ButtonComponent
           variant="flat"

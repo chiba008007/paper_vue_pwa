@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import UserHelpers from "./functions/userHelper";
 import { useStoreUser } from "@/store/user";
+import queryString from "query-string";
 
 const store = useStoreUser();
 const code = store.userdata as any;
@@ -11,6 +12,7 @@ const { movePage, movePageCode, moveLinkPageCode } = UserHelpers();
 const menuOpen = () => {
   open.value = open.value ? false : true;
 };
+const filter = queryString.parse(location.search);
 </script>
 <template>
   <v-app>
@@ -18,13 +20,13 @@ const menuOpen = () => {
       <v-toolbar density="compact" color="primary" class="caption">
         <p class="text-h6 ml-2">私の名刺</p>
         <v-spacer></v-spacer>
-        <v-btn icon @click="[movePage('top')]">
+        <v-btn icon @click="[movePage('top')]" v-if="filter.code">
           <v-icon>mdi-home</v-icon>
         </v-btn>
-        <v-btn icon @click="[movePage('lists')]">
+        <v-btn icon @click="[movePage('lists')]" v-if="filter.code">
           <v-icon>mdi-format-list-bulleted</v-icon>
         </v-btn>
-        <v-btn icon @click="menuOpen()">
+        <v-btn icon @click="menuOpen()" v-if="filter.code">
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
       </v-toolbar>
