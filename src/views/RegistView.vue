@@ -4,6 +4,7 @@ import { ref } from "vue";
 import TextComponent from "../components/TextComponent.vue";
 import SelectComponent from "../components/SelectComponent.vue";
 import ButtonComponent from "../components/ButtonComponent.vue";
+import LoadingComponent from "../components/LoadingComponent.vue";
 import { prefecturesNameList } from "../plugins/const";
 import { useRouter } from "vue-router";
 import UserHelpers from "../functions/userHelper";
@@ -19,6 +20,7 @@ import UserApiService from "../services/UserApiService";
 const router = useRouter();
 const { movePage } = UserHelpers();
 const disableFlag = ref(true);
+const loadFlag = ref(false);
 const form = ref({
   name: "",
   email: "",
@@ -33,9 +35,9 @@ const sendButtonFlag = () => {
     requiredValue(form.value.name, "").length === 0 &&
     checkEmail(form.value.email).length === 0 &&
     checkTel(form.value.tel).length === 0 &&
-    checkPost(form.value.postcode).length === 0 &&
-    requiredValue(form.value.pref, "").length === 0 &&
-    requiredValue(form.value.address, "").length === 0
+    checkPost(form.value.postcode).length === 0
+    //requiredValue(form.value.pref, "").length === 0 &&
+    //requiredValue(form.value.address, "").length === 0
   ) {
     disableFlag.value = false;
   } else {
@@ -43,6 +45,7 @@ const sendButtonFlag = () => {
   }
 };
 const onRegist = () => {
+  loadFlag.value = true;
   let params = {
     name: form.value.name,
     mail: form.value.email,
@@ -54,6 +57,7 @@ const onRegist = () => {
 
   UserApiService.setRegist(params)
     .then(() => {
+      loadFlag.value = false;
       movePage("registFin");
     })
     .catch(($e) => {
@@ -71,6 +75,7 @@ const fetchAddress = (postcode: string) => {
 </script>
 <template>
   <v-container>
+    <LoadingComponent v-show="loadFlag"></LoadingComponent>
     <p class="font-weight-black text-h6">新規申込み</p>
     <v-row class="mt-1" dense>
       <v-col cols="12">

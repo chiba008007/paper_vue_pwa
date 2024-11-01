@@ -12,7 +12,9 @@ import UserApiService from "../services/UserApiService";
 import queryString from "query-string";
 import { imagePath } from "@/plugins/const";
 import UserHelpers from "../functions/userHelper";
+import LoadingComponent from "../components/LoadingComponent.vue";
 
+const loadFlag = ref(false);
 const { movePage } = UserHelpers();
 const disabledFlag = ref(true);
 const filter = queryString.parse(location.search);
@@ -41,6 +43,10 @@ const company_image_path = ref("");
 if (filter.c) {
   UserApiService.getRegistData({ code: filter.c })
     .then((res: any) => {
+      if (res.data == "") {
+        alert("ERROR");
+        throw new Error("Whoops!");
+      }
       form.value.name = res.data.name;
       form.value.email = res.data.mail;
     })
@@ -173,6 +179,7 @@ const onUpdate = (e: any, type: string) => {
 
 const editflag = ref(false);
 const editButton = () => {
+  loadFlag.value = true;
   let param = {
     code: filter.c,
     name: form.value.name,
@@ -192,6 +199,7 @@ const editButton = () => {
   };
   UserApiService.setRegistData(param)
     .then((res) => {
+      loadFlag.value = false;
       console.log(res);
       movePage("registerfin");
     })
@@ -497,6 +505,7 @@ const editButton = () => {
         :disabled="disabledFlag"
         @onClick="editButton()"
       ></ButtonComponent>
+      <LoadingComponent v-show="loadFlag"></LoadingComponent>
     </div>
   </v-container>
 </template>
