@@ -23,7 +23,7 @@ class UserApiService {
     return httpAuth.post("/api/editUser", data);
   }
   onLogout(): Promise<object> {
-    return httpAuth.post("/api/logout");
+    return httpAuth.post("/api/logout/");
   }
   onSendMail(data: object): Promise<object> {
     return http.post("/api/mail", data);
@@ -42,6 +42,12 @@ class UserApiService {
   }
   getRegistData(data: object): Promise<object> {
     return http.post("/api/getRegistData", data);
+  }
+  forgetPassword(data: object): Promise<object> {
+    return http.post("/api/forget", data);
+  }
+  forgetPasswordInput(data: object): Promise<object> {
+    return http.post("/api/forgetForm", data);
   }
 }
 

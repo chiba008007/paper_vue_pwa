@@ -11,6 +11,7 @@ import ListView from "../views/ListView.vue";
 import LoginFormView from "../views/LoginFormView.vue";
 import LogoutFormView from "../views/LogoutFormView.vue";
 import ForgetFormView from "../views/ForgetFormView.vue";
+import ForgetFormInputView from "../views/ForgetFormInputView.vue";
 import QuestionFormView from "../views/QuestionFormView.vue";
 import QuestionFinFormView from "../views/QuestionFinFormView.vue";
 import RegistView from "../views/RegistView.vue";
@@ -48,6 +49,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/forget",
     name: "forget",
     component: ForgetFormView,
+  },
+  {
+    path: "/forgetForm",
+    name: "forgetForm",
+    component: ForgetFormInputView,
   },
   {
     path: "/question",

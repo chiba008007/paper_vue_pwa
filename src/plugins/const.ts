@@ -15,7 +15,7 @@ if (reg.test(uri.toString())) {
 export const d_Path = tmp;
 
 /** 画像 */
-export const imagePath = d_Path + "storage/app/myImage/";
+export const imagePath = d_Path + "/storage/app/myImage/";
 
 /** 性別 */
 export const gender: NumberCodeOrNullListType = {

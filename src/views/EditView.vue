@@ -99,51 +99,57 @@ const setHistories = (val: string, n: number, type: string) => {
 };
 
 // データを取得
-if (!filter.c) {
-  // UserApiService.getUserEditData()
-  //   .then((res: any) => {
-  //     form.value.display_name = res.data.user.display_name;
-  //     form.value.kana = res.data.user.kana;
-  //     form.value.syozoku = res.data.user.syozoku;
-  //     form.value.myimage_path = res.data.user.myimage_path;
-  //     form.value.company_image_path = res.data.user.company_image_path;
-  //     form.value.company_name = res.data.user.company_name;
-  //     form.value.company_url = res.data.user.company_url;
-  //     form.value.tel = res.data.user.tel;
-  //     form.value.email = res.data.user.email;
-  //     form.value.profile = res.data.user.profile;
-  //     form.value.companies = res.data.company;
-  //     companyLoops.value = [];
-  //     for (let i = 0; i < companies.value.length; i++) {
-  //       companyLoops.value.push({
-  //         key: i + 1,
-  //         address: companies.value[i].address,
-  //         map_url: companies.value[i].map_url,
-  //       });
-  //     }
-  //     skills.value = res.data.skill;
-  //     skillLoops.value = [];
-  //     for (let i = 0; i < skills.value.length; i++) {
-  //       skillLoops.value.push({
-  //         key: i + 1,
-  //         note: skills.value[i].note,
-  //       });
-  //     }
-  //     histories.value = res.data.history;
-  //     historyLoops.value = [];
-  //     for (let i = 0; i < histories.value.length; i++) {
-  //       historyLoops.value.push({
-  //         key: i + 1,
-  //         title: histories.value[i].title,
-  //         note: histories.value[i].note,
-  //       });
-  //     }
-  //   })
-  //   .catch(($e) => {
-  //     console.log("ERROR");
-  //     console.log($e);
-  //     alert("getData ERROR");
-  //   });
+if (filter.code) {
+  UserApiService.getUserEditData()
+    .then((res: any) => {
+      alert("success");
+      console.log(res);
+      /*
+      form.value.display_name = res.data.user.display_name;
+      form.value.kana = res.data.user.kana;
+      form.value.syozoku = res.data.user.syozoku;
+      form.value.myimage_path = res.data.user.myimage_path;
+      form.value.company_image_path = res.data.user.company_image_path;
+      form.value.company_name = res.data.user.company_name;
+      form.value.company_url = res.data.user.company_url;
+      form.value.tel = res.data.user.tel;
+      form.value.email = res.data.user.email;
+      form.value.profile = res.data.user.profile;
+      form.value.companies = res.data.company;
+*/
+      /*
+      companyLoops.value = [];
+      for (let i = 0; i < companies.value.length; i++) {
+        companyLoops.value.push({
+          key: i + 1,
+          address: companies.value[i].address,
+          map_url: companies.value[i].map_url,
+        });
+      }
+      skills.value = res.data.skill;
+      skillLoops.value = [];
+      for (let i = 0; i < skills.value.length; i++) {
+        skillLoops.value.push({
+          key: i + 1,
+          note: skills.value[i].note,
+        });
+      }
+      histories.value = res.data.history;
+      historyLoops.value = [];
+      for (let i = 0; i < histories.value.length; i++) {
+        historyLoops.value.push({
+          key: i + 1,
+          title: histories.value[i].title,
+          note: histories.value[i].note,
+        });
+      }
+        */
+    })
+    .catch(($e) => {
+      console.log("ERROR");
+      console.log($e);
+      alert("getData ERROR");
+    });
 }
 
 const onUpdate = (e: any, type: string) => {

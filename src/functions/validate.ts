@@ -27,3 +27,11 @@ export const checkPost = (postNumber: string) => {
   }
   return [];
 };
+
+export const checkPassword = (postNumber: string) => {
+  const pattern = /^[a-zA-Z0-9]{4,}$/;
+  if (!pattern.test(postNumber)) {
+    return ["パスワードに不備があります。"];
+  }
+  return [];
+};

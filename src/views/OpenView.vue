@@ -21,6 +21,7 @@ const onSwitch = (e: Event) => {
 
 UserApiService.getUserEditData()
   .then((res: any) => {
+    console.log(res);
     isSwitchFlag.value = res.data.user.display_flag ? true : false;
   })
   .catch(($e) => {

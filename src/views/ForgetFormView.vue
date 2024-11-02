@@ -5,12 +5,26 @@ import TextComponent from "../components/TextComponent.vue";
 import ButtonComponent from "../components/ButtonComponent.vue";
 import AlertComponent from "../components/AlertComponent.vue";
 import { useTheme } from "vuetify/lib/framework.mjs";
+import UserApiService from "../services/UserApiService";
 
+const form = ref({
+  email: "",
+});
 const sendflag = ref(false);
-const router = useRouter();
 const pwdSendClick = () => {
-  alert(1111);
-  sendflag.value = true;
+  let params = {};
+  params = {
+    email: form.value.email,
+  };
+  UserApiService.forgetPassword(params)
+    .then((res) => {
+      sendflag.value = true;
+    })
+    .catch(($e) => {
+      alert("error");
+      console.log("ERROR");
+      console.log($e);
+    });
 };
 </script>
 <template>
@@ -27,6 +41,7 @@ const pwdSendClick = () => {
           label="メールアドレス"
           variant="outlined"
           type="text"
+          @onBlur="(e) => (form.email = e)"
         ></TextComponent>
       </v-col>
     </v-row>
