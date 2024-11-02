@@ -5,14 +5,16 @@ import TextAreaComponent from "../components/TextAreaComponent.vue";
 import ButtonComponent from "../components/ButtonComponent.vue";
 import UserHelpers from "../functions/userHelper";
 import UserApiService from "../services/UserApiService";
+import LoadingComponent from "../components/LoadingComponent.vue";
 
 const { movePage } = UserHelpers();
-
+const loadFlag = ref(false);
 const name = ref();
 const email = ref();
 const body = ref();
 
 const pwdSendClick = () => {
+  loadFlag.value = true;
   let data = {
     name: name.value,
     email: email.value,
@@ -20,6 +22,7 @@ const pwdSendClick = () => {
   };
   UserApiService.onSendMail(data)
     .then(() => {
+      loadFlag.value = false;
       movePage("questionFin");
     })
     .catch(() => {
@@ -95,5 +98,6 @@ const buttonDisabled = () => {
         ></ButtonComponent>
       </v-col>
     </v-row>
+    <LoadingComponent v-show="loadFlag"></LoadingComponent>
   </v-container>
 </template>
