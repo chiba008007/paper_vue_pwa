@@ -54,11 +54,89 @@ export default function () {
     }
     return ls;
   };
+  const onAddCompany = (
+    type: string,
+    companyLoops: { key: number; id: number }[]
+  ) => {
+    const cnt = companyLoops.length + 1;
+    if (type == "add") companyLoops.push({ key: cnt, id: cnt });
+    if (type == "delete") companyLoops.splice(cnt - 2, 1);
+  };
+  const onAddSkill = (
+    type: string,
+    skillLoops: { id: number; key: number }[]
+  ) => {
+    const cnt = skillLoops.length + 1;
+    if (type == "add") skillLoops.push({ id: cnt, key: cnt });
+    if (type == "delete") skillLoops.splice(cnt - 2, 1);
+  };
+  const onAddHistory = (
+    type: string,
+    historyLoops: { id: number; key: number }[]
+  ) => {
+    const cnt = historyLoops.length + 1;
+    if (type == "add") historyLoops.push({ id: cnt, key: cnt });
+    if (type == "delete") historyLoops.splice(cnt - 2, 1);
+  };
+  const setCompanyNameValue = (
+    val: string,
+    n: number,
+    companyLoops: { id: number; address: string }[],
+    id: number
+  ) => {
+    companyLoops[n]["id"] = id;
+    companyLoops[n]["address"] = val;
+    console.log(companyLoops);
+  };
+  const setCompanyNameMapUrl = (
+    val: string,
+    n: number,
+    companyLoops: { id: number; map_url: string }[],
+    id: number
+  ) => {
+    companyLoops[n]["id"] = id;
+    companyLoops[n]["map_url"] = val;
+  };
+  const setSkillName = (
+    val: string,
+    n: number,
+    skillLoops: { key: number; id: number; value: string; note: string }[],
+    id: number
+  ) => {
+    skillLoops[n]["id"] = id;
+    skillLoops[n]["note"] = val;
+  };
+  const setHistoriesTitle = (
+    val: string,
+    n: number,
+    historyLoops: { key: number; title: string }[],
+    id: number
+  ) => {
+    historyLoops[n]["key"] = id;
+    historyLoops[n]["title"] = val;
+  };
+  const setHistoriesValue = (
+    val: string,
+    n: number,
+    historyLoops: { key: number; value: string; note: string }[],
+    id: number
+  ) => {
+    historyLoops[n]["key"] = id;
+    historyLoops[n]["note"] = val;
+  };
   return {
     movePage,
     movePageCode,
     moveLinkPageCode,
     getStrage,
     sameCheck,
+    onAddCompany,
+    onAddSkill,
+    onAddHistory,
+    setCompanyNameValue,
+    setCompanyNameMapUrl,
+    setSkillName,
+    setHistoriesTitle,
+    setHistoriesValue,
   };
 }

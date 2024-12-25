@@ -13,6 +13,11 @@ const menuOpen = () => {
   open.value = open.value ? false : true;
 };
 const filter = queryString.parse(location.search);
+console.log(filter);
+if (filter.code === "undefined") {
+  alert("page error");
+  history.back();
+}
 </script>
 <template>
   <v-app>

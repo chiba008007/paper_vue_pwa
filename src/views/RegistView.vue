@@ -16,8 +16,15 @@ import {
   checkPost,
 } from "../functions/validate";
 import UserApiService from "../services/UserApiService";
-
+import AlertComponent from "@/components/AlertComponent.vue";
+const useemail = ref([{}]);
+UserApiService.sameMail().then((res) => {
+  res.data.map(function (value: any) {
+    useemail.value.push(value.email);
+  });
+});
 const router = useRouter();
+const mailSameFlag = ref(false);
 const { movePage } = UserHelpers();
 const disableFlag = ref(true);
 const loadFlag = ref(false);
@@ -31,7 +38,11 @@ const form = ref({
 });
 const sendButtonFlag = () => {
   disableFlag.value = true;
-  if (
+  mailSameFlag.value = false;
+  if (useemail.value.indexOf(form.value.email) > 0) {
+    disableFlag.value = true;
+    mailSameFlag.value = true;
+  } else if (
     requiredValue(form.value.name, "").length === 0 &&
     checkEmail(form.value.email).length === 0 &&
     checkTel(form.value.tel).length === 0 &&
@@ -145,6 +156,11 @@ const fetchAddress = (postcode: string) => {
           :rules="requiredValue(form.address, '住所')"
           @onKeyup="(e) => ((form.address = e), sendButtonFlag())"
         ></TextComponent>
+        <AlertComponent
+          text="メールアドレスが重複しています。"
+          type="error"
+          v-if="mailSameFlag"
+        ></AlertComponent>
         <ButtonComponent
           variant="flat"
           color="primary"

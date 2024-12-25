@@ -49,6 +49,9 @@ class UserApiService {
   forgetPasswordInput(data: object): Promise<object> {
     return http.post("/api/forgetForm", data);
   }
+  sameMail() {
+    return http.post("/api/sameMail");
+  }
 }
 
 export default new UserApiService();

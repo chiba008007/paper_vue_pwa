@@ -17,6 +17,7 @@ import QuestionFinFormView from "../views/QuestionFinFormView.vue";
 import RegistView from "../views/RegistView.vue";
 import RegistFinView from "../views/RegistFinView.vue";
 import RegisterFinView from "../views/RegisterFinView.vue";
+import RegisterView from "../views/RegisterView.vue";
 import EditView from "../views/EditView.vue";
 import OpenView from "../views/OpenView.vue";
 
@@ -78,7 +79,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/register",
     name: "register",
-    component: EditView,
+    component: RegisterView,
   },
   {
     path: "/registerFin",

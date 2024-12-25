@@ -7,6 +7,8 @@ import UserHelpers from "../functions/userHelper";
 import UserApiService from "../services/UserApiService";
 import queryString from "query-string";
 import { useStoreUser } from "../store/user";
+import axios from "axios";
+
 const filter = queryString.parse(location.search);
 const user = UserHelpers();
 const store = useStoreUser();
@@ -36,6 +38,7 @@ const myselfCode = myself?.userdata?.code;
 // if (store.isLogin) {
 //   localStorage.setItem("user", JSON.stringify(store));
 // }
+
 UserApiService.getUserData(filter.code as string)
   .then((res: any) => {
     code.value = res.data.user.code;
@@ -51,7 +54,7 @@ UserApiService.getUserData(filter.code as string)
     email.value = res.data.user.email;
     profile.value = res.data.user.profile;
     display_flag.value = res.data.user.display_flag;
-
+    console.log(res.data.company);
     companies.value = res.data.company;
     skills.value = res.data.skill;
     histories.value = res.data.history;
@@ -66,6 +69,7 @@ UserApiService.getUserData(filter.code as string)
   })
   .catch(() => {
     alert("getData ERROR");
+    location.href = "/error";
   });
 </script>
 <template>
@@ -164,11 +168,13 @@ UserApiService.getUserData(filter.code as string)
           <v-col class="wraptext">
             {{ company.address }}
             <iframe
-              :src="company.map_url"
-              width="100"
-              style="border: 0; width: 100%"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
+              :src="
+                `https://maps.google.co.jp/maps?output=embed&z=15&q=` +
+                company.map_url
+              "
+              width="100%"
+              height="250"
+              style="border: none"
             ></iframe>
           </v-col>
         </v-row>

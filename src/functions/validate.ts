@@ -1,10 +1,10 @@
+import UserApiService from "../services/UserApiService";
 export const requiredValue = (value: string, item: string) => {
   if (!value) {
     return [item + "は必須です。"];
   }
   return [];
 };
-
 export const checkEmail = (value: string) => {
   if (!value) return ["メールアドレスは必須です"];
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

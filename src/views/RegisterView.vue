@@ -16,33 +16,10 @@ import LoadingComponent from "../components/LoadingComponent.vue";
 import { fromJSON } from "flatted";
 
 const loadFlag = ref(false);
-const {
-  movePage,
-  onAddCompany,
-  onAddSkill,
-  onAddHistory,
-  setCompanyNameValue,
-  setCompanyNameMapUrl,
-  setSkillName,
-  setHistoriesTitle,
-  setHistoriesValue,
-} = UserHelpers();
-
+const { movePage } = UserHelpers();
+const disabledFlag = ref(true);
 const filter = queryString.parse(location.search);
-const companyLoops = ref([
-  {
-    key: 1,
-    id: 1,
-    user_id: 1,
-    address: "",
-    map_url: "",
-    company_address: "",
-    value: "",
-  },
-]);
-const skillLoops = ref([{ key: 1, id: 1, value: "", note: "" }]);
-const historyLoops = ref([{ key: 1, id: 1, title: "", value: "", note: "" }]);
-
+const companyLoops = ref([{ key: 1 }]) as any;
 const form = ref({
   name: "",
   display_name: "",
@@ -63,34 +40,65 @@ const form = ref({
 const myimage_path = ref("");
 const company_image_path = ref("");
 
-// データを取得
-if (filter.code) {
-  UserApiService.getUserEditData()
+// 新規登録の時
+if (filter.c) {
+  UserApiService.getRegistData({ code: filter.c })
     .then((res: any) => {
-      form.value.display_name = res.data.user.display_name;
-      form.value.kana = res.data.user.kana;
-      form.value.syozoku = res.data.user.syozoku;
-      form.value.myimage_path = res.data.user.myimage_path;
-
-      form.value.company_image_path = res.data.user.company_image_path;
-      form.value.company_name = res.data.user.company_name;
-
-      form.value.company_url = res.data.user.company_url;
-      form.value.tel = res.data.user.tel;
-      form.value.email = res.data.user.email;
-      form.value.profile = res.data.user.profile;
-      // form.value.companies = res.data.company;
-      // form.value.skills = res.data.skill;
-      companyLoops.value = res.data.company;
-      skillLoops.value = res.data.skill;
-      historyLoops.value = res.data.history;
+      if (res.data == "") {
+        alert("ERROR");
+        throw new Error("Whoops!");
+      }
+      form.value.name = res.data.name;
+      form.value.email = res.data.mail;
     })
     .catch(($e) => {
       console.log("ERROR");
       console.log($e);
-      alert("getData ERROR");
+      movePage("error");
     });
 }
+// ボタン
+const buttonFlag = () => {
+  disabledFlag.value = true;
+  if (requiredValue(form.value.display_name, "表示名").length === 0) {
+    disabledFlag.value = false;
+  }
+};
+
+const onAddCompany = (type: string) => {
+  let cnt = companyLoops.value.length + 1;
+  if (type == "add") companyLoops.value.push({ key: cnt });
+  if (type == "delete") companyLoops.value.splice(cnt - 2, 1);
+};
+const skillLoops = ref([{ key: 1 }]) as any;
+const onAddSkill = (type: string) => {
+  let cnt = skillLoops.value.length + 1;
+  if (type == "add") skillLoops.value.push({ key: cnt });
+  if (type == "delete") skillLoops.value.splice(cnt - 2, 1);
+};
+const historyLoops = ref([{ key: 1 }]) as any;
+const onAddHistory = (type: string) => {
+  let cnt = historyLoops.value.length + 1;
+  if (type == "add") historyLoops.value.push({ key: cnt });
+  if (type == "delete") historyLoops.value.splice(cnt - 2, 1);
+};
+
+const setCompanyName = (val: string, n: number, type: string) => {
+  companyLoops.value[n - 1]["key"] = n;
+  companyLoops.value[n - 1][type] = val;
+  form.value.company_address = companyLoops;
+};
+
+const setSkillName = (val: string, n: number) => {
+  skillLoops.value[n - 1]["key"] = n;
+  skillLoops.value[n - 1]["value"] = val;
+  form.value.skills = skillLoops;
+};
+const setHistories = (val: string, n: number, type: string) => {
+  historyLoops.value[n - 1]["key"] = n;
+  historyLoops.value[n - 1][type] = val;
+  form.value.histories = historyLoops;
+};
 
 const onUpdate = (e: any, type: string) => {
   let blob: Blob;
@@ -119,37 +127,38 @@ const onUpdate = (e: any, type: string) => {
       }
     })
     .catch((e) => {
-      alert("editUserData ERROR" + e);
+      alert("onUpload ERROR" + e);
     });
 };
 
 const editflag = ref(false);
 const editButton = () => {
-  // loadFlag.value = true;
-  console.log(companyLoops.value);
-
+  loadFlag.value = true;
   let param = {
+    code: filter.c,
+    name: form.value.name,
     display_name: form.value.display_name,
+    email: form.value.email,
     syozoku: form.value.syozoku,
     kana: form.value.kana,
     myimage_path: form.value.myimage_path,
-    company_name: form.value.company_name,
     company_image_path: form.value.company_image_path,
+    company_name: form.value.company_name,
     company_url: form.value.company_url,
-    company_address: companyLoops.value,
+    company_address: form.value.company_address,
     tel: form.value.tel,
-    skills: skillLoops.value,
-    histories: historyLoops.value,
+    skills: form.value.skills,
+    histories: form.value.histories,
     profile: form.value.profile,
   };
-
-  UserApiService.editUserData(param)
-    .then((res: any) => {
+  UserApiService.setRegistData(param)
+    .then((res) => {
+      loadFlag.value = false;
       console.log(res);
-      editflag.value = true;
+      movePage("registerfin");
     })
-    .catch(() => {
-      alert("editData ERROR");
+    .catch((e) => {
+      alert(e);
     });
 };
 </script>
@@ -157,7 +166,7 @@ const editButton = () => {
   <v-container>
     <v-row class="mt-1">
       <v-col cols="12">
-        <p class="font-weight-black text-h6">名刺データ編集</p>
+        <p class="font-weight-black text-h6">名刺データ新規申し込み</p>
       </v-col>
     </v-row>
 
@@ -171,7 +180,7 @@ const editButton = () => {
           hideDetails="auto"
           :value="form.display_name"
           :rules="requiredValue(form.display_name, '表示名')"
-          @onBlur="(e:string) => form.display_name = e"
+          @onBlur="(e:string) => (form.display_name = e,buttonFlag())"
         ></TextComponent>
       </v-col>
     </v-row>
@@ -273,35 +282,28 @@ const editButton = () => {
 
     <v-row
       class="mt-2"
-      v-for="(companyLoop, index) in companyLoops"
-      :key="companyLoop.id"
+      v-for="companyLoop in companyLoops"
+      :key="companyLoop.key"
     >
       <v-col cols="12">
         <TextAreaComponent
-          :label="`会社住所`"
+          :label="`会社住所` + companyLoop.key"
           variant="outlined"
           type="text"
           :autoGrow="true"
           :hideDetails="true"
           :value="companyLoop.address"
-          @onBlur="
-            (e) => setCompanyNameValue(e, index, companyLoops, companyLoop.id)
-          "
+          @onBlur="(e) => setCompanyName(e, companyLoop.key, 'value')"
         ></TextAreaComponent>
         <TextComponent
-          label="地図用住所・場所"
+          label="地図表示場所名"
           variant="outlined"
           type="text"
           :autoGrow="true"
           :hideDetails="true"
           :value="companyLoop.map_url"
-          @onBlur="
-            (e) => setCompanyNameMapUrl(e, index, companyLoops, companyLoop.id)
-          "
+          @onBlur="(e) => setCompanyName(e, companyLoop.key, 'map_url')"
         ></TextComponent>
-        <p class="text-red text-caption">
-          地図用のURL若しくは場所を入力してください
-        </p>
       </v-col>
     </v-row>
 
@@ -313,7 +315,7 @@ const editButton = () => {
             color="red darken-1"
             class="w-25"
             label="削除"
-            @click="onAddCompany('delete', companyLoops)"
+            @click="onAddCompany('delete')"
             :disabled="companyLoops.length <= 1 ? true : false"
           ></ButtonComponent>
           <ButtonComponent
@@ -321,7 +323,7 @@ const editButton = () => {
             color="blue darken-1"
             class="w-25 ml-1"
             label="追加"
-            @click="onAddCompany('add', companyLoops)"
+            @click="onAddCompany('add')"
           ></ButtonComponent>
         </div>
       </v-col>
@@ -348,15 +350,15 @@ const editButton = () => {
     <v-row class="mt-5">
       <v-col cols="12">
         <TextComponent
-          v-for="(skillLoop, index) in skillLoops"
-          :key="skillLoop.id"
-          :label="`スキル`"
+          v-for="skillLoop in skillLoops"
+          :key="skillLoop"
+          :label="`スキル` + skillLoop.key"
           variant="outlined"
           type="text"
           autoGrow="auto"
           hideDetails="auto"
           :value="skillLoop.note"
-          @onBlur="(e) => setSkillName(e, index, skillLoops, skillLoop.id)"
+          @onBlur="(e) => setSkillName(e, skillLoop.key)"
         ></TextComponent>
         <div class="text-right">
           <ButtonComponent
@@ -364,7 +366,7 @@ const editButton = () => {
             color="red darken-1"
             class="w-25 mt-2"
             label="削除"
-            @click="onAddSkill('delete', skillLoops)"
+            @click="onAddSkill('delete')"
             :disabled="skillLoops.length <= 1 ? true : false"
           ></ButtonComponent>
           <ButtonComponent
@@ -372,42 +374,34 @@ const editButton = () => {
             color="blue darken-1"
             class="w-25 mt-2 ml-1"
             label="追加"
-            @click="onAddSkill('add', skillLoops)"
+            @click="onAddSkill('add')"
           ></ButtonComponent>
         </div>
       </v-col>
     </v-row>
-    <v-row
-      class="mt-5"
-      v-for="(historyLoop, index) in historyLoops"
-      :key="historyLoop.id"
-    >
+    <v-row class="mt-5" v-for="historyLoop in historyLoops" :key="historyLoop">
       <v-col cols="12">
         <TextComponent
-          :label="`経歴タイトル`"
+          :label="`経歴タイトル` + historyLoop.key"
           variant="outlined"
           type="text"
           autoGrow="auto"
           hideDetails="auto"
           :value="historyLoop.title"
-          @onBlur="
-            (e) => setHistoriesTitle(e, index, historyLoops, historyLoop.id)
-          "
+          @onBlur="(e) => setHistories(e, historyLoop.key, 'title')"
         ></TextComponent>
         <TextAreaComponent
-          :label="`経歴内容` + historyLoop.id"
+          :label="`経歴内容` + historyLoop.key"
           variant="outlined"
           type="text"
           :autoGrow="true"
           :hideDetails="true"
-          :value="historyLoop.note"
-          @onBlur="
-            (e) => setHistoriesValue(e, index, historyLoops, historyLoop.id)
-          "
+          :value="historyLoop.value"
+          @onBlur="(e) => setHistories(e, historyLoop.key, 'value')"
         ></TextAreaComponent>
       </v-col>
     </v-row>
-    <v-row class="mt-2 pt-0">
+    <v-row class="mt-0 pt-0">
       <v-col class="mt-0 pt-0">
         <div class="text-right mt-0 pt-0">
           <ButtonComponent
@@ -415,7 +409,7 @@ const editButton = () => {
             color="red darken-1"
             class="w-25"
             label="削除"
-            @click="onAddHistory('delete', historyLoops)"
+            @click="onAddHistory('delete')"
             :disabled="historyLoops.length <= 1 ? true : false"
           ></ButtonComponent>
           <ButtonComponent
@@ -423,7 +417,7 @@ const editButton = () => {
             color="blue darken-1"
             class="w-25 ml-1"
             label="追加"
-            @click="onAddHistory('add', historyLoops)"
+            @click="onAddHistory('add')"
           ></ButtonComponent>
         </div>
       </v-col>
@@ -445,16 +439,17 @@ const editButton = () => {
     <div id="buttonFix">
       <AlertComponent
         v-if="editflag"
-        text="データ更新を行いました。"
+        text="データ登録を行いました。"
         type="success"
         class="mb-2"
         @onClick="editflag = false"
       ></AlertComponent>
       <ButtonComponent
         variant="flat"
-        color="green darken-1"
+        color="blue darken-1"
         class="w-100"
-        label="更新"
+        label="登録"
+        :disabled="disabledFlag"
         @onClick="editButton()"
       ></ButtonComponent>
       <LoadingComponent v-show="loadFlag"></LoadingComponent>
