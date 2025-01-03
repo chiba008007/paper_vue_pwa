@@ -6,6 +6,7 @@ import {
 } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import AboutView from "../views/AboutView.vue";
+import IndexView from "../views/IndexView.vue";
 import TopView from "../views/TopView.vue";
 import ListView from "../views/ListView.vue";
 import LoginFormView from "../views/LoginFormView.vue";
@@ -26,9 +27,20 @@ import { START_LOCATION } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
   {
+    path: "/home",
+    name: "home",
+    component: HomeView,
+    //props: (route) => ({ text: route.params.text }),
+  },
+  {
     path: "/",
     name: "top",
     component: TopView,
+    beforeEnter: (to, from) => {
+      if (!to.query.code) {
+        location.href = "/home";
+      }
+    },
     //props: (route) => ({ text: route.params.text }),
   },
   {

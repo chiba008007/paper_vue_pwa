@@ -23,7 +23,11 @@ if (filter.code === "undefined") {
   <v-app>
     <v-card color="grey-lighten-4" height="auto" rounded="0" flat>
       <v-toolbar density="compact" color="primary" class="caption">
-        <p class="text-h6 ml-2">私の名刺</p>
+        <p class="text-h6 ml-2">
+          <a href="/home" style="text-decoration: none; color: #fff"
+            >私のプロフ</a
+          >
+        </p>
         <v-spacer></v-spacer>
         <v-btn icon @click="[movePage('top')]" v-if="filter.code">
           <v-icon>mdi-home</v-icon>
@@ -81,7 +85,7 @@ if (filter.code === "undefined") {
       <router-view />
     </v-main>
     <div style="height: 40px">
-      <v-footer color="primary" height="40"> (c) 私の名刺 </v-footer>
+      <v-footer color="primary" height="40"> (c) 私のプロフ </v-footer>
     </div>
   </v-app>
 </template>
