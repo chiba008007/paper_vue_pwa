@@ -48,8 +48,8 @@ if (filter.c) {
         alert("ERROR");
         throw new Error("Whoops!");
       }
-      form.value.name = res.data.name;
-      form.value.email = res.data.mail;
+      form.value.name = res.data[0].name;
+      form.value.email = res.data[0].mail;
     })
     .catch(($e) => {
       console.log("ERROR");
@@ -136,7 +136,6 @@ const editButton = () => {
   loadFlag.value = true;
   let param = {
     code: filter.c,
-    name: form.value.name,
     display_name: form.value.display_name,
     email: form.value.email,
     syozoku: form.value.syozoku,
@@ -154,7 +153,6 @@ const editButton = () => {
   UserApiService.setRegistData(param)
     .then((res) => {
       loadFlag.value = false;
-      console.log(res);
       movePage("registerfin");
     })
     .catch((e) => {
