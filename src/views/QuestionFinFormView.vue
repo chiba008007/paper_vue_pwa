@@ -16,8 +16,7 @@ import { ref } from "vue";
         </p>
         <p class="font-weight-black text-h6">連絡先</p>
         <p class="my-5">
-          電話番号: +12-3456-7890 <br />
-          メールアドレス: info@example.com<br />
+          メールアドレス: admin@myselfpaper.online<br />
           また、ご質問やご意見などがございましたら、お気軽にお知らせください。<br />
           お手数をおかけしますが、しばらくお待ちいただけますようお願い申し上げます。
         </p>

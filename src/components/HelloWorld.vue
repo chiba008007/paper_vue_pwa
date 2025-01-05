@@ -11,7 +11,14 @@
         />
       </v-col>
       <v-col cols="12">
-        <v-btn color="primary" @click="onClick()"> 申込はこちら </v-btn>
+        <v-btn color="primary" @click="onClick()" class="w-100">
+          新規申込はこちら
+        </v-btn>
+      </v-col>
+      <v-col cols="12">
+        <v-btn to="/question" color="success" class="w-100"
+          >問い合わせはこちら</v-btn
+        >
       </v-col>
     </v-row>
     <v-row class="text-left">
