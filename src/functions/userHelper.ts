@@ -8,6 +8,9 @@ export default function () {
   const movePage = (pgName: string) => {
     router.push({ name: pgName, query: { code: filter.code } });
   };
+  const moveLink = (pgName: string) => {
+    router.push({ name: pgName });
+  };
   const movePageCode = (pgName: string, code: string) => {
     router.push({ name: pgName, query: { code: code } });
   };
@@ -126,6 +129,7 @@ export default function () {
   };
   return {
     movePage,
+    moveLink,
     movePageCode,
     moveLinkPageCode,
     getStrage,

@@ -21,6 +21,7 @@ import RegisterFinView from "../views/RegisterFinView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import EditView from "../views/EditView.vue";
 import OpenView from "../views/OpenView.vue";
+import HowtoView from "../views/HowtoView.vue";
 
 import ErrorView from "../views/ErrorView.vue";
 import { START_LOCATION } from "vue-router";
@@ -107,6 +108,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/open",
     name: "open",
     component: OpenView,
+  },
+  {
+    path: "/howto",
+    name: "howto",
+    component: HowtoView,
   },
   {
     path: "/error",

@@ -3,17 +3,18 @@ import { ref } from "vue";
 import UserHelpers from "./functions/userHelper";
 import { useStoreUser } from "@/store/user";
 import queryString from "query-string";
+import ButtonComponent from "./components/ButtonComponent.vue";
 
 const store = useStoreUser();
 const code = store.userdata as any;
 
 const open = ref(false);
-const { movePage, movePageCode, moveLinkPageCode } = UserHelpers();
+const { movePage, moveLink, moveLinkPageCode } = UserHelpers();
 const menuOpen = () => {
   open.value = open.value ? false : true;
 };
 const filter = queryString.parse(location.search);
-console.log(filter);
+
 if (filter.code === "undefined") {
   alert("page error");
   history.back();
@@ -85,7 +86,18 @@ if (filter.code === "undefined") {
       <router-view />
     </v-main>
     <div style="height: 40px">
-      <v-footer color="primary" height="40"> (c) 私のプロフ </v-footer>
+      <v-footer color="primary" height="40" class="d-flex text-caption">
+        <div class="w-25">(c)私のプロフ</div>
+        <div class="w-75 text-right">
+          <ButtonComponent
+            v-if="!filter.code"
+            label="特定商取引法に基づく表記"
+            variant="text"
+            mdi="mdi-information"
+            @click="moveLink('howto')"
+          ></ButtonComponent>
+        </div>
+      </v-footer>
     </div>
   </v-app>
 </template>
