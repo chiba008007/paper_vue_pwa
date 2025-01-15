@@ -1,6 +1,6 @@
 {
-  "name": "vue-game-chiba",
-  "short_name": "gamechiba",
+  "name": "私のプロフ",
+  "short_name": "myProf",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
@@ -38,7 +38,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/?code=chiba00807",
+  "start_url": "/home",
   "display": "fullscreen",
   "background_color": "#FFFFFF",
   "theme_color": "#4e342e"

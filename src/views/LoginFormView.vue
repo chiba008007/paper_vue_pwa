@@ -6,11 +6,13 @@ import ButtonComponent from "../components/ButtonComponent.vue";
 import { useTheme } from "vuetify/lib/framework.mjs";
 import UserApiService from "../services/UserApiService";
 import { useStoreUser } from "../store/user";
+import AlertComponent from "@/components/AlertComponent.vue";
 
 const router = useRouter();
 const pwdForgetClick = () => {
   router.push({ name: "forget" });
 };
+const loginError = ref();
 const email = ref();
 const password = ref();
 const onKeyup = (e: any, name: string) => {
@@ -23,6 +25,7 @@ const onLogin = () => {
     email: email.value,
     password: password.value,
   };
+  loginError.value = false;
   UserApiService.getPost(data)
     .then((response: any) => {
       console.log(response.data);
@@ -35,7 +38,8 @@ const onLogin = () => {
       }
     })
     .catch((e) => {
-      alert("LOGIN ERROR" + e);
+      loginError.value = true;
+      //alert("LOGIN ERROR" + e);
     });
 };
 </script>
@@ -67,6 +71,12 @@ const onLogin = () => {
     </v-row>
     <v-row>
       <v-col cols="12">
+        <AlertComponent
+          v-show="loginError"
+          type="danger"
+          text="ログインに失敗しました。"
+          class="mb-2 bg-red"
+        ></AlertComponent>
         <ButtonComponent
           color="primary"
           class="w-100"

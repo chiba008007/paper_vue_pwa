@@ -25,9 +25,15 @@
     <script>
       let url = new URL(window.location.href);
       let params = url.searchParams;
-      document
-        .querySelector("#my-manifest")
-        .setAttribute("href", "/manifest_" + params.get("code") + ".json");
+      if (!params.get("code")) {
+        document
+          .querySelector("#my-manifest")
+          .setAttribute("href", "/manifest.json");
+      } else {
+        document
+          .querySelector("#my-manifest")
+          .setAttribute("href", "/manifest_" + params.get("code") + ".json");
+      }
     </script>
     <div id="app"></div>
     <!-- built files will be auto injected -->
