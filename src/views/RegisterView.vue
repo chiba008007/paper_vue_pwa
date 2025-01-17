@@ -153,7 +153,9 @@ const editButton = () => {
   UserApiService.setRegistData(param)
     .then((res) => {
       loadFlag.value = false;
-      movePage("registerfin");
+      //movePage("registerfin");
+      //ストライプ支払い画面
+      location.href = "https://buy.stripe.com/test_28odTbeyYd2o1Q43cc";
     })
     .catch((e) => {
       alert(e);

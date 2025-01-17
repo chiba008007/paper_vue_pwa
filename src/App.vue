@@ -7,15 +7,15 @@ import ButtonComponent from "./components/ButtonComponent.vue";
 
 const store = useStoreUser();
 const code = store.userdata as any;
-
+console.log(code);
 const open = ref(false);
-const { movePage, moveLink, moveLinkPageCode } = UserHelpers();
+const { movePage, moveLink, moveLinkPageCode, movePageCode } = UserHelpers();
 const menuOpen = () => {
   open.value = open.value ? false : true;
 };
 const filter = queryString.parse(location.search);
 
-if (filter.code === "undefined") {
+if (filter.code === "undefined" || code.code === "undefined") {
   alert("page error");
   history.back();
 }
@@ -25,15 +25,27 @@ if (filter.code === "undefined") {
     <v-card color="grey-lighten-4" height="auto" rounded="0" flat>
       <v-toolbar density="compact" color="primary" class="caption">
         <p class="text-h6 ml-2">
-          <a href="/home" style="text-decoration: none; color: #fff"
+          <a
+            v-if="!code.code"
+            href="/home"
+            style="text-decoration: none; color: #fff"
             >私のプロフ</a
           >
+          <span v-else> 私のプロフ </span>
         </p>
         <v-spacer></v-spacer>
-        <v-btn icon @click="[movePage('top')]" v-if="filter.code">
+        <v-btn
+          icon
+          @click="[movePageCode('top', code.code)]"
+          v-if="filter.code"
+        >
           <v-icon>mdi-home</v-icon>
         </v-btn>
-        <v-btn icon @click="[movePage('lists')]" v-if="filter.code">
+        <v-btn
+          icon
+          @click="[movePageCode('lists', code.code)]"
+          v-if="filter.code"
+        >
           <v-icon>mdi-format-list-bulleted</v-icon>
         </v-btn>
         <v-btn icon @click="menuOpen()" v-if="filter.code">
@@ -65,9 +77,8 @@ if (filter.code === "undefined") {
           公開可否
         </div>
         <div class="menu__item" @click="[movePage('lists'), menuOpen()]">
-          読込履歴取込み
+          読込履歴
         </div>
-        <div class="menu__item">利用状況</div>
         <div
           class="menu__item"
           v-if="store.isLogin == false"
