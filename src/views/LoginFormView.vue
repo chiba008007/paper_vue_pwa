@@ -33,8 +33,8 @@ const onLogin = () => {
       user.setUserDataToken(response.data.token);
       user.setUserData(response.data.user);
       if (user.isLogin == true) {
-        router.push({ name: "top", query: { code: response.data.user.code } });
-        //location.href = "?code=" + response.data.user.code;
+        //router.push({ name: "top", query: { code: response.data.user.code } });
+        location.href = "/?code=" + response.data.user.code;
       }
     })
     .catch((e) => {
