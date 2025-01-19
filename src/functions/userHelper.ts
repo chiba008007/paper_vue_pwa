@@ -11,11 +11,17 @@ export default function () {
   const moveLink = (pgName: string) => {
     router.push({ name: pgName });
   };
-  const movePageCode = (pgName: string, code: string) => {
+  const movePageCode = (pgName: string, code: string | (string | null)[]) => {
     router.push({ name: pgName, query: { code: code } });
   };
-  const moveLinkPageCode = (pgName: string, code: string) => {
+  const moveLinkPageCode = (
+    pgName: string,
+    code: string | (string | null)[]
+  ) => {
     location.href = "/" + pgName + "?code=" + code;
+  };
+  const moveLinkPage = (pgName: string) => {
+    location.href = "/" + pgName;
   };
   const sameCheck = () => {
     const filter = queryString.parse(location.search);
@@ -132,6 +138,7 @@ export default function () {
     moveLink,
     movePageCode,
     moveLinkPageCode,
+    moveLinkPage,
     getStrage,
     sameCheck,
     onAddCompany,

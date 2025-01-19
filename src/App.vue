@@ -6,17 +6,18 @@ import queryString from "query-string";
 import ButtonComponent from "./components/ButtonComponent.vue";
 
 const store = useStoreUser();
+
 const code = store.userdata as any;
 console.log(code);
 const open = ref(false);
-const { movePage, moveLink, moveLinkPageCode, movePageCode } = UserHelpers();
+const { movePage, moveLink, moveLinkPageCode, movePageCode, moveLinkPage } =
+  UserHelpers();
 const menuOpen = () => {
   open.value = open.value ? false : true;
 };
 const filter = queryString.parse(location.search);
 
 if (filter.code === "undefined" || code.code === "undefined") {
-  alert("page error");
   history.back();
 }
 </script>
@@ -34,16 +35,12 @@ if (filter.code === "undefined" || code.code === "undefined") {
           <span v-else> 私のプロフ </span>
         </p>
         <v-spacer></v-spacer>
-        <v-btn
-          icon
-          @click="[movePageCode('top', code.code)]"
-          v-if="filter.code"
-        >
+        <v-btn icon @click="[moveLinkPageCode('', code.code)]">
           <v-icon>mdi-home</v-icon>
         </v-btn>
         <v-btn
           icon
-          @click="[movePageCode('lists', code.code)]"
+          @click="[movePageCode('lists', filter.code)]"
           v-if="filter.code"
         >
           <v-icon>mdi-format-list-bulleted</v-icon>
@@ -59,9 +56,7 @@ if (filter.code === "undefined" || code.code === "undefined") {
         <div class="menu__item" @click="[movePage('question'), menuOpen()]">
           問合せ
         </div>
-        <div class="menu__item" @click="[movePage('regist'), menuOpen()]">
-          新規申し込み
-        </div>
+
         <div
           class="menu__item"
           v-if="store.isLogin == true"
@@ -92,6 +87,9 @@ if (filter.code === "undefined" || code.code === "undefined") {
           @click="[movePage('logout'), menuOpen()]"
         >
           ログアウト
+        </div>
+        <div class="menu__item" @click="[movePage('regist'), menuOpen()]">
+          新規申し込み
         </div>
       </div>
       <router-view />

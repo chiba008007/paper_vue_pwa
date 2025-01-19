@@ -8,10 +8,14 @@ import UserApiService from "../services/UserApiService";
 import queryString from "query-string";
 import { useStoreUser } from "../store/user";
 import axios from "axios";
-
+const { moveLinkPageCode } = UserHelpers();
 const filter = queryString.parse(location.search);
 const user = UserHelpers();
 const store = useStoreUser();
+if (!filter.code || filter.code == "undefined") {
+  moveLinkPageCode("top", (store.userdata as any).code);
+}
+
 // alert(store.userToken);
 // データを取得
 const name = ref();
@@ -68,8 +72,7 @@ UserApiService.getUserData(filter.code as string)
     localStorage.setItem("paper_url", JSON.stringify(ls));
   })
   .catch(() => {
-    alert("getData ERROR");
-    location.href = "/error";
+    location.href = "/home";
   });
 </script>
 <template>

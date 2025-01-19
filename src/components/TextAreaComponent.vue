@@ -16,6 +16,7 @@ interface Props {
   rows?: number;
   value?: string | undefined;
   name?: string;
+  messages?: string;
 }
 
 const emit = defineEmits<{
@@ -32,6 +33,7 @@ const props = withDefaults(defineProps<Props>(), {
   type: "",
   value: "",
   name: "",
+  messages: "",
 });
 </script>
 <template>
@@ -42,6 +44,7 @@ const props = withDefaults(defineProps<Props>(), {
     :rows="props.rows"
     :hide-details="props.hideDetails"
     :model-value="props.value"
+    :messages="props.messages"
     @keyup="emit('onKeyup', $event.target.value, props.name)"
     @blur="emit('onBlur', $event.target.value, props.name)"
   ></v-textarea>

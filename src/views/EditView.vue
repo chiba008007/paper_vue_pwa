@@ -14,6 +14,10 @@ import { imagePath } from "@/plugins/const";
 import UserHelpers from "../functions/userHelper";
 import LoadingComponent from "../components/LoadingComponent.vue";
 import { fromJSON } from "flatted";
+import { useStoreUser } from "@/store/user";
+
+const store = useStoreUser();
+const code = store.userdata as any;
 
 const loadFlag = ref(false);
 const {
@@ -26,9 +30,13 @@ const {
   setSkillName,
   setHistoriesTitle,
   setHistoriesValue,
+  moveLinkPageCode,
 } = UserHelpers();
 
 const filter = queryString.parse(location.search);
+if (!filter.code || filter.code == "undefined") {
+  moveLinkPageCode("edit", code.code);
+}
 const companyLoops = ref([
   {
     key: 1,
@@ -64,33 +72,30 @@ const myimage_path = ref("");
 const company_image_path = ref("");
 
 // データを取得
-if (filter.code) {
-  UserApiService.getUserEditData()
-    .then((res: any) => {
-      form.value.display_name = res.data.user.display_name;
-      form.value.kana = res.data.user.kana;
-      form.value.syozoku = res.data.user.syozoku;
-      form.value.myimage_path = res.data.user.myimage_path;
 
-      form.value.company_image_path = res.data.user.company_image_path;
-      form.value.company_name = res.data.user.company_name;
+UserApiService.getUserEditData()
+  .then((res: any) => {
+    form.value.display_name = res.data.user.display_name;
+    form.value.kana = res.data.user.kana;
+    form.value.syozoku = res.data.user.syozoku;
+    form.value.myimage_path = res.data.user.myimage_path;
 
-      form.value.company_url = res.data.user.company_url;
-      form.value.tel = res.data.user.tel;
-      form.value.email = res.data.user.email;
-      form.value.profile = res.data.user.profile;
-      // form.value.companies = res.data.company;
-      // form.value.skills = res.data.skill;
-      companyLoops.value = res.data.company;
-      skillLoops.value = res.data.skill;
-      historyLoops.value = res.data.history;
-    })
-    .catch(($e) => {
-      console.log("ERROR");
-      console.log($e);
-      alert("getData ERROR");
-    });
-}
+    form.value.company_image_path = res.data.user.company_image_path;
+    form.value.company_name = res.data.user.company_name;
+
+    form.value.company_url = res.data.user.company_url;
+    form.value.tel = res.data.user.tel;
+    form.value.email = res.data.user.email;
+    form.value.profile = res.data.user.profile;
+    // form.value.companies = res.data.company;
+    // form.value.skills = res.data.skill;
+    companyLoops.value = res.data.company;
+    skillLoops.value = res.data.skill;
+    historyLoops.value = res.data.history;
+  })
+  .catch(($e) => {
+    moveLinkPageCode("edit", code.code);
+  });
 
 const onUpdate = (e: any, type: string) => {
   let blob: Blob;
@@ -126,8 +131,7 @@ const onUpdate = (e: any, type: string) => {
 const editflag = ref(false);
 const editButton = () => {
   // loadFlag.value = true;
-  console.log(companyLoops.value);
-
+  // console.log(companyLoops.value);
   let param = {
     display_name: form.value.display_name,
     syozoku: form.value.syozoku,
@@ -164,13 +168,14 @@ const editButton = () => {
     <v-row class="mt-1">
       <v-col cols="12">
         <TextComponent
-          label="表示名"
+          label="氏名"
           variant="outlined"
           type="text"
           autoGrow="auto"
           hideDetails="auto"
+          messages="例) 佐藤 太郎"
           :value="form.display_name"
-          :rules="requiredValue(form.display_name, '表示名')"
+          :rules="requiredValue(form.display_name, '氏名')"
           @onBlur="(e:string) => form.display_name = e"
         ></TextComponent>
       </v-col>
@@ -183,6 +188,7 @@ const editButton = () => {
           type="text"
           autoGrow="auto"
           hideDetails="auto"
+          messages="例) 株式会社〇〇〇〇 営業部"
           :value="form.syozoku"
           @onBlur="(e:string) => (form.syozoku = e)"
         ></TextComponent>
@@ -196,6 +202,7 @@ const editButton = () => {
           type="text"
           autoGrow="auto"
           hideDetails="auto"
+          messages="例) さとう たろう"
           :value="form.kana"
           @onBlur="(e:string) => (form.kana = e)"
         ></TextComponent>
@@ -229,6 +236,7 @@ const editButton = () => {
           type="text"
           autoGrow="auto"
           hideDetails="auto"
+          messages="例) 株式会社〇〇〇〇"
           :value="form.company_name"
           @onBlur="(e:string) => (form.company_name = e)"
         ></TextComponent>
@@ -265,6 +273,7 @@ const editButton = () => {
           type="text"
           autoGrow="auto"
           hideDetails="auto"
+          messages="https://myselfpaper.online/"
           :value="form.company_url"
           @onBlur="(e:string) => (form.company_url = e)"
         ></TextComponent>
@@ -288,6 +297,7 @@ const editButton = () => {
             (e) => setCompanyNameValue(e, index, companyLoops, companyLoop.id)
           "
         ></TextAreaComponent>
+        <p class="text-caption">例)〒100-0001<br />東京都千代田区千代田1-1</p>
         <TextComponent
           label="地図用住所・場所"
           variant="outlined"
@@ -299,9 +309,8 @@ const editButton = () => {
             (e) => setCompanyNameMapUrl(e, index, companyLoops, companyLoop.id)
           "
         ></TextComponent>
-        <p class="text-red text-caption">
-          地図用のURL若しくは場所を入力してください
-        </p>
+        <p class="text-caption">例)東京タワー</p>
+        <p class="text-red text-caption">場所を入力してください</p>
       </v-col>
     </v-row>
 
@@ -334,6 +343,7 @@ const editButton = () => {
           type="text"
           autoGrow="auto"
           hideDetails="auto"
+          messages="例) 03-0000-0000"
           :value="form.tel"
           @onBlur="(e:string) => (form.tel = e)"
         ></TextComponent>
@@ -355,6 +365,8 @@ const editButton = () => {
           type="text"
           autoGrow="auto"
           hideDetails="auto"
+          messages="例)ITパスポート（情報処理技術者試験）"
+          class="mt-2"
           :value="skillLoop.note"
           @onBlur="(e) => setSkillName(e, index, skillLoops, skillLoop.id)"
         ></TextComponent>
@@ -389,12 +401,14 @@ const editButton = () => {
           type="text"
           autoGrow="auto"
           hideDetails="auto"
+          messages="例)〇〇株式会社 営業部"
           :value="historyLoop.title"
           @onBlur="
             (e) => setHistoriesTitle(e, index, historyLoops, historyLoop.id)
           "
         ></TextComponent>
         <TextAreaComponent
+          class="mt-2"
           :label="`経歴内容` + historyLoop.id"
           variant="outlined"
           type="text"
@@ -405,6 +419,13 @@ const editButton = () => {
             (e) => setHistoriesValue(e, index, historyLoops, historyLoop.id)
           "
         ></TextAreaComponent>
+        <p class="text-caption">
+          例)<br />
+          営業担当<br />
+          新規顧客開拓および既存顧客対応<br />
+          月間売上目標を達成し、年間MVPを受賞（2022年度）<br />
+          顧客ニーズを分析し、提案内容をカスタマイズして契約数を15％増加させる
+        </p>
       </v-col>
     </v-row>
     <v-row class="mt-2 pt-0">
