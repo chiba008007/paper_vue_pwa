@@ -355,47 +355,44 @@ const editButton = () => {
         {{ form.email }}
       </v-col>
     </v-row>
-    <v-row class="mt-5">
+    <p class="mt-3 mb-2">スキル</p>
+    <v-row v-for="(skillLoop, index) in skillLoops" :key="skillLoop.id">
       <v-col cols="12">
         <TextComponent
-          v-for="(skillLoop, index) in skillLoops"
-          :key="skillLoop.id"
           :label="`スキル`"
           variant="outlined"
           type="text"
           autoGrow="auto"
           hideDetails="auto"
           messages="例)ITパスポート（情報処理技術者試験）"
-          class="mt-2"
           :value="skillLoop.note"
           @onBlur="(e) => setSkillName(e, index, skillLoops, skillLoop.id)"
         ></TextComponent>
-        <div class="text-right">
-          <ButtonComponent
-            variant="flat"
-            color="red darken-1"
-            class="w-25 mt-2"
-            label="削除"
-            @click="onAddSkill('delete', skillLoops)"
-            :disabled="skillLoops.length <= 1 ? true : false"
-          ></ButtonComponent>
-          <ButtonComponent
-            variant="flat"
-            color="blue darken-1"
-            class="w-25 mt-2 ml-1"
-            label="追加"
-            @click="onAddSkill('add', skillLoops)"
-          ></ButtonComponent>
-        </div>
       </v-col>
     </v-row>
-    <v-row
-      class="mt-5"
-      v-for="(historyLoop, index) in historyLoops"
-      :key="historyLoop.id"
-    >
+    <div class="text-right">
+      <ButtonComponent
+        variant="flat"
+        color="red darken-1"
+        class="w-25 mt-2"
+        label="削除"
+        @click="onAddSkill('delete', skillLoops)"
+        :disabled="skillLoops.length <= 1 ? true : false"
+      ></ButtonComponent>
+      <ButtonComponent
+        variant="flat"
+        color="blue darken-1"
+        class="w-25 mt-2 ml-1"
+        label="追加"
+        @click="onAddSkill('add', skillLoops)"
+      ></ButtonComponent>
+    </div>
+
+    <p>経歴</p>
+    <v-row v-for="(historyLoop, index) in historyLoops" :key="historyLoop.id">
       <v-col cols="12">
         <TextComponent
+          class="mt-2"
           :label="`経歴タイトル`"
           variant="outlined"
           type="text"
