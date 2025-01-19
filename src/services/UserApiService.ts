@@ -23,7 +23,7 @@ class UserApiService {
     return httpAuth.post("/api/editUser", data);
   }
   onLogout(): Promise<object> {
-    return httpAuth.post("/api/logout/");
+    return httpAuth.post("/api/logout");
   }
   onSendMail(data: object): Promise<object> {
     return http.post("/api/mail", data);

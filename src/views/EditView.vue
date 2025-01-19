@@ -188,7 +188,7 @@ const editButton = () => {
           type="text"
           autoGrow="auto"
           hideDetails="auto"
-          messages="例) 株式会社〇〇〇〇 営業部"
+          messages="例) 株式会社〇〇〇〇 営業課"
           :value="form.syozoku"
           @onBlur="(e:string) => (form.syozoku = e)"
         ></TextComponent>

@@ -7,6 +7,7 @@ import ButtonComponent from "../components/ButtonComponent.vue";
 import AlertComponent from "../components/AlertComponent.vue";
 import imgConponent from "../components/ImgConponent.vue";
 import { requiredValue } from "@/functions/validate";
+import CardConfConponent from "@/components/CardConfConponent.vue";
 
 import UserApiService from "../services/UserApiService";
 import queryString from "query-string";
@@ -132,7 +133,13 @@ const onUpdate = (e: any, type: string) => {
 };
 
 const editflag = ref(false);
+const dialog = ref(false);
+const confText = form.value;
+const editConfButton = () => {
+  dialog.value = true;
+};
 const editButton = () => {
+  dialog.value = false;
   loadFlag.value = true;
   let param = {
     code: filter.c,
@@ -152,6 +159,7 @@ const editButton = () => {
   };
   UserApiService.setRegistData(param)
     .then((res) => {
+      dialog.value = false;
       loadFlag.value = false;
       movePage("registerfin");
       //ストライプ支払い画面
@@ -163,6 +171,16 @@ const editButton = () => {
 };
 </script>
 <template>
+  <v-dialog v-model="dialog" persistent>
+    <CardConfConponent
+      :text="confText"
+      style="background-color: white"
+      class="text-pre-wrap pa-4"
+      @inputBack="dialog = false"
+      @inputRegist="editButton()"
+    ></CardConfConponent>
+  </v-dialog>
+
   <v-container>
     <v-row class="mt-1">
       <v-col cols="12">
@@ -173,13 +191,14 @@ const editButton = () => {
     <v-row class="mt-1">
       <v-col cols="12">
         <TextComponent
-          label="表示名"
+          label="氏名"
           variant="outlined"
           type="text"
           autoGrow="auto"
           hideDetails="auto"
+          messages="例) 佐藤 太郎"
           :value="form.display_name"
-          :rules="requiredValue(form.display_name, '表示名')"
+          :rules="requiredValue(form.display_name, '氏名')"
           @onBlur="(e:string) => (form.display_name = e,buttonFlag())"
         ></TextComponent>
       </v-col>
@@ -192,6 +211,7 @@ const editButton = () => {
           type="text"
           autoGrow="auto"
           hideDetails="auto"
+          messages="例) 株式会社〇〇〇〇 営業課"
           :value="form.syozoku"
           @onBlur="(e:string) => (form.syozoku = e)"
         ></TextComponent>
@@ -205,6 +225,7 @@ const editButton = () => {
           type="text"
           autoGrow="auto"
           hideDetails="auto"
+          messages="例) さとう たろう"
           :value="form.kana"
           @onBlur="(e:string) => (form.kana = e)"
         ></TextComponent>
@@ -238,6 +259,7 @@ const editButton = () => {
           type="text"
           autoGrow="auto"
           hideDetails="auto"
+          messages="例) 株式会社〇〇〇〇"
           :value="form.company_name"
           @onBlur="(e:string) => (form.company_name = e)"
         ></TextComponent>
@@ -274,6 +296,7 @@ const editButton = () => {
           type="text"
           autoGrow="auto"
           hideDetails="auto"
+          messages="https://myselfpaper.online/"
           :value="form.company_url"
           @onBlur="(e:string) => (form.company_url = e)"
         ></TextComponent>
@@ -295,8 +318,9 @@ const editButton = () => {
           :value="companyLoop.address"
           @onBlur="(e) => setCompanyName(e, companyLoop.key, 'value')"
         ></TextAreaComponent>
+        <p class="text-caption">例)〒100-0001<br />東京都千代田区千代田1-1</p>
         <TextComponent
-          label="地図表示場所名"
+          label="地図用住所・場所"
           variant="outlined"
           type="text"
           :autoGrow="true"
@@ -304,6 +328,8 @@ const editButton = () => {
           :value="companyLoop.map_url"
           @onBlur="(e) => setCompanyName(e, companyLoop.key, 'map_url')"
         ></TextComponent>
+        <p class="text-caption">例)東京タワー</p>
+        <p class="text-red text-caption">場所を入力してください</p>
       </v-col>
     </v-row>
 
@@ -336,6 +362,7 @@ const editButton = () => {
           type="text"
           autoGrow="auto"
           hideDetails="auto"
+          messages="例) 03-0000-0000"
           :value="form.tel"
           @onBlur="(e:string) => (form.tel = e)"
         ></TextComponent>
@@ -347,7 +374,7 @@ const editButton = () => {
         {{ form.email }}
       </v-col>
     </v-row>
-    <v-row class="mt-5">
+    <v-row class="mt-2">
       <v-col cols="12">
         <TextComponent
           v-for="skillLoop in skillLoops"
@@ -358,6 +385,7 @@ const editButton = () => {
           autoGrow="auto"
           hideDetails="auto"
           :value="skillLoop.note"
+          messages="例)ITパスポート（情報処理技術者試験）"
           @onBlur="(e) => setSkillName(e, skillLoop.key)"
         ></TextComponent>
         <div class="text-right">
@@ -387,6 +415,7 @@ const editButton = () => {
           type="text"
           autoGrow="auto"
           hideDetails="auto"
+          messages="例)〇〇株式会社 営業部"
           :value="historyLoop.title"
           @onBlur="(e) => setHistories(e, historyLoop.key, 'title')"
         ></TextComponent>
@@ -399,6 +428,13 @@ const editButton = () => {
           :value="historyLoop.value"
           @onBlur="(e) => setHistories(e, historyLoop.key, 'value')"
         ></TextAreaComponent>
+        <p class="text-caption ml-2">
+          例)<br />
+          営業担当<br />
+          新規顧客開拓および既存顧客対応<br />
+          月間売上目標を達成し、年間MVPを受賞（2022年度）<br />
+          顧客ニーズを分析し、提案内容をカスタマイズして契約数を15％増加させる
+        </p>
       </v-col>
     </v-row>
     <v-row class="mt-0 pt-0">
@@ -450,7 +486,7 @@ const editButton = () => {
         class="w-100"
         label="登録"
         :disabled="disabledFlag"
-        @onClick="editButton()"
+        @onClick="editConfButton()"
       ></ButtonComponent>
       <LoadingComponent v-show="loadFlag"></LoadingComponent>
     </div>
