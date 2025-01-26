@@ -206,20 +206,6 @@ const editButton = () => {
     <v-row class="mt-1">
       <v-col cols="12">
         <TextComponent
-          label="所属"
-          variant="outlined"
-          type="text"
-          autoGrow="auto"
-          hideDetails="auto"
-          messages="例) 株式会社〇〇〇〇 営業課"
-          :value="form.syozoku"
-          @onBlur="(e:string) => (form.syozoku = e)"
-        ></TextComponent>
-      </v-col>
-    </v-row>
-    <v-row class="mt-1">
-      <v-col cols="12">
-        <TextComponent
           label="ふりがな"
           variant="outlined"
           type="text"
@@ -231,6 +217,21 @@ const editButton = () => {
         ></TextComponent>
       </v-col>
     </v-row>
+    <v-row class="mt-1">
+      <v-col cols="12">
+        <TextComponent
+          label="所属"
+          variant="outlined"
+          type="text"
+          autoGrow="auto"
+          hideDetails="auto"
+          messages="例) 株式会社〇〇〇〇 営業課"
+          :value="form.syozoku"
+          @onBlur="(e:string) => (form.syozoku = e)"
+        ></TextComponent>
+      </v-col>
+    </v-row>
+
     <v-row class="mt-1">
       <v-col cols="3">
         <imgConponent

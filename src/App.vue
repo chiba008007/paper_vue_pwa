@@ -17,8 +17,9 @@ const menuOpen = () => {
 };
 const filter = queryString.parse(location.search);
 
-if (filter.code === "undefined" || code.code === "undefined") {
-  history.back();
+if (filter.code && (filter.code === "undefined" || code.code === "undefined")) {
+  //history.back();
+  location.href = "/home";
 }
 </script>
 <template>
