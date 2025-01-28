@@ -28,7 +28,6 @@ const onLogin = () => {
   loginError.value = false;
   UserApiService.getPost(data)
     .then((response: any) => {
-      console.log(response.data);
       localStorage.setItem("userToken", JSON.stringify(response.data.token));
       user.setUserDataToken(response.data.token);
       user.setUserData(response.data.user);

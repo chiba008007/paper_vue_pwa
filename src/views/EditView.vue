@@ -149,7 +149,6 @@ const editButton = () => {
 
   UserApiService.editUserData(param)
     .then((res: any) => {
-      console.log(res);
       editflag.value = true;
     })
     .catch(() => {

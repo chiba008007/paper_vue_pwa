@@ -58,7 +58,6 @@ UserApiService.getUserData(filter.code as string)
     email.value = res.data.user.email;
     profile.value = res.data.user.profile;
     display_flag.value = res.data.user.display_flag;
-    console.log(res.data.company);
     companies.value = res.data.company;
     skills.value = res.data.skill;
     histories.value = res.data.history;

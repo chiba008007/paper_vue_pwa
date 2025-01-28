@@ -14,7 +14,6 @@ const onSwitch = (e: Event) => {
       console.log(res);
     })
     .catch(($e: any) => {
-      console.log($e);
       alert("editData ERROR");
     });
 };

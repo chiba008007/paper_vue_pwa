@@ -53,7 +53,6 @@ const addRead = () => {
     .catch(($e) => {
       console.log("ERROR");
       console.log($e);
-      alert("setData ERROR");
     });
 };
 const onClick = () => {

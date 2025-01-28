@@ -8,7 +8,6 @@ import ButtonComponent from "./components/ButtonComponent.vue";
 const store = useStoreUser();
 
 const code = store.userdata as any;
-console.log(code);
 const open = ref(false);
 const { movePage, moveLink, moveLinkPageCode, movePageCode, moveLinkPage } =
   UserHelpers();

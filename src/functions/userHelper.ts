@@ -95,7 +95,6 @@ export default function () {
   ) => {
     companyLoops[n]["id"] = id;
     companyLoops[n]["address"] = val;
-    console.log(companyLoops);
   };
   const setCompanyNameMapUrl = (
     val: string,

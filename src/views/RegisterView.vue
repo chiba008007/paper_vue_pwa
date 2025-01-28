@@ -53,8 +53,6 @@ if (filter.c) {
       form.value.email = res.data[0].mail;
     })
     .catch(($e) => {
-      console.log("ERROR");
-      console.log($e);
       movePage("error");
     });
 }

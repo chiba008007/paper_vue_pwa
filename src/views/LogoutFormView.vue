@@ -15,12 +15,10 @@ const user = useStoreUser();
 const onLogout = () => {
   UserApiService.onLogout()
     .then((res: any) => {
-      console.log(res);
       user.isLogin = false;
       router.push({ name: "top", query: { code: filter.code } });
     })
     .catch(($e) => {
-      console.log($e);
       alert("LOGOUT ERROR");
     });
 };

@@ -36,7 +36,6 @@ const pwdSendClick = () => {
       location.href = "/?code=" + res.data;
     })
     .catch(($e) => {
-      alert("error");
       console.log("ERROR");
       console.log($e);
     });

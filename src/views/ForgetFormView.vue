@@ -21,7 +21,6 @@ const pwdSendClick = () => {
       sendflag.value = true;
     })
     .catch(($e) => {
-      alert("error");
       console.log("ERROR");
       console.log($e);
     });
