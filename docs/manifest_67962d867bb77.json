@@ -1,0 +1,45 @@
+{
+  "name": "shikata-ryoma",
+  "short_name": "shikata",
+  "icons": [
+    {
+      "src": "./img/icons/chiba00807/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/chiba00807/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/chiba00807/apple-touch-icon-60x60.png",
+      "sizes": "60x60",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/chiba00807/apple-touch-icon-76x76.png",
+      "sizes": "76x76",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/chiba00807/apple-touch-icon-120x120.png",
+      "sizes": "120x120",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/chiba00807/apple-touch-icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/chiba00807/apple-touch-icon-180x180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/?code=67962d867bb77",
+  "display": "fullscreen",
+  "background_color": "#FFFFFF",
+  "theme_color": "#4e342e"
+}

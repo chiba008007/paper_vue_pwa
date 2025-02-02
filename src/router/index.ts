@@ -22,6 +22,7 @@ import RegisterView from "../views/RegisterView.vue";
 import EditView from "../views/EditView.vue";
 import OpenView from "../views/OpenView.vue";
 import HowtoView from "../views/HowtoView.vue";
+import HumanView from "../views/HumanView.vue";
 
 import ErrorView from "../views/ErrorView.vue";
 import { START_LOCATION } from "vue-router";
@@ -113,6 +114,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/howto",
     name: "howto",
     component: HowtoView,
+  },
+  {
+    path: "/human",
+    name: "human",
+    component: HumanView,
   },
   {
     path: "/error",

@@ -97,10 +97,19 @@ if (filter.code && (filter.code === "undefined" || code.code === "undefined")) {
     <div style="height: 40px">
       <v-footer color="primary" height="40" class="d-flex text-caption">
         <div class="w-25">(c)私のプロフ</div>
-        <div class="w-75 text-right">
+        <div class="w-75 text-right d-flex">
           <ButtonComponent
+            class="text-caption"
             v-if="!filter.code"
-            label="特定商取引法に基づく表記"
+            label="個人情報取扱"
+            variant="text"
+            mdi="mdi-information"
+            @click="moveLink('human')"
+          ></ButtonComponent>
+          <ButtonComponent
+            class="text-caption"
+            v-if="!filter.code"
+            label="特定商取引表記"
             variant="text"
             mdi="mdi-information"
             @click="moveLink('howto')"

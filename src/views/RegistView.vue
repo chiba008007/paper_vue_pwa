@@ -23,6 +23,7 @@ UserApiService.sameMail().then((res) => {
     useemail.value.push(value.email);
   });
 });
+import CardRegistConfConponent from "@/components/CardRegistConfConponent.vue";
 const router = useRouter();
 const mailSameFlag = ref(false);
 const { movePage } = UserHelpers();
@@ -55,7 +56,14 @@ const sendButtonFlag = () => {
     disableFlag.value = true;
   }
 };
+const dialog = ref(false);
+const confText = ref();
+const onRegistConf = () => {
+  dialog.value = true;
+  confText.value = form.value;
+};
 const onRegist = () => {
+  dialog.value = false;
   loadFlag.value = true;
   let params = {
     name: form.value.name,
@@ -86,6 +94,15 @@ const fetchAddress = (postcode: string) => {
 </script>
 <template>
   <v-container>
+    <v-dialog v-model="dialog" persistent>
+      <CardRegistConfConponent
+        :text="confText"
+        style="background-color: white"
+        class="text-pre-wrap pa-4"
+        @inputBack="dialog = false"
+        @inputRegist="onRegist()"
+      ></CardRegistConfConponent>
+    </v-dialog>
     <LoadingComponent v-show="loadFlag"></LoadingComponent>
     <p class="font-weight-black text-h6">新規申込み</p>
     <v-row class="mt-1" dense>
@@ -166,7 +183,7 @@ const fetchAddress = (postcode: string) => {
           color="primary"
           class="w-100 mt-2"
           label="送信"
-          @onClick="onRegist()"
+          @onClick="onRegistConf()"
           :disabled="disableFlag"
         ></ButtonComponent>
       </v-col>
