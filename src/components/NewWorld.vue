@@ -68,7 +68,7 @@ const onClick = () => {
       </v-card>
     </div>
 
-    <v-card class="mx-auto w-100 pa-3 mb-5" variant="tonal">
+    <v-card class="mx-auto w-100 pa-3 mb-1" variant="tonal">
       <v-alert
         text="デジタル名刺購入から利用まで"
         color="deep-purple-accent-4"
@@ -121,6 +121,22 @@ const onClick = () => {
         </v-timeline-item>
       </v-timeline>
     </v-card>
+    <div>
+      <ButtonComponent
+        style="height: 60px"
+        label="新規申込み"
+        class="bg-success rounded-lg text-h5 w-50"
+        prependIcon="mdi-plus"
+        @click="onClick()"
+      ></ButtonComponent>
+      <ButtonComponent
+        style="height: 60px"
+        label="問合わせ"
+        class="bg-red rounded-lg text-h5 w-50"
+        prependIcon="mdi-account"
+        to="/question"
+      ></ButtonComponent>
+    </div>
   </section>
 </template>
 

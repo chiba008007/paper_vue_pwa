@@ -186,6 +186,13 @@ const fetchAddress = (postcode: string) => {
           @onClick="onRegistConf()"
           :disabled="disableFlag"
         ></ButtonComponent>
+        <ButtonComponent
+          variant="flat"
+          color="red"
+          class="w-100 mt-5"
+          label="戻る"
+          to="/home"
+        ></ButtonComponent>
       </v-col>
     </v-row>
   </v-container>

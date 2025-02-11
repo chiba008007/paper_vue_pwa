@@ -96,6 +96,13 @@ const buttonDisabled = () => {
           @onClick="pwdSendClick()"
           :disabled="buttonDisabled()"
         ></ButtonComponent>
+        <ButtonComponent
+          variant="flat"
+          color="red"
+          class="w-100 mt-5"
+          label="戻る"
+          to="/home"
+        ></ButtonComponent>
       </v-col>
     </v-row>
     <LoadingComponent v-show="loadFlag"></LoadingComponent>
