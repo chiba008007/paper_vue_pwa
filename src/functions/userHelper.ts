@@ -16,7 +16,7 @@ export default function () {
   };
   const moveLinkPageCode = (
     pgName: string,
-    code: string | (string | null)[]
+    code: string | (string | null)[] | any
   ) => {
     location.href = "/" + pgName + "?code=" + code;
   };

@@ -11,6 +11,7 @@ interface Props {
   label?: string;
   type?: string;
   mdi?: string;
+  prependIcon?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -19,10 +20,16 @@ const props = withDefaults(defineProps<Props>(), {
   label: "",
   type: "",
   mdi: "",
+  prependIcon: "",
 });
 </script>
 <template>
-  <v-btn :variant="props.variant" :type="props.type" @click="$emit('onClick')">
+  <v-btn
+    :variant="props.variant"
+    :type="props.type"
+    @click="$emit('onClick')"
+    :prepend-icon="props.prependIcon"
+  >
     {{ props.label }}
     <v-icon v-if="props.mdi">{{ props.mdi }}</v-icon>
   </v-btn>

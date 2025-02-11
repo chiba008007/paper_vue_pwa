@@ -23,19 +23,19 @@ if (filter.code && (filter.code === "undefined" || code.code === "undefined")) {
 </script>
 <template>
   <v-app>
-    <v-card color="grey-lighten-4" height="auto" rounded="0" flat>
+    <v-card color="grey-lighten-4 fixed" height="auto" rounded="0" flat>
       <v-toolbar density="compact" color="primary" class="caption">
         <p class="text-h6 ml-2">
-          <a
-            v-if="!code.code"
-            href="/home"
-            style="text-decoration: none; color: #fff"
+          <a href="/home" style="text-decoration: none; color: #fff"
             >私のプロフ</a
           >
-          <span v-else> 私のプロフ </span>
         </p>
         <v-spacer></v-spacer>
-        <v-btn icon @click="[moveLinkPageCode('', code.code)]">
+        <v-btn
+          icon
+          v-if="filter.code"
+          @click="[moveLinkPageCode('', filter.code)]"
+        >
           <v-icon>mdi-home</v-icon>
         </v-btn>
         <v-btn
@@ -45,7 +45,7 @@ if (filter.code && (filter.code === "undefined" || code.code === "undefined")) {
         >
           <v-icon>mdi-format-list-bulleted</v-icon>
         </v-btn>
-        <v-btn icon @click="menuOpen()" v-if="filter.code">
+        <v-btn icon @click="menuOpen()">
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
       </v-toolbar>
@@ -92,7 +92,7 @@ if (filter.code && (filter.code === "undefined" || code.code === "undefined")) {
           新規申し込み
         </div>
       </div>
-      <router-view />
+      <router-view class="mt-10" />
     </v-main>
     <div style="height: 40px">
       <v-footer color="primary" height="40" class="d-flex text-caption">
@@ -127,7 +127,7 @@ if (filter.code && (filter.code === "undefined" || code.code === "undefined")) {
   position: fixed;
   top: 0;
   right: 0;
-  z-index: 100;
+  z-index: 10001;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -149,7 +149,13 @@ if (filter.code && (filter.code === "undefined" || code.code === "undefined")) {
     color: #ff0000;
   }
 }
-
+.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10000;
+}
 /*----------------------------
 * アニメーション部分
 *----------------------------*/

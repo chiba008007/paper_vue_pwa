@@ -13,7 +13,7 @@ const filter = queryString.parse(location.search);
 const user = UserHelpers();
 const store = useStoreUser();
 if (!filter.code || filter.code == "undefined") {
-  moveLinkPageCode("top", (store.userdata as any).code);
+  moveLinkPageCode("home", (store.userdata as any).code);
 }
 
 // alert(store.userToken);

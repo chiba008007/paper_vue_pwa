@@ -13,6 +13,7 @@ interface Props {
   color?: string;
   class?: string;
   text?: string;
+  title?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -23,6 +24,7 @@ const props = withDefaults(defineProps<Props>(), {
   color: undefined,
   class: undefined,
   text: "",
+  title: "",
 });
 </script>
 <template>
@@ -33,6 +35,7 @@ const props = withDefaults(defineProps<Props>(), {
     :width="props.width"
     :color="props.color"
     :class="props.color"
+    :title="props.title"
   >
     <v-card-text class="text-caption pa-0 ma-0 pl-3 text-black">{{
       props.text
