@@ -40,8 +40,12 @@ const onClick = () => {
 
   <section>
     <div class="ma-3">
-      <v-card color="primary" variant="tonal">
-        <v-card-title>スマホをかざすだけの名刺</v-card-title>
+      <v-alert
+        text="スマホをかざすだけの名刺"
+        color="deep-purple-accent-4"
+        type="success"
+      ></v-alert>
+      <v-card color="primary" variant="tonal" class="mt-2">
         <v-card-text class="text-caption ma-0 pl-3 text-black">
           <v-list lines="one" class="mt-0">
             <v-list-item :title="'簡便さ'">
@@ -63,9 +67,14 @@ const onClick = () => {
         </v-card-text>
       </v-card>
     </div>
-    <v-card class="mx-auto w-75 pa-3 mb-5" variant="tonal">
-      <p>デジタル名刺購入から利用まで</p>
-      <v-timeline align="start" density="compact">
+
+    <v-card class="mx-auto w-100 pa-3 mb-5" variant="tonal">
+      <v-alert
+        text="デジタル名刺購入から利用まで"
+        color="deep-purple-accent-4"
+        type="info"
+      ></v-alert>
+      <v-timeline class="mt-2" align="start" density="compact">
         <v-timeline-item size="x-small">
           <div class="mb-4">
             <div class="font-weight-normal">
