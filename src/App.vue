@@ -139,7 +139,9 @@ window.addEventListener("beforeinstallprompt", (e) => {
     </v-main>
     <div style="height: 40px">
       <v-footer color="primary" height="40" class="d-flex text-caption">
-        <div class="w-25">(c)私のプロフ</div>
+        <div class="w-25">
+          <a href="/home" class="text-white">(c)sponnect</a>
+        </div>
         <div class="w-75 text-right d-flex">
           <ButtonComponent
             class="text-caption"

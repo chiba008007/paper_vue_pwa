@@ -55,46 +55,49 @@ const onClick = () => {
                     :src="require('@/assets/Sponnect.png')"
                     class="min-image"
                   ></ImgConponent>
+
+                  <v-expansion-panels id="targetElement1">
+                    <v-expansion-panel>
+                      <v-expansion-panel-title>
+                        sponnect(スポネクト)とは
+                      </v-expansion-panel-title>
+                      <v-expansion-panel-text>
+                        「Sponnect」は、学生が学園祭やクラブ活動を通じて、自らの情熱を企業に伝え、支援を受けるための『架け橋』として誕生しました。<br />
+                        従来の協賛獲得プロセスは、情報が紙や口頭に頼っており、信頼性を証明するのが難しいものでした。<br />
+                        しかし、Sponnectはデジタル技術を活用し、学生の活動実績や魅力を一元管理。最新のデータと洗練されたデザインで、企業に「本物の情熱と実績」を伝えるツールとして進化しました。<br />
+                        このブランドは、「若者の挑戦を後押しする」という理念のもと、すべての学生に夢を実現するための強力なパートナーとなることを目指しています。Sponnectを通じて、未来を担う若者と企業が共に成長し、地域社会に新しい価値を創造する。
+                      </v-expansion-panel-text>
+                    </v-expansion-panel>
+                  </v-expansion-panels>
+                  <v-expansion-panels class="mt-5" id="targetElement2">
+                    <v-expansion-panel>
+                      <v-expansion-panel-title>
+                        sponnect(スポネクト)の特徴
+                      </v-expansion-panel-title>
+                      <v-expansion-panel-text>
+                        <v-list lines="one" class="mt-0 my-list">
+                          <v-list-item :title="'簡便さ'">
+                            <v-list-item-content>
+                              スマートフォンやカードをかざすだけで、簡単に名刺交換が完了！紙の名刺を持ち歩く必要はなく、わずらわしい入力作業も一切なし。瞬時に自分の情報を相手と共有でき、データの更新もスムーズに行えます。時間も手間も省けて、どこでもすぐにネットワーキングができる便利さを実感してください。スマートなビジネスをサポートします。
+                            </v-list-item-content>
+                          </v-list-item>
+                          <v-list-item :title="'環境'">
+                            <v-list-item-content>
+                              紙や時間を無駄にすることなく、スマートに名刺交換を行いましょう。手間なく、瞬時にプロフィール情報を相手に共有でき、必要な時にすぐにデータを更新・管理することができます。従来の紙の名刺では面倒だった在庫管理や印刷費用もゼロに。環境にも優しく、効率的なネットワーキングをサポートします。今すぐ、デジタル名刺で新しいビジネスライフを始めましょう。
+                            </v-list-item-content>
+                          </v-list-item>
+                          <v-list-item :title="'プロフィール'">
+                            <v-list-item-content>
+                              自分の情報を簡単にカスタマイズできます。名前、写真、自己紹介文など、あらゆる個人情報を自由に変更・更新することができ、より自分らしいプロフィールを作成できます。さらに、趣味や特技などの詳細も追加できるので、他のユーザーとの交流を深める手助けになります。自分のプロフィールを最新の状態に保ち、より魅力的な印象を与えましょう！
+                            </v-list-item-content>
+                          </v-list-item>
+                        </v-list>
+                      </v-expansion-panel-text>
+                    </v-expansion-panel>
+                  </v-expansion-panels>
+                  <br />
                   <CardConponent
-                    text="sponnect(スポネクト)とは"
-                    color="primary"
-                    variant="tonal"
-                    ma="ma-1"
-                    pa="pa-1"
-                    id="targetElement1"
-                  ></CardConponent>
-                  <p class="pa-2">
-                    「Sponnect」は、学生が学園祭やクラブ活動を通じて、自らの情熱を企業に伝え、支援を受けるための『架け橋』として誕生しました。<br />
-                    従来の協賛獲得プロセスは、情報が紙や口頭に頼っており、信頼性を証明するのが難しいものでした。<br />
-                    しかし、Sponnectはデジタル技術を活用し、学生の活動実績や魅力を一元管理。最新のデータと洗練されたデザインで、企業に「本物の情熱と実績」を伝えるツールとして進化しました。<br />
-                    このブランドは、「若者の挑戦を後押しする」という理念のもと、すべての学生に夢を実現するための強力なパートナーとなることを目指しています。Sponnectを通じて、未来を担う若者と企業が共に成長し、地域社会に新しい価値を創造する。
-                  </p>
-                  <CardConponent
-                    text="sponnect(スポネクト)の特徴"
-                    color="red"
-                    variant="tonal"
-                    ma="ma-1"
-                    pa="pa-1"
-                    id="targetElement2"
-                  ></CardConponent>
-                  <v-list lines="one" class="mt-0 my-list">
-                    <v-list-item :title="'簡便さ'">
-                      <v-list-item-content>
-                        スマートフォンやカードをかざすだけで、簡単に名刺交換が完了！紙の名刺を持ち歩く必要はなく、わずらわしい入力作業も一切なし。瞬時に自分の情報を相手と共有でき、データの更新もスムーズに行えます。時間も手間も省けて、どこでもすぐにネットワーキングができる便利さを実感してください。スマートなビジネスをサポートします。
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item :title="'環境'">
-                      <v-list-item-content>
-                        紙や時間を無駄にすることなく、スマートに名刺交換を行いましょう。手間なく、瞬時にプロフィール情報を相手に共有でき、必要な時にすぐにデータを更新・管理することができます。従来の紙の名刺では面倒だった在庫管理や印刷費用もゼロに。環境にも優しく、効率的なネットワーキングをサポートします。今すぐ、デジタル名刺で新しいビジネスライフを始めましょう。
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item :title="'プロフィール'">
-                      <v-list-item-content>
-                        自分の情報を簡単にカスタマイズできます。名前、写真、自己紹介文など、あらゆる個人情報を自由に変更・更新することができ、より自分らしいプロフィールを作成できます。さらに、趣味や特技などの詳細も追加できるので、他のユーザーとの交流を深める手助けになります。自分のプロフィールを最新の状態に保ち、より魅力的な印象を与えましょう！
-                      </v-list-item-content>
-                    </v-list-item>
-                  </v-list>
-                  <CardConponent
+                    class="mt-4"
                     text="ご注文の流れ"
                     color="purple"
                     variant="tonal"
