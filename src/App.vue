@@ -20,16 +20,50 @@ if (filter.code && (filter.code === "undefined" || code.code === "undefined")) {
   //history.back();
   location.href = "/home";
 }
+
+let deferredPrompt: any;
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  // このイベントをキャンセルしないとブラウザのデフォルトのポップアップが表示される
+  e.preventDefault();
+  deferredPrompt = e;
+
+  // ユーザーがボタンをクリックした時に、インストールプロンプトを表示する
+  const installButton = document.getElementById("install-button");
+  installButton.style.display = "block";
+
+  installButton.addEventListener("click", () => {
+    // インストールプロンプトを表示
+    deferredPrompt.prompt();
+
+    // ユーザーがインストールを選択したかどうかを監視
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === "accepted") {
+        console.log("User accepted the install prompt");
+      } else {
+        console.log("User dismissed the install prompt");
+      }
+      deferredPrompt = null;
+    });
+  });
+});
 </script>
 <template>
   <v-app>
-    <v-card color="grey-lighten-4 fixed" height="auto" rounded="0" flat>
+    <v-card
+      color="grey-lighten-4 fixed"
+      height="auto"
+      rounded="0"
+      flat
+      v-if="filter.code !== undefined"
+    >
       <v-toolbar density="compact" color="primary" class="caption">
         <p class="text-h6 ml-2">
           <a href="/home" style="text-decoration: none; color: #fff"
-            >私のプロフ</a
-          >
+            >SPONNECT <small>-sponsor+connect-</small>
+          </a>
         </p>
+
         <v-spacer></v-spacer>
         <v-btn
           icon
@@ -51,6 +85,15 @@ if (filter.code && (filter.code === "undefined" || code.code === "undefined")) {
       </v-toolbar>
     </v-card>
     <v-main>
+      <ButtonComponent
+        id="install-button"
+        style="display: none; top: 80%; right: 10px; z-index: 1"
+        mdi="mdi-account-plus-outline"
+        class="position-fixed bg-green-lighten-2"
+        size="x-small"
+        stacked
+        label="ホームに追加"
+      ></ButtonComponent>
       <div class="menu" :class="{ 'is-active': open }">
         <div class="menu__item close" @click="menuOpen()">閉じる</div>
         <div class="menu__item" @click="[movePage('question'), menuOpen()]">
@@ -92,7 +135,7 @@ if (filter.code && (filter.code === "undefined" || code.code === "undefined")) {
           新規申し込み
         </div>
       </div>
-      <router-view class="mt-10" />
+      <router-view :class="filter.code !== undefined ? 'mt-10' : ''" />
     </v-main>
     <div style="height: 40px">
       <v-footer color="primary" height="40" class="d-flex text-caption">

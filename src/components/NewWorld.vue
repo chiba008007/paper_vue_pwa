@@ -23,16 +23,18 @@ const onClick = () => {
     style="z-index: 999; bottom: 30px; right: 30px"
   >
     <ButtonComponent
+      variant="tonal"
       style="height: 60px"
       label="新規申込み"
-      class="bg-success rounded-lg text-h5 mt-3 w-50"
+      class="bg-yellow-lighten-2 rounded-lg text-h5 mt-3 w-50"
       prependIcon="mdi-plus"
       @click="onClick()"
     ></ButtonComponent>
     <ButtonComponent
+      variant="tonal"
       style="height: 60px"
       label="問合わせ"
-      class="bg-red rounded-lg text-h5 mt-3 w-50"
+      class="bg-light-blue-lighten-4 rounded-lg text-h5 mt-3 w-50"
       prependIcon="mdi-account"
       to="/question"
     ></ButtonComponent>
@@ -123,16 +125,18 @@ const onClick = () => {
     </v-card>
     <div>
       <ButtonComponent
+        variant="tonal"
         style="height: 60px"
         label="新規申込み"
-        class="bg-success rounded-lg text-h5 w-50"
+        class="bg-yellow-lighten-2 rounded-lg text-h5 w-50"
         prependIcon="mdi-plus"
         @click="onClick()"
       ></ButtonComponent>
       <ButtonComponent
+        variant="tonal"
         style="height: 60px"
         label="問合わせ"
-        class="bg-red rounded-lg text-h5 w-50"
+        class="bg-light-blue-lighten-4 rounded-lg text-h5 w-50"
         prependIcon="mdi-account"
         to="/question"
       ></ButtonComponent>

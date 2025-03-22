@@ -13,7 +13,8 @@ interface Props {
   color?: string;
   class?: string;
   text?: string;
-  title?: string;
+  pa?: string;
+  ma?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -24,7 +25,8 @@ const props = withDefaults(defineProps<Props>(), {
   color: undefined,
   class: undefined,
   text: "",
-  title: "",
+  pa: "pa-0",
+  ma: "ma-0",
 });
 </script>
 <template>
@@ -35,10 +37,13 @@ const props = withDefaults(defineProps<Props>(), {
     :width="props.width"
     :color="props.color"
     :class="props.color"
-    :title="props.title"
+    :pa="props.pa"
+    :ma="props.ma"
   >
-    <v-card-text class="text-caption pa-0 ma-0 pl-3 text-black">{{
-      props.text
-    }}</v-card-text>
+    <v-card-text
+      class="text-caption pl-3 text-black"
+      :class="[props.ma, props.pa]"
+      >{{ props.text }}</v-card-text
+    >
   </v-card>
 </template>

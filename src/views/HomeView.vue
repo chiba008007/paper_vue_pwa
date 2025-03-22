@@ -1,16 +1,12 @@
 <template>
-  <!--
-  <hello-world />
--->
-  <NewWorld></NewWorld>
+  <NewWorld :style="{ backgroundColor: '#F1EFE7' }"></NewWorld>
 </template>
 <link rel="stylesheet" href="css/style.css" />
 <script lang="ts">
 import { defineComponent } from "vue";
 
 // Components
-//import HelloWorld from "../components/HelloWorld.vue";
-import NewWorld from "@/components/NewWorld.vue";
+import NewWorld from "@/components/NewWorld2.vue";
 
 export default defineComponent({
   name: "HomeView",
