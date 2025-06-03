@@ -32,7 +32,21 @@ export const generation: NumberCodeOrNullListType = {
   4: "40代",
   5: "50代～",
 };
+/** template */
+export const templateList = {
+  1: "テンプレート1",
+  2: "テンプレート2",
+};
 
+/** 色コード */
+export const d_colors = [
+  { value: "green", color: "#1B5E20" },
+  { value: "cyan", color: "#006064" },
+  { value: "teal", color: "#004D40" },
+  { value: "light-blue", color: "#01579B" },
+  { value: "light-green", color: "#33691E" },
+  { value: "brown", color: "#3E2723" },
+];
 /** 都道府県_Data */
 export const prefecturesNameList = [
   "北海道",

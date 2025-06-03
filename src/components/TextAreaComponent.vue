@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import { defineProps, withDefaults, defineEmits } from "vue";
-import { prop } from "vue-class-component";
-import type { VCard } from "vuetify/components";
-type TVariant = VCard["$props"]["variant"];
-type TDensity = VCard["$props"]["density"];
 
 interface Props {
-  variant?: TVariant;
-  density?: TDensity;
+  variant?:
+    | "outlined"
+    | "underlined"
+    | "filled"
+    | "plain"
+    | "solo"
+    | "solo-inverted"
+    | "solo-filled"
+    | undefined;
+  density?: "default" | "comfortable" | "compact" | undefined;
   label?: string;
   autoGrow?: boolean;
-  hideDetails?: boolean | string;
+  hideDetails?: boolean;
   type?: string;
   rowHeight?: number;
   rows?: number;

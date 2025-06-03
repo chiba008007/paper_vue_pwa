@@ -14,6 +14,28 @@ module.exports = defineConfig({
     },
   },
   pwa: {
+    name: "SPONNECT",
+    themeColor: "#4DBA87",
+    msTileColor: "#000000",
+    manifestOptions: {
+      name: "SPONNECT",
+      short_name: "SPON",
+      start_url: ".",
+      display: "standalone",
+      background_color: "#42B983",
+      icons: [
+        {
+          src: "img/icons/android-chrome-192x192.png",
+          sizes: "192x192",
+          type: "image/png",
+        },
+        {
+          src: "img/icons/android-chrome-512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+        },
+      ],
+    },
     workboxOptions: {
       skipWaiting: true,
       clientsClaim: true,

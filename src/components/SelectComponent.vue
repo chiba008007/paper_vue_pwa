@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { defineProps, withDefaults, defineEmits } from "vue";
 import { prop } from "vue-class-component";
-import type { VCard } from "vuetify/components";
-type TVariant = VCard["$props"]["variant"];
+import type { VSelect } from "vuetify/components";
+type TVariant = VSelect["$props"]["variant"];
 
 interface Props {
   variant?: TVariant;
   label?: string;
-  hideDetails?: boolean | string;
-  items?: object;
+  hideDetails?: boolean | "auto" | undefined;
+  items?: any;
   errormessage?: string;
   value?: string;
 }

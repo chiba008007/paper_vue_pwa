@@ -23,6 +23,7 @@ if (filter.code && (filter.code === "undefined" || code.code === "undefined")) {
 
 let deferredPrompt: any;
 
+/*
 window.addEventListener("beforeinstallprompt", (e) => {
   // このイベントをキャンセルしないとブラウザのデフォルトのポップアップが表示される
   e.preventDefault();
@@ -46,6 +47,30 @@ window.addEventListener("beforeinstallprompt", (e) => {
       deferredPrompt = null;
     });
   });
+});
+*/
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  // DOMContentLoaded後か、Vueのmounted内で以下を実行すべき
+  setTimeout(() => {
+    const installButton = document.getElementById("install-button");
+    if (installButton) {
+      installButton.style.display = "block";
+      installButton.addEventListener("click", async () => {
+        deferredPrompt.prompt();
+        const choiceResult = await deferredPrompt.userChoice;
+        if (choiceResult.outcome === "accepted") {
+          console.log("User accepted the install prompt");
+        } else {
+          console.log("User dismissed the install prompt");
+        }
+        deferredPrompt = null;
+      });
+    }
+  }, 100);
 });
 </script>
 <template>
