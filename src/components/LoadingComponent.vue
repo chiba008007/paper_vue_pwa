@@ -13,26 +13,30 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 <template>
   <div id="loading">
-    <v-progress-circular color="primary" indeterminate></v-progress-circular>
+    <v-progress-circular
+      color="primary"
+      :size="128"
+      :width="12"
+      indeterminate
+    ></v-progress-circular>
   </div>
 </template>
 <style type="text/css">
 #loading {
   position: absolute;
-  background-color: #ccc;
+  background-color: rgba(100, 100, 100, 0.8);
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   text-align: center;
-  padding-top: 10%;
-  z-index: 10px;
+  z-index: 100000;
   div {
     position: absolute;
-    top: 30%;
+    top: 50px;
     left: 50%;
     right: 50%;
-    margin-left: -10px;
+    margin-left: -50px;
   }
 }
 </style>

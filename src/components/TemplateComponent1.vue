@@ -1,337 +1,211 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, defineProps, withDefaults, defineEmits, computed } from "vue";
 import RadioComponent from "./RadioComponent.vue";
 import topImageComponent from "./topImageComponent.vue";
-import { d_colors } from "@/plugins/const";
-import { templateList, d_Path } from "@/plugins/const";
+import { d_colors, d_pie_colors } from "@/plugins/const";
+import {
+  templateList,
+  d_Path,
+  chartOptions,
+  pieOptions,
+} from "@/plugins/const";
 const templateSelected = ref<string>("1");
 
 import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
 
-const chartData = {
-  labels: ["2021", "2022", "2023", "2024", "2025(目標)"],
-  datasets: [
-    {
-      label: "売上",
-      data: [8000, 9000, 13000, 15000, 18000],
-      // backgroundColor: '#1976d2', // 色は自動でOK
-      clip: false as const,
-    },
-  ],
-};
+interface Props {
+  data?: Record<string, any>;
+  user_id?: number;
+}
+const props = withDefaults(defineProps<Props>(), {
+  data: () => ({}),
+});
 
-const chartOptions = {
-  responsive: true,
-  plugins: {
-    legend: { display: false },
-    title: { display: false },
-  },
-  scales: {
-    y: {
-      min: 0,
-      max: 18000,
-    },
-  },
-};
+const emit = defineEmits<{
+  (e: "updateTopImage", value: string, type: string): void;
+  (e: "onKeyup", value: string, type: string): void;
+  (e: "onChecked", value: boolean | null, type: string): void;
+  (e: "onImageChecked", value: boolean | null, type: string): void;
+  (e: "onPoints", value: string, type: string, key: number): void;
+  (
+    e: "onTimeLine",
+    value: string,
+    type: string,
+    clumn: string,
+    key: number
+  ): void;
+  (
+    e: "onImages",
+    value: string,
+    type: string,
+    clumn: string,
+    key: number
+  ): void;
+  (
+    e: "onImageCheckbox",
+    value: boolean,
+    type: string,
+    clumn: string,
+    key: number
+  ): void;
+  (
+    e: "onCheckSNS",
+    value: boolean | null,
+    type: string,
+    clumn: string,
+    key: number
+  ): void;
+}>();
 
-const pieData = {
-  labels: [
-    "大学生(60%)",
-    "一般(20%)",
-    "高校生(10%)",
-    "ファミリー(5%)",
-    "その他(5%)",
-  ],
-  datasets: [
-    {
-      data: [60, 20, 10, 5, 5],
-      // backgroundColor: ['#f87171', '#60a5fa', '#34d399'], // 色指定も可能
-      // borderColor: 'white'
-    },
-  ],
-};
-const pieData2 = {
-  labels: ["男性(50%)", "女性(40%)", "その他(10%)"],
-  datasets: [
-    {
-      data: [50, 40, 10],
-      // backgroundColor: ['#f87171', '#60a5fa', '#34d399'], // 色指定も可能
-      // borderColor: 'white'
-    },
-  ],
-};
-const pieOptions = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: true,
-      position: "bottom" as const,
-      labels: {
-        boxWidth: 12, // 色アイコンのサイズ
-        padding: 5, // ラベル間の余白
-        font: {
-          size: 9, // フォントを小さく
-        },
-        usePointStyle: true, // 点アイコン表示で横に詰める
-      },
-    },
-    title: { display: false },
-  },
-};
+const maxY = computed(() => {
+  const arr = props?.data?.chart_data;
+  if (!Array.isArray(arr)) return 0;
+
+  const numeric = arr.filter((v) => typeof v === "number");
+  return numeric.length ? Math.max(...numeric) : 0;
+});
 </script>
 <template>
-  <div>
-    <RadioComponent
-      :templateList="templateList"
-      :selected="templateSelected"
-      :inline="true"
-    ></RadioComponent>
-  </div>
-  <div>
-    <topImageComponent
-      :section1="true"
-      :section2="true"
-      :section3="true"
-      :section4="true"
-      :section5="true"
-      :section6="true"
-      :top="d_Path + `/default/template1/top.png`"
-      :human="d_Path + `/default/template1/human.png`"
-      :yaImage="d_Path + `/default/template1/ya.png`"
-      text1="〇〇大学 〇〇祭実行委員会"
-      text2="渉外局 2 年"
-      text3="〇〇学部"
-      text4="〇〇県出身"
-      name="スポネク 太郎"
-      kana="Taro Sponnect"
-      mail="〇〇〇〇@ 〇〇. c o m"
-      title1="about"
-      :title1image="d_Path + `/default/template1/title1.png`"
-      text5="〇〇大学 〇〇祭実行委員会"
-      text6="所属学生数"
-      text7="〇〇〇人( 1 年〇〇人/ 2 年〇〇人/ 3 年〇〇人）"
-      text8="男女比"
-      text9="〇:〇"
-      text10="公式HP"
-      text11="h t t p s : / / 〇〇〇〇〇〇"
-      text12="M a i l"
-      text13="〇〇〇〇@ 〇〇〇〇. c o m"
-      text14="TEL"
-      text15="0 3 - 〇〇〇〇- 〇〇〇〇"
-      :image1="d_Path + `/default/template1/image1.mp4`"
-      :image2="d_Path + `/default/template1/image2.png`"
-      :image3="d_Path + `/default/template1/image3.png`"
-      :image4="d_Path + `/default/template1/image4.png`"
-      :image5="d_Path + `/default/template1/image5.png`"
-      text16="開催日時"
-      text17="2 0 2 5 / 〇〇/ 〇〇 ~ 〇〇"
-      text18="開催場所"
-      text19="東京都〇〇区〇〇"
-      text20="参加団体数"
-      text21="〇〇〇団体"
-      text22="想定来場者数"
-      text23="約〇〇〇〇人"
-      textarea1="大学祭の詳細やテーマ 特色などなど
-文字の大きさ・色・配置・装飾などを自分たちで設定。 フリーテキストエリア
-フリーテキストエリア フリーテキストエリア フリーテキストエリア
-フリーテキストエリア フリーテキストエリア フリーテキストエリア
-フリーテキストエリア"
-      text24="後援"
-      text25="〇〇〇〇"
-      :chartOptions="chartOptions"
-      :chartData="chartData"
-      charttitle="来場者数"
-      :chartXList="[2021, 2022, 2023, 2024, 2025]"
-      :chartYList="[8000, 8500, 13000, 15000, 18000]"
-      :pieOptions="pieOptions"
-      :pieData="pieData"
-      pietitle1="来場者分布1"
-      :pieData2="pieData2"
-      :pieNameList="[
-        '大学生(60%)',
-        '一般(20%)',
-        '高校生(10%)',
-        'ファミリー(5%)',
-        'その他(5%)',
-      ]"
-      :piePointList="[60, 20, 10, 5, 5]"
-      pietitle2="来場者分布2"
-      :pie2NameList="['男性(50%)', '女性(40%)', 'その他(10%)', '', '']"
-      :pie2PointList="[50, 40, 10, 0, 0]"
-      textarea2="アピールポイントなど。
-フリーテキストエリア フリーテキストエリア フリーテキストエリア フリーテキストエリア
-フリーテキストエリア フリーテキストエリア フリーテキストエリア フリーテキストエリア
-フリーテキストエリア フリーテキストエリア フリーテキストエリア フリーテキストエリア
-フリーテキストエリア フリーテキストエリア フリーテキストエリア フリーテキストエリア"
-      title2="plan"
-      :chipTitle="['plan1', 'plan2', 'plan3']"
-      :chipTitle2="['￥0,000', '￥0,000', '￥0,000']"
-      :chipTitle3="['協賛タイトル', '協賛タイトル', '協賛タイトル']"
-      :chipBody="['協賛内容', '協賛内容', '協賛内容']"
-      buttonLabel="資料Download"
-      buttonLink="http://www."
-      buttonText="企画書をダウンロードしてご覧いただけます。"
-      title3="schedule"
-      :items="[
+  <p class="font-weight-black text-h6">テンプレート選択</p>
+  <RadioComponent
+    :templateList="templateList"
+    :selected="templateSelected"
+    :inline="true"
+  ></RadioComponent>
+
+  <topImageComponent
+    @updateTopImage="(e, type) => emit('updateTopImage', e, type)"
+    @onKeyup="(e, type) => emit('onKeyup', e, type)"
+    @onChecked="(e, type) => emit('onChecked', e, type)"
+    @onImageChecked="(e, type) => emit('onImageChecked', e, type)"
+    @onPoints="(e, type, key) => emit('onPoints', e, type, key)"
+    @onTimeLine="
+      (e, type, clumn, key) => emit('onTimeLine', e, type, clumn, key)
+    "
+    @onImages="(e, type, clumn, key) => emit('onImages', e, type, clumn, key)"
+    @onImageCheckbox="
+      (e, type, clumn, key) => emit('onImageCheckbox', e, type, clumn, key)
+    "
+    @onCheckSNS="
+      (e, type, clumn, key) => emit('onCheckSNS', e, type, clumn, key)
+    "
+    :user_id="props.user_id"
+    :section1="props.data.section1"
+    :section2="props.data.section2"
+    :section3="props.data.section3"
+    :section4="props.data.section4"
+    :section5="props.data.section5"
+    :section6="props.data.section6"
+    :top="d_Path + props.data.top"
+    :human="d_Path + props.data.human"
+    :yaImage="d_Path + `/default/template1/ya.png`"
+    :text1="props.data.text1"
+    :text2="props.data.text2"
+    :text3="props.data.text3"
+    :text4="props.data.text4"
+    :name="props.data.name"
+    :kana="props.data.kana"
+    :mail="props.data.mail"
+    :title1="props.data.title1"
+    :title1image="d_Path + props.data.title1_image"
+    :title1_image_checked="props.data.title1_image_checked"
+    :text5="props.data.text5"
+    :text6="props.data.text6"
+    :text7="props.data.text7"
+    :text8="props.data.text8"
+    :text9="props.data.text9"
+    :text10="props.data.text10"
+    :text11="props.data.text11"
+    :text12="props.data.text12"
+    :text13="props.data.text13"
+    :text14="props.data.text14"
+    :text15="props.data.text15"
+    :image1="d_Path + props.data.image1"
+    :image2="d_Path + props.data.image2"
+    :image3="d_Path + props.data.image3"
+    :image4="d_Path + props.data.image4"
+    :image5="d_Path + props.data.image5"
+    :image1_checked="props.data.image1_checked"
+    :image2_checked="props.data.image2_checked"
+    :image3_checked="props.data.image3_checked"
+    :image4_checked="props.data.image4_checked"
+    :image5_checked="props.data.image5_checked"
+    :text16="props.data.text16"
+    :text17="props.data.text17"
+    :text18="props.data.text18"
+    :text19="props.data.text19"
+    :text20="props.data.text20"
+    :text21="props.data.text21"
+    :text22="props.data.text22"
+    :text23="props.data.text23"
+    :textarea1="props.data.textarea1"
+    :text24="props.data.text24"
+    :text25="props.data.text25"
+    :chartOptions="chartOptions(maxY)"
+    :chartData="
+    {
+      labels: props.data.chart_labels,
+      datasets: [
         {
-          id: 1,
-          title: 'お申し込み',
-          text: '◯月◯日までに下記お問い合わせ先までお申し込みください。',
-          color: 'green-darken-4',
-          colorText: 'green',
+          label: '値',
+          data: props.data.chart_data,
+          clip: false as const,
         },
+      ],
+    }"
+    :charttitle="props.data.charttitle"
+    :chartXList="props.data.chart_labels"
+    :chartYList="props.data.chart_data"
+    :pieOptions="pieOptions"
+    :pieData="{
+      labels: props.data.pie_labels,
+      datasets: [
         {
-          id: 2,
-          title: '広告データ入稿',
-          text: '◯月◯日までにパンフレットに掲載する広告データを入稿してください。',
-          color: 'green-darken-4',
-          colorText: 'green',
+          data: props.data.pie_data,
+          backgroundColor: d_pie_colors,
         },
+      ],
+    }"
+    :pietitle1="props.data.pietitle1"
+    :pieData2="{
+      labels: props.data.pie2_labels,
+      datasets: [
         {
-          id: 3,
-          title: '大学祭当日',
-          text: '◯月◯日～◯月◯日来場者に御社の広告が掲載された\nパンフレットを配布いたします',
-          color: 'cyan-darken-4',
-          colorText: 'cyan',
+          data: props.data.pie2_data,
+          backgroundColor: d_pie_colors,
         },
-        {
-          id: 4,
-          title: '実施報告',
-          text: '大学祭の報告書をお送りします。本年度の来場者数などご確認いただけます。',
-          color: 'green-darken-4',
-          colorText: 'green',
-        },
-        {
-          id: 5,
-          title: '協賛金お支払い',
-          text: '◯月◯日までに請求書をお送りします。\n期日までにお支払いお願いいたします。',
-          color: 'green-darken-4',
-          colorText: 'green',
-        },
-      ]"
-      :colors="d_colors"
-      title4="track record"
-      text26="昨年度の協賛金総額"
-      money="¥ 0,000,000"
-      text27="使用用途"
-      :tables="[
-        {
-          title: '項目1',
-          value: '￥000,000',
-        },
-        {
-          title: '項目2',
-          value: '￥000,000',
-        },
-        {
-          title: '項目3',
-          value: '￥000,000',
-        },
-        {
-          title: '項目4',
-          value: '￥000,000',
-        },
-        {
-          title: '項目5',
-          value: '￥000,000',
-        },
-        {
-          title: '項目6',
-          value: '￥000,000',
-        },
-        {
-          title: '項目7',
-          value: '￥000,000',
-        },
-        {
-          title: '項目8',
-          value: '￥000,000',
-        },
-        {
-          title: '項目9',
-          value: '￥000,000',
-        },
-        {
-          title: '項目10',
-          value: '￥000,000',
-        },
-        {
-          title: '項目11',
-          value: '￥000,000',
-        },
-        {
-          title: '項目12',
-          value: '￥000,000',
-        },
-      ]"
-      :comments="[
-        {
-          id: 1,
-          icon: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-          title: '株式会社〇〇〇〇',
-          value:
-            'コメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメント',
-        },
-        {
-          id: 2,
-          icon: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-          title: '株式会社〇〇〇〇',
-          value:
-            'コメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメント',
-        },
-        {
-          id: 3,
-          icon: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-          title: '株式会社〇〇〇〇',
-          value:
-            'コメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメント',
-        },
-      ]"
-      title5="SNS"
-      :sns="[
-        {
-          key: 'x',
-          flag: true,
-          url: 'http://yahoo.com',
-          image: d_Path + `/default/template1/x.png`,
-        },
-        {
-          key: 'insta',
-          flag: true,
-          url: 'http://yahoo.com',
-          image: d_Path + `/default/template1/insta.png`,
-        },
-        {
-          key: 'facebook',
-          flag: true,
-          url: 'http://yahoo.com',
-          image: d_Path + `/default/template1/facebook.png`,
-        },
-        {
-          key: 'youtube',
-          flag: true,
-          url: 'http://yahoo.com',
-          image: d_Path + `/default/template1/youtube.png`,
-        },
-        {
-          key: 'n',
-          flag: true,
-          url: 'http://yahoo.com',
-          image: d_Path + `/default/template1/n.png`,
-        },
-        {
-          key: 'tiktok',
-          flag: true,
-          url: 'http://yahoo.com',
-          image: d_Path + `/default/template1/tiktok.png`,
-        },
-      ]"
-      title6="contact"
-      text28="下記連絡先まで、ご連絡ください。"
-      contactMail="〇〇〇〇@〇〇〇〇.com"
-      contactTel="03-〇〇〇〇-〇〇〇〇"
-    ></topImageComponent>
-  </div>
+      ],
+    }"
+    :pieNameList="props.data.pie_labels"
+    :piePointList="props.data.pie_data"
+    :pietitle2="props.data.pietitle2"
+    :pie2NameList="props.data.pie2_labels"
+    :pie2PointList="props.data.pie2_data"
+    :textarea2="props.data.textarea2"
+    :title2="props.data.title2"
+    :chipTitle="props.data.chip_title"
+    :chipTitle2="props.data.chip_title2"
+    :chipTitle3="props.data.chip_title3"
+    :chipBody="props.data.chip_body"
+    :buttonLabel="props.data.button_label"
+    :buttonLink="props.data.button_link"
+    :buttonText="props.data.button_text"
+    :title3="props.data.title3"
+    :items="props.data.items"
+    :colors="d_colors"
+    :title4="props.data.title4"
+    :text26="props.data.text26"
+    :money="props.data.money"
+    :text27="props.data.text27"
+    :tables="props.data.tables"
+    :comments="props.data.comments"
+    :title5="props.data.title5"
+    :sns="props.data.sns"
+    :title6="props.data.title6"
+    :text28="props.data.text28"
+    :contactMail="props.data.contact_mail"
+    :contactTel="props.data.contact_tel"
+  ></topImageComponent>
 </template>

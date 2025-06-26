@@ -56,6 +56,7 @@ watch(model, (val) => emit("update:value", val));
     :hide-details="props.hideDetails"
     :error-messages="props.errormessage"
     @blur="emit('onBlur', model)"
+    @update:modelValue="emit('update:value', model)"
   >
     <!-- 選択済みの表示 -->
     <template #selection="{ item }">

@@ -1,18 +1,22 @@
 <script setup lang="ts">
-import { defineProps, withDefaults } from "vue";
-interface Props {
-  label?: string | undefined;
-  class?: string;
-}
+import { defineProps, defineEmits } from "vue";
 
-const props = withDefaults(defineProps<Props>(), {
-  label: "",
-});
+const props = defineProps<{
+  modelValue?: boolean;
+  label?: string;
+}>();
+
+const emit = defineEmits<{
+  (e: "update", value: boolean | null): void;
+}>();
 </script>
+
 <template>
   <v-checkbox
+    :model-value="props.modelValue ? true : false"
+    @update:modelValue="emit('update', props.modelValue)"
     :label="props.label"
     density="compact"
     hide-details="auto"
-  ></v-checkbox>
+  />
 </template>

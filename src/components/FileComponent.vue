@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { defineProps, withDefaults, defineEmits } from "vue";
-import { prop } from "vue-class-component";
+import { defineProps, withDefaults, defineEmits, ref } from "vue";
+
 import type { VFileInput } from "vuetify/components";
 import CheckboxConponent from "./CheckboxConponent.vue";
+import UserApiService from "@/services/UserApiService";
 type TVariant = VFileInput["$props"]["variant"];
 
 interface Props {
@@ -10,14 +11,16 @@ interface Props {
   label?: string;
   hideDetails?: boolean | "auto";
   name?: string;
+  user_id?: number;
   checkboxlabel?: string;
+  checked?: boolean;
   density?: "default" | "comfortable" | "compact" | undefined;
 }
 const emit = defineEmits<{
-  (e: "onKeyup", value: string, name: string | undefined): void;
-  (e: "onBlur", value: string, name: string | undefined): void;
   (e: "onChange", value: string, name: string | undefined): void;
   (e: "onUpdate", value: string, name: string | undefined): void;
+  (e: "updateTopImages", value: string, name: string | undefined): void;
+  (e: "onChecked", value: boolean): void;
 }>();
 const props = withDefaults(defineProps<Props>(), {
   variant: "outlined",
@@ -26,21 +29,43 @@ const props = withDefaults(defineProps<Props>(), {
   hideDetails: true,
   items: undefined,
   name: undefined,
+  checked: false,
 });
-// 型補完しやすくするための型ガード関数
-function extractFileName(input: File | File[] | null | undefined): string {
-  if (Array.isArray(input)) {
-    return input[0]?.name ?? "";
+
+function onUpdate(fileInput: File | File[] | undefined | null) {
+  if (!fileInput) {
+    console.warn("ファイルが未選択です");
+    return;
   }
-  return input?.name ?? "";
-}
-function onUpdate(files: File | File[] | null) {
-  emit("onUpdate", extractFileName(files), props.name);
+
+  const file = Array.isArray(fileInput) ? fileInput[0] : fileInput;
+
+  if (!(file instanceof File)) {
+    console.warn("無効なファイルです");
+    return;
+  }
+
+  const extension = file.name.split(".").pop()?.toLowerCase() || "";
+  const formData = new FormData();
+  formData.append("image", file);
+  formData.append("user_id", String(props.user_id));
+  formData.append("extension", extension);
+
+  UserApiService.onUpload(formData)
+    .then((res: { data?: string }) => {
+      console.log("アップロード成功", res.data);
+      emit("onUpdate", String(res.data), props.name);
+    })
+    .catch((err) => {
+      console.error("アップロード失敗", err);
+    });
 }
 
-function onChange(files: File | File[] | null) {
-  emit("onChange", extractFileName(files), props.name);
-}
+const checked = ref(false);
+const onCheckbox = (e: boolean | null) => {
+  checked.value = e ? true : false;
+  emit("onChecked", checked.value);
+};
 </script>
 <template>
   <div class="d-flex flex-column w-100">
@@ -51,14 +76,15 @@ function onChange(files: File | File[] | null) {
       :variant="props.variant"
       :hide-details="props.hideDetails"
       @update:modelValue="onUpdate"
-      @change="onChange"
       class="custom-white-file-input"
     ></v-file-input>
 
     <CheckboxConponent
-      :label="props.checkboxlabel"
       v-if="props.checkboxlabel"
+      :label="props.checkboxlabel"
+      :modelValue="props.checked"
       class="ma-0 pa-0"
+      @update="(e) => onCheckbox(e)"
     ></CheckboxConponent>
   </div>
 </template>

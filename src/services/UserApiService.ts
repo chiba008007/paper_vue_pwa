@@ -49,6 +49,10 @@ class UserApiService {
   forgetPasswordInput(data: object): Promise<object> {
     return http.post("/api/forgetForm", data);
   }
+  getRegistedUserData(data: object): Promise<object> {
+    return http.post("/api/getRegistedUserData", data);
+  }
+
   sameMail() {
     return http.post("/api/sameMail");
   }

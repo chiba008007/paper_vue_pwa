@@ -91,7 +91,7 @@ const routes: Array<RouteRecordRaw> = [
     component: RegistFinView,
   },
   {
-    path: "/register",
+    path: "/register/:token",
     name: "register",
     component: RegisterView,
   },

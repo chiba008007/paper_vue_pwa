@@ -1,0 +1,38 @@
+.position-relative {
+  position: relative;
+}
+.yaImage {
+  background-image: url("../assets/ya.png");
+}
+.img-overlap-wrapper {
+  display: flex;
+  justify-content: center;
+  /* wrapper自体で余白を調整してもOK */
+}
+
+.img-overlap {
+  margin-top: -50px; /* ←ここを好きな分だけマイナスに。画像高さの半分程度が自然です */
+  z-index: 10;
+  position: relative; /* z-index効かせたい場合に */
+}
+.border-bottom {
+  border-bottom: 1px dotted #000;
+}
+.custom-height-row {
+  height: 140px;
+}
+.custom-height-row {
+  .text-h6 {
+    top: 0;
+    left: 0;
+    margin-top: -10px;
+    margin-left: -10px;
+  }
+}
+.areas {
+  width: 90%;
+  margin: 0 auto;
+  .border-right {
+    border-right: 1px solid #ccc;
+  }
+}

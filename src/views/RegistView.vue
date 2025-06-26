@@ -42,20 +42,22 @@ const form = ref({
   pref: "",
   address: "",
 });
+
 const sendButtonFlag = () => {
   disableFlag.value = true;
   mailSameFlag.value = false;
+
+  const nameValid = requiredValue(form.value.name, "お名前").every(
+    (fn) => fn(form.value.name) === true
+  );
+  const emailValid = checkEmail().every((fn) => fn(form.value.email) === true);
+  const telValid = checkTel().every((fn) => fn(form.value.tel) === true);
+  const postValid = checkPost().every((fn) => fn(form.value.postcode) === true);
+
   if (useemail.value.indexOf(form.value.email) > 0) {
     disableFlag.value = true;
     mailSameFlag.value = true;
-  } else if (
-    requiredValue(form.value.name, "").length === 0 &&
-    checkEmail(form.value.email).length === 0 &&
-    checkTel(form.value.tel).length === 0 &&
-    checkPost(form.value.postcode).length === 0
-    //requiredValue(form.value.pref, "").length === 0 &&
-    //requiredValue(form.value.address, "").length === 0
-  ) {
+  } else if (nameValid && emailValid && telValid && postValid) {
     disableFlag.value = false;
   } else {
     disableFlag.value = true;
@@ -147,7 +149,7 @@ const scrollToPosition = () => {
               type="text"
               :value="form.email"
               :hideDetails="`auto`"
-              :rules="checkEmail(form.email)"
+              :rules="checkEmail()"
               @onBlur="(e) => ((form.email = e), sendButtonFlag())"
             ></TextComponent>
           </v-col>
@@ -159,7 +161,7 @@ const scrollToPosition = () => {
               :value="form.tel"
               :hideDetails="`auto`"
               messages="例)090-0000-0000"
-              :rules="checkTel(form.tel)"
+              :rules="checkTel()"
               @onBlur="(e) => ((form.tel = e), sendButtonFlag())"
             ></TextComponent>
           </v-col>
@@ -173,7 +175,7 @@ const scrollToPosition = () => {
               class="w-75"
               :postflag="true"
               :value="form.postcode"
-              :rules="checkPost(form.postcode)"
+              :rules="checkPost()"
               messages="例)000-0000"
               @onKeyup="(e) => (fetchAddress(e), sendButtonFlag())"
             ></TextComponent>

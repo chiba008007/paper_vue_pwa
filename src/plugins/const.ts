@@ -38,6 +38,14 @@ export const templateList = {
   2: "テンプレート2",
 };
 
+/** pieグラフカラー */
+export const d_pie_colors = [
+  "#FF6384", // 柔らかい赤（ピンク系）
+  "#36A2EB", // 明るめの青
+  "#FFCE56", // 穏やかな黄色
+  "#4BC0C0", // グリーン寄りの青緑
+  "#9966FF", // 薄めの紫
+];
 /** 色コード */
 export const d_colors = [
   { value: "green", color: "#1B5E20" },
@@ -47,6 +55,41 @@ export const d_colors = [
   { value: "light-green", color: "#33691E" },
   { value: "brown", color: "#3E2723" },
 ];
+
+/**chartグラフ */
+export const chartOptions = (max: number) => ({
+  responsive: true,
+  plugins: {
+    legend: { display: false },
+    title: { display: false },
+  },
+  scales: {
+    y: {
+      min: 0,
+      max: Math.ceil((max * 1.1) / 1000) * 1000,
+    },
+  },
+});
+
+export const pieOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: true,
+      position: "bottom" as const,
+      labels: {
+        boxWidth: 12, // 色アイコンのサイズ
+        padding: 5, // ラベル間の余白
+        font: {
+          size: 9, // フォントを小さく
+        },
+        usePointStyle: true, // 点アイコン表示で横に詰める
+      },
+    },
+    title: { display: false },
+  },
+};
+
 /** 都道府県_Data */
 export const prefecturesNameList = [
   "北海道",

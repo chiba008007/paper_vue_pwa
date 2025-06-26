@@ -15,7 +15,7 @@ interface Props {
   density?: "default" | "comfortable" | "compact" | undefined;
   label?: string;
   autoGrow?: boolean | string;
-  hideDetails?: boolean;
+  hideDetails?: boolean | "auto";
   type?: string;
   rules?: Array<(value: any) => boolean | string> | undefined;
   postflag?: boolean;
